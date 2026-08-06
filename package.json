@@ -1,0 +1,19 @@
+{
+  "name": "static-framework",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch:parkruns": "node scripts/fetch-sheet-parkruns.mjs",
+    "generate": "npm run fetch:parkruns && node scripts/build.js",
+    "dev": "npm run generate && vite",
+    "build": "npm run generate && vite build"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "csv-parse": "^7.0.2",
+    "csv-parser": "^3.2.1",
+    "node-fetch": "^3.3.2"
+  }
+}
