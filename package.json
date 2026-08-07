@@ -3,8 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "fetch:all": "node scripts/fetch-sheet-parkruns.mjs && node scripts/fetch-sheet-places-visited.mjs",
     "fetch:parkruns": "node scripts/fetch-sheet-parkruns.mjs",
-    "generate": "npm run fetch:parkruns && node scripts/build.js",
+    "fetch:places-visited": "node scripts/fetch-sheet-places-visited.mjs",
+    "generate": "npm run fetch:all && node scripts/build.js",
     "dev": "npm run generate && vite",
     "build": "npm run generate && vite build"
   },

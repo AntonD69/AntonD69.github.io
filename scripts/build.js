@@ -4,70 +4,142 @@ import fetch from 'node-fetch';
 import csv from 'csv-parser';
 import { Readable } from 'stream';
 
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRS8h9ayT8YD-0XTYiGbltU0xYzYCy6WAZB-2h3eYU-Hpu0UEICvfsR1RjRgw2Wp7k-Ho0RKeE4tDfk/pub?output=csv';
-
-async function fetchSheetToJSON() {
-  console.log('Fetching data from Google Sheets...');
-
-  const response = await fetch(SHEET_CSV_URL);
-  const csvText = await response.text();
-  
-  const results = [];
-  const stream = Readable.from(csvText);
-
-  stream
-    .pipe(csv())
-    .on('data', (data) => results.push(data))
-    .on('end', () => {
-      // Save the output to your data folder
-      const outputPath = path.resolve('data/parkruns.json');
-      fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
-      console.log(`Successfully saved ${results.length} records to data/parkruns.json`);
-    });
+function copyRecursiveSync(src, dest) {
+  if (fs.existsSync(src)) {
+    // Copy directory recursively (requires Node.js 16.7+)
+    fs.cpSync(src, dest, { recursive: true, force: true });
+    console.log(`Successfully copied ${src} -> ${dest}`);
+  } else {
+    console.warn(`Source path non-existent, skipped copying: ${src}`);
+  }
 }
 
-fetchSheetToJSON();
+// Helper function to replace {{ key }} placeholders
+function renderTemplate(template, data) {
+  let result = template;
 
-// import fs from 'fs';
-// import path from 'path';
+  // Handle conditional logic like {{ #if pb }}class-name{{ /if }}
+  result = result.replace(/\{\{\s*#if\s+(\w+)\s*\}\}(.*?)\{\{\s*\/if\s*\}\}/g, (_, key, content) => {
+    return data[key] ? content : '';
+  });
 
-// // Helper function to replace {{ key }} placeholders
-// function renderTemplate(template, data) {
-//   let result = template;
+  // Handle variable replacements like {{ name }}
+  Object.keys(data).forEach(key => {
+    const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'g');
+    result = result.replace(regex, data[key]);
+  });
 
-//   // Handle conditional logic like {{ #if pb }}class-name{{ /if }}
-//   result = result.replace(/\{\{\s*#if\s+(\w+)\s*\}\}(.*?)\{\{\s*\/if\s*\}\}/g, (_, key, content) => {
-//     return data[key] ? content : '';
-//   });
+  return result;
+}
 
-//   // Handle variable replacements like {{ name }}
-//   Object.keys(data).forEach(key => {
-//     const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'g');
-//     result = result.replace(regex, data[key]);
-//   });
+function generateNavMenu(links, activePage) {
+  const itemsHtml = links.map(link => {
+    // Determine active state for highlighting
+    const isActive = link.url.includes(activePage) ? 'class="active"' : '';
+    return `        <li><a href="${link.url}" ${isActive}>${link.label}</a></li>`;
+  }).join('\n');
 
-//   return result;
-// }
+  return `
+    <nav class="site-nav">
+      <ul>
+${itemsHtml}
+      </ul>
+    </nav>
+  `;
+}
 
-// function buildSite() {
-//   console.log('Generating static HTML files...');
+function buildSite() {
+  console.log('Generating static HTML files...');
 
-//   // 1. Read sources
-//   const rawData = fs.readFileSync(path.resolve('data/parkruns.json'), 'utf-8');
-//   const items = JSON.parse(rawData);
-//   const cardTemplate = fs.readFileSync(path.resolve('src/templates/parkrun-card.html'), 'utf-8');
-//   const layoutTemplate = fs.readFileSync(path.resolve('src/templates/layout.html'), 'utf-8');
+  //--  Copy public images to root/images so relative paths like ./images/... work everywhere
+  const publicImagesDir = path.resolve('public/images');
+  const targetImagesDir = path.resolve('images');
 
-//   // 2. Render each item into HTML cards
-//   const cardsHtml = items.map(item => renderTemplate(cardTemplate, item)).join('\n');
+  copyRecursiveSync(publicImagesDir, targetImagesDir)
 
-//   // 3. Inject cards into the main layout
-//   const finalHtml = layoutTemplate.replace('{{ content }}', cardsHtml);
+  //-- Create Navigation
+  console.log('  Building site with navigation...');
 
-//   // 4. Output the compiled index.html at root
-//   fs.writeFileSync(path.resolve('index.html'), finalHtml, 'utf-8');
+    // 1. Read configurations and templates
+    const siteConfig = JSON.parse(fs.readFileSync(path.resolve('data/site-config.json'), 'utf-8'));
+    const layoutTemplate = fs.readFileSync(path.resolve('src/templates/index-page.html'), 'utf-8');
+    
+    // 2. Build navigation HTML string
+    const navHtml = generateNavMenu(siteConfig.navLinks, 'index.html');
 
-//   console.log('Successfully generated index.html!');
-// }
+    // 3. Inject Navigation into layout
+    let finalHtml = layoutTemplate.replace('<!--NAV_MENU-->', navHtml);
 
-// buildSite();
+    // 4. Inject main page content (example content replacement)
+    finalHtml = finalHtml.replace('{{ content }}', '<h1>Welcome to DamhuisClan</h1>');
+
+    // 5. Output compiled HTML
+    fs.writeFileSync(path.resolve('index.html'), finalHtml, 'utf-8');
+
+    console.log('  Successfully generated index.html with injected menu!');  
+ 
+    //-- Create Main Page
+
+  //-- STEP 2 -  Create Parkrun
+  const rawData = fs.readFileSync(path.resolve('data/parkruns.json'), 'utf-8');
+  const parkruns = JSON.parse(rawData);
+  const cardTemplate = fs.readFileSync(path.resolve('src/templates/parkruns-card.html'), 'utf-8');
+  const parkrunLayoutTemplate = fs.readFileSync(path.resolve('src/templates/parkruns-page.html'), 'utf-8');
+
+  // 2. Render each item into HTML cards
+  const defaultParkRunImage = 'EmptyParkrun2.jpg';
+
+  //const cardsHtml = items.map(item => renderTemplate(cardTemplate, item)).join('\n');
+  const cardsHtml = parkruns.map(item => {
+    const photo = (item.PhotoUrl && item.PhotoUrl.trim() !== 'null') 
+      ? item.PhotoUrl.trim() 
+      : defaultParkRunImage;
+
+      let countryClass = '';
+      
+      if (item.Country && item.Country.trim().toUpperCase() === 'ZA') {
+        countryClass = 'za-country';}
+      if (item.Country && item.Country.trim().toUpperCase() === 'NL') {
+        countryClass = 'nl-country';}
+      if (item.Country && item.Country.trim().toUpperCase() === 'SZ') {
+        countryClass = 'sz-country';}
+
+    return renderTemplate(cardTemplate, {
+      ...item,
+      PhotoUrl: photo,
+      country_class: countryClass
+    });
+  }).join('\n');
+
+  // 3. Inject cards into the main layout
+  const parkrunsFinalHtml = parkrunLayoutTemplate
+          .replace('<!--NAV_MENU-->', navHtml)
+          .replace('{{ content }}', cardsHtml);
+
+  // 4. Output the compiled index.html at root
+  fs.writeFileSync(path.resolve('parkruns.html'), parkrunsFinalHtml, 'utf-8');
+
+  console.log('Successfully generated parkruns.html.');
+
+  //-- Places Visited
+
+  //-- DamhuisClan site
+
+  //-- Panoramas
+
+  //-- Drone Adventures
+
+  //-- Geocaching
+
+  //-- Turkana 4
+
+  //-- Workshop projects
+  //--    keyrings
+  //--    Cnc Carving
+  //--    Other Projects
+
+  //-- Blog posts
+  
+}
+
+buildSite();

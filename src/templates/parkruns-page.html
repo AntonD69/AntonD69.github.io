@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parkrun Tracker</title>
+  <link rel="stylesheet" href="./src/styles/main.css">
+</head>
+<body>
+  <header>
+    <!-- Navigation Menu Placeholder -->
+    <!--NAV_MENU-->
+  </header>
+  <main>
+    <h1>🌳🏃‍♂️‍➡️My Parkrun Statistics</h1>
+
+    <div class="filter-controls">
+      <button class="btn" onclick="sortBy('date-desc')">Newest First</button>
+      <button class="btn" onclick="sortBy('alphabetical')">Alphabetical (A-Z)</button>
+    </div>
+
+    <div class="parkrun-grid">
+{{ content }}
+    </div>
+    <script type="module" src="./src/scripts/parkrun-controls.js"></script>
+  </main>
+</body>
+</html>
