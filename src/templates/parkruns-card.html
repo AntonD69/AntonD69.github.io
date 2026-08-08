@@ -5,9 +5,12 @@
             <p class="card-image-container">
               <img src="./images/parkruns/{{ PhotoUrl }}" class="parkrun-thumb" alt="Parkrun {{ MyPrId }}" />
             </p>
-            <p><strong>Pr #:</strong> {{ MyPrId }}</p>
-            <p><strong>📅:</strong> {{ Date }}</p>
-            <p>🏅 {{ MyUniquePrId }} | 🏃 {{ MyPrId }}</p>
+            <div class="card-stats-row">
+              <p>📅 {{ Date }}</p>
+              <p>🏅 {{ MyUniquePrId }} | 🏃 {{ MyPrId }}</p>
+            </div>
+            
+            {{youtube_button_html}}
           </div>
         </div>
       </div>

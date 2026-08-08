@@ -140,3 +140,57 @@
 .parkrun-card.nl-country .details p {
   color: #000000 !important;
 }
+
+.card-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Ensures both items get exactly 50% width */
+  gap: 10px;                       /* Gap between the two items */
+  align-items: center;            /* Centers content vertically */
+  margin-top: 8px;
+}
+
+/* Ensure paragraph margins don't break the alignment */
+.card-stats-row p {
+  margin: 0;
+  text-align: center;             /* Centers text within each half */
+  white-space: nowrap;            /* Keeps date and stats on one line each */
+}
+
+.card-action-row {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+/* YouTube Brand Button */
+.youtube-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #FF0000;
+  color: #FFFFFF !important;
+  font-weight: bold;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.youtube-btn:hover {
+  background-color: #CC0000; /* Darker red on hover */
+  transform: translateY(-1px);
+}
+
+.youtube-btn:active {
+  transform: translateY(0);
+}
+
+/* YouTube Play Icon */
+.yt-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+}
