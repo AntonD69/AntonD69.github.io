@@ -53,5 +53,15 @@ cards.sort((a, b) => {
   cards.forEach(card => container.appendChild(card));
 }
 
+function scrollToAlphabet() {
+  const section = document.getElementById('alphabet-challenge');
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    console.error('Alphabet challenge section not found.');
+  }
+}
+
 window.showView = showView;
 window.sortBy = sortBy;
+window.scrollToAlphabet = scrollToAlphabet;

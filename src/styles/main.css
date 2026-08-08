@@ -194,3 +194,18 @@
   height: 18px;
   display: inline-block;
 }
+
+.card-title-full {
+  width: 100%;
+  margin: 0 0 6px 0;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  text-align: left; /* or center if you prefer */
+  word-wrap: break-word; /* Prevents long parkrun names from breaking layout */
+}
+
+.card-subheader {
+  display: flex;
+  justify-content: flex-end; /* Keeps run number neatly aligned right */
+  margin-bottom: 8px;
+}

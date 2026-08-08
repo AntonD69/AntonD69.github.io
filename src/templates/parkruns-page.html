@@ -17,11 +17,20 @@
     <div class="filter-controls">
       <button class="btn" onclick="sortBy('date-desc')">Newest First</button>
       <button class="btn" onclick="sortBy('alphabetical')">Alphabetical (A-Z)</button>
+      <button class="btn btn-challenge" onclick="scrollToAlphabet()">Alphabet Challenge</button>
     </div>
 
     <div class="parkrun-grid">
 {{ content }}
     </div>
+
+    <section id="alphabet-challenge" class="alphabet-challenge-section">
+      <h2>Alphabet Challenge</h2>
+      <div class="alphabet-grid">
+{{ alphabet_grid }}
+      </div>
+    </section>
+
     <script type="module" src="./src/scripts/parkrun-controls.js"></script>
   </main>
 </body>
