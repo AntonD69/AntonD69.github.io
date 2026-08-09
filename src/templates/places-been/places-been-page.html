@@ -21,6 +21,16 @@
       <button class="btn btn-challenge" onclick="scrollToAlphabet()">Alphabet Challenge</button> -->
     </div>
 
+    <div class="filter-matrix-wrapper">
+      <div class="filter-header">
+        <span>Filter by Type & Starting Letter</span>
+        <button id="reset-filter-btn" class="btn-reset">Reset Filter</button>
+      </div>
+      
+      <!-- JavaScript populates grid buttons inside here -->
+      <div id="filter-matrix" class="filter-matrix"></div>
+    </div>
+
     <div class="visited-grid">
 {{ content }}
     </div>

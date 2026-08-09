@@ -83,7 +83,7 @@ export function build_PlacesBeen_Page(navHtml) {
     // Render individual cards
     const places = JSON.parse(rawData);
 
-    const cardsHtml = places.slice(0, 50).map(place => {
+    const cardsHtml = places.map(place => {
         // 1. YouTube Button HTML
         const hasYoutube = place.YoutubeLink && place.YoutubeLink.trim() !== '';
         
