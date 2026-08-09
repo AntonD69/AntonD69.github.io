@@ -3,50 +3,9 @@ import path from 'path';
 import fetch from 'node-fetch';
 import csv from 'csv-parser';
 import { Readable } from 'stream';
+import * as utils from './utils.js';
 
-function copyRecursiveSync(src, dest) {
-  if (fs.existsSync(src)) {
-    // Copy directory recursively (requires Node.js 16.7+)
-    fs.cpSync(src, dest, { recursive: true, force: true });
-    console.log(`Successfully copied ${src} -> ${dest}`);
-  } else {
-    console.warn(`Source path non-existent, skipped copying: ${src}`);
-  }
-}
 
-// Helper function to replace {{ key }} placeholders
-function renderTemplate(template, data) {
-  let result = template;
-
-  // Handle conditional logic like {{ #if pb }}class-name{{ /if }}
-  result = result.replace(/\{\{\s*#if\s+(\w+)\s*\}\}(.*?)\{\{\s*\/if\s*\}\}/g, (_, key, content) => {
-    return data[key] ? content : '';
-  });
-
-  // Handle variable replacements like {{ name }}
-  Object.keys(data).forEach(key => {
-    const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'g');
-    result = result.replace(regex, data[key]);
-  });
-
-  return result;
-}
-
-function generateNavMenu(links, activePage) {
-  const itemsHtml = links.map(link => {
-    // Determine active state for highlighting
-    const isActive = link.url.includes(activePage) ? 'class="active"' : '';
-    return `        <li><a href="${link.url}" ${isActive}>${link.label}</a></li>`;
-  }).join('\n');
-
-  return `
-    <nav class="site-nav">
-      <ul>
-${itemsHtml}
-      </ul>
-    </nav>
-  `;
-}
 
 export function buildParkrunPage(navHtml) {
   //-- STEP 2 -  Create Parkrun
@@ -84,7 +43,7 @@ export function buildParkrunPage(navHtml) {
       if (item.Country && item.Country.trim().toUpperCase() === 'SZ') {
         countryClass = 'sz-country';}
 
-    return renderTemplate(cardTemplate, {
+    return utils.renderTemplate(cardTemplate, {
       ...item,
       PhotoUrl: photo,
       country_class: countryClass,
@@ -136,5 +95,5 @@ export function buildParkrunPage(navHtml) {
   // 4. Output the compiled index.html at root
   fs.writeFileSync(path.resolve('parkruns.html'), parkrunsFinalHtml, 'utf-8');
 
-  console.log('Successfully generated parkruns.html.');
+  console.log('      Successfully generated parkruns.html with injected menu!.');
 }

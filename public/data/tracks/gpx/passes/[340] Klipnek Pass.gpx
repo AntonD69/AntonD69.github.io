@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?><gpx creator="Garmin Desktop App" version="1.1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd http://www.garmin.com/xmlschemas/PressureExtension/v1 http://www.garmin.com/xmlschemas/PressureExtensionv1.xsd http://www.garmin.com/xmlschemas/TripExtensions/v1 http://www.garmin.com/xmlschemas/TripExtensionsv1.xsd http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1 http://www.garmin.com/xmlschemas/TripMetaDataExtensionsv1.xsd http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1 http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensionsv1.xsd http://www.garmin.com/xmlschemas/CreationTimeExtension/v1 http://www.garmin.com/xmlschemas/CreationTimeExtensionsv1.xsd http://www.garmin.com/xmlschemas/AccelerationExtension/v1 http://www.garmin.com/xmlschemas/AccelerationExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/VideoExtension/v1 http://www.garmin.com/xmlschemas/VideoExtensionv1.xsd" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:trp="http://www.garmin.com/xmlschemas/TripExtensions/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxacc="http://www.garmin.com/xmlschemas/AccelerationExtension/v1" xmlns:gpxpx="http://www.garmin.com/xmlschemas/PowerExtension/v1" xmlns:vidx1="http://www.garmin.com/xmlschemas/VideoExtension/v1">
+
+  <metadata>
+    <link href="http://www.garmin.com">
+      <text>Garmin International</text>
+    </link>
+    <time>2023-04-15T10:24:20Z</time>
+    <bounds maxlat="-28.283597426488996" maxlon="28.425546297803521" minlat="-28.291289750486612" minlon="28.395936721935868" />
+  </metadata>
+
+  <trk>
+    <name>[340] Klipnek Pass</name>
+    <extensions>
+      <gpxx:TrackExtension>
+        <gpxx:DisplayColor>Green</gpxx:DisplayColor>
+      </gpxx:TrackExtension>
+    </extensions>
+    <trkseg>
+      <trkpt lat="-28.283597426488996" lon="28.395936721935868">
+        <ele>1680.52</ele>
+        <time>2023-04-07T07:53:13Z</time>
+      </trkpt>
+      <trkpt lat="-28.286115350201726" lon="28.40170606970787">
+        <ele>1690.6199999999999</ele>
+        <time>2023-04-07T07:53:32Z</time>
+      </trkpt>
+      <trkpt lat="-28.288273187354207" lon="28.406918440014124">
+        <ele>1711.76</ele>
+        <time>2023-04-07T07:53:50Z</time>
+      </trkpt>
+      <trkpt lat="-28.288576444610953" lon="28.409168729558587">
+        <ele>1721.8599999999999</ele>
+        <time>2023-04-07T07:53:57Z</time>
+      </trkpt>
+      <trkpt lat="-28.28902873210609" lon="28.413198748603463">
+        <ele>1721.8599999999999</ele>
+        <time>2023-04-07T07:54:09Z</time>
+      </trkpt>
+      <trkpt lat="-28.289796095341444" lon="28.415014855563641">
+        <ele>1713.6900000000001</ele>
+        <time>2023-04-07T07:54:15Z</time>
+      </trkpt>
+      <trkpt lat="-28.291022032499313" lon="28.418040135875344">
+        <ele>1699.75</ele>
+        <time>2023-04-07T07:54:25Z</time>
+      </trkpt>
+      <trkpt lat="-28.291289750486612" lon="28.420245330780745">
+        <ele>1696.8599999999999</ele>
+        <time>2023-04-07T07:54:32Z</time>
+      </trkpt>
+      <trkpt lat="-28.291051285341382" lon="28.422449603676796">
+        <ele>1698.3099999999999</ele>
+        <time>2023-04-07T07:54:39Z</time>
+      </trkpt>
+      <trkpt lat="-28.290143106132746" lon="28.425546297803521">
+        <ele>1704.0699999999999</ele>
+        <time>2023-04-07T07:54:49Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+
+</gpx>

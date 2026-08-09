@@ -1,0 +1,46 @@
+<div class="visitedPlace-card" data-area="{{ Area }}" data-date="{{ Date }}">
+    <div class="card-content">
+        <div class="card-header">
+        <h3>{{ Name }}</h3>
+        <span class="area-badge">{{ Area }}</span>
+        </div>
+
+        <div class="card-image-container {{ ImageRatio }}">
+            <img 
+                src="./images/places-been/been/{{ ImageLink }}" 
+                onerror="this.onerror=null; this.src='./images/places-been/default-place-been.jpg';" 
+                alt="{{ Name }}" 
+                class="place-thumb" 
+                loading="lazy"
+            />
+            {{ vehicle_badge_html }}
+        </div>
+
+        <!-- Metadata Micro-Grid -->
+        <div class="card-meta-grid">
+            <!-- ROW 1 (4 Columns: Emoji, Value, Emoji, Value) -->
+            <span class="meta-icon">📅</span>
+            <span class="meta-val">{{ Date }}</span>
+            <span class="meta-icon">🕒</span>
+            <span class="meta-val">{{ Time }}</span>
+
+            <!-- ROW 2 (4 Columns: Emoji, Value, Emoji, Value) -->
+            <span class="meta-icon">📍</span>
+            <span class="meta-val">{{ link_coords_html }}</span>
+            <span class="meta-icon">🗺️</span>
+            <span class="meta-val">{{ Area }}</span>
+
+            <!-- ROW 3 (3 Columns: Spans 4 units each) -->
+            <div class="meta-row3-item"><span>PT:</span> {{ PointType }}</div>
+            <div class="meta-row3-item"><span>Vc:</span> {{ Vehicle }}</div>
+            <div class="meta-row3-item"><span>Ratio:</span> {{ ImageRatio }}</div>
+        </div>
+        LC:</span> {{ LookupCode }}
+
+        <!-- Conditional Links (YouTube & GPX) -->
+        <div class="card-actions">
+        {{ youtube_btn_html }}
+        {{ gpx_btn_html }}
+        </div>
+    </div>
+</div>

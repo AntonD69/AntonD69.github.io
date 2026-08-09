@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?><gpx creator="Garmin Desktop App" version="1.1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd http://www.garmin.com/xmlschemas/PressureExtension/v1 http://www.garmin.com/xmlschemas/PressureExtensionv1.xsd http://www.garmin.com/xmlschemas/TripExtensions/v1 http://www.garmin.com/xmlschemas/TripExtensionsv1.xsd http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1 http://www.garmin.com/xmlschemas/TripMetaDataExtensionsv1.xsd http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1 http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensionsv1.xsd http://www.garmin.com/xmlschemas/CreationTimeExtension/v1 http://www.garmin.com/xmlschemas/CreationTimeExtensionsv1.xsd http://www.garmin.com/xmlschemas/AccelerationExtension/v1 http://www.garmin.com/xmlschemas/AccelerationExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/VideoExtension/v1 http://www.garmin.com/xmlschemas/VideoExtensionv1.xsd" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:trp="http://www.garmin.com/xmlschemas/TripExtensions/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxacc="http://www.garmin.com/xmlschemas/AccelerationExtension/v1" xmlns:gpxpx="http://www.garmin.com/xmlschemas/PowerExtension/v1" xmlns:vidx1="http://www.garmin.com/xmlschemas/VideoExtension/v1">
+
+  <metadata>
+    <link href="http://www.garmin.com">
+      <text>Garmin International</text>
+    </link>
+    <time>2022-07-02T14:21:26Z</time>
+    <bounds maxlat="-25.772896148264408" maxlon="28.496027123183012" minlat="-25.780378254130483" minlon="28.451820630580187" />
+  </metadata>
+
+  <trk>
+    <name>[46] Donkerpoort</name>
+    <extensions>
+      <gpxx:TrackExtension>
+        <gpxx:DisplayColor>Blue</gpxx:DisplayColor>
+      </gpxx:TrackExtension>
+    </extensions>
+    <trkseg>
+      <trkpt lat="-25.772896148264408" lon="28.451820630580187">
+        <ele>1412.3099999999999</ele>
+        <time>2016-03-28T12:44:33Z</time>
+      </trkpt>
+      <trkpt lat="-25.773721095174551" lon="28.45435238443315">
+        <ele>1425.29</ele>
+        <time>2016-03-28T12:44:46Z</time>
+      </trkpt>
+      <trkpt lat="-25.774204060435295" lon="28.456245269626379">
+        <ele>1433.9400000000001</ele>
+        <time>2016-03-28T12:44:57Z</time>
+      </trkpt>
+      <trkpt lat="-25.774503881111741" lon="28.458624137565494">
+        <ele>1442.5999999999999</ele>
+        <time>2016-03-28T12:45:09Z</time>
+      </trkpt>
+      <trkpt lat="-25.774678727611899" lon="28.460463378578424">
+        <ele>1445.48</ele>
+        <time>2016-03-28T12:45:19Z</time>
+      </trkpt>
+      <trkpt lat="-25.774871008470654" lon="28.462439831346273">
+        <ele>1449.3199999999999</ele>
+        <time>2016-03-28T12:45:30Z</time>
+      </trkpt>
+      <trkpt lat="-25.775198321789503" lon="28.464925233274698">
+        <ele>1453.6500000000001</ele>
+        <time>2016-03-28T12:45:42Z</time>
+      </trkpt>
+      <trkpt lat="-25.775920758023858" lon="28.46725070849061">
+        <ele>1456.05</ele>
+        <time>2016-03-28T12:45:53Z</time>
+      </trkpt>
+      <trkpt lat="-25.777190281078219" lon="28.471057433634996">
+        <ele>1465.1900000000001</ele>
+        <time>2016-03-28T12:46:10Z</time>
+      </trkpt>
+      <trkpt lat="-25.77908668667078" lon="28.476775567978621">
+        <ele>1475.28</ele>
+        <time>2016-03-28T12:46:34Z</time>
+      </trkpt>
+      <trkpt lat="-25.779465297237039" lon="28.478551777079701">
+        <ele>1481.53</ele>
+        <time>2016-03-28T12:46:42Z</time>
+      </trkpt>
+      <trkpt lat="-25.779247367754579" lon="28.48005129955709">
+        <ele>1487.78</ele>
+        <time>2016-03-28T12:46:49Z</time>
+      </trkpt>
+      <trkpt lat="-25.778604224324226" lon="28.481299029663205">
+        <ele>1496.9100000000001</ele>
+        <time>2016-03-28T12:46:56Z</time>
+      </trkpt>
+      <trkpt lat="-25.777098415419459" lon="28.482984798029065">
+        <ele>1511.8099999999999</ele>
+        <time>2016-03-28T12:47:09Z</time>
+      </trkpt>
+      <trkpt lat="-25.776242623105645" lon="28.484264966100454">
+        <ele>1514.21</ele>
+        <time>2016-03-28T12:47:19Z</time>
+      </trkpt>
+      <trkpt lat="-25.775812966749072" lon="28.485788712278008">
+        <ele>1506.52</ele>
+        <time>2016-03-28T12:47:27Z</time>
+      </trkpt>
+      <trkpt lat="-25.775869963690639" lon="28.487531645223498">
+        <ele>1496.4300000000001</ele>
+        <time>2016-03-28T12:47:35Z</time>
+      </trkpt>
+      <trkpt lat="-25.776448734104633" lon="28.489095037803054">
+        <ele>1486.3399999999999</ele>
+        <time>2016-03-28T12:47:42Z</time>
+      </trkpt>
+      <trkpt lat="-25.77801120467484" lon="28.491848660632968">
+        <ele>1477.6800000000001</ele>
+        <time>2016-03-28T12:47:54Z</time>
+      </trkpt>
+      <trkpt lat="-25.780378254130483" lon="28.496027123183012">
+        <ele>1482.97</ele>
+        <time>2016-03-28T12:48:11Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+
+</gpx>

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?><gpx creator="Garmin Desktop App" version="1.1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd http://www.garmin.com/xmlschemas/PressureExtension/v1 http://www.garmin.com/xmlschemas/PressureExtensionv1.xsd http://www.garmin.com/xmlschemas/TripExtensions/v1 http://www.garmin.com/xmlschemas/TripExtensionsv1.xsd http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1 http://www.garmin.com/xmlschemas/TripMetaDataExtensionsv1.xsd http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1 http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensionsv1.xsd http://www.garmin.com/xmlschemas/CreationTimeExtension/v1 http://www.garmin.com/xmlschemas/CreationTimeExtensionsv1.xsd http://www.garmin.com/xmlschemas/AccelerationExtension/v1 http://www.garmin.com/xmlschemas/AccelerationExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/VideoExtension/v1 http://www.garmin.com/xmlschemas/VideoExtensionv1.xsd" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:trp="http://www.garmin.com/xmlschemas/TripExtensions/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxacc="http://www.garmin.com/xmlschemas/AccelerationExtension/v1" xmlns:gpxpx="http://www.garmin.com/xmlschemas/PowerExtension/v1" xmlns:vidx1="http://www.garmin.com/xmlschemas/VideoExtension/v1">
+
+  <metadata>
+    <link href="http://www.garmin.com">
+      <text>Garmin International</text>
+    </link>
+    <time>2022-07-02T14:17:32Z</time>
+    <bounds maxlat="-28.140595033764839" maxlon="30.216664457693696" minlat="-28.162414468824863" minlon="30.179852647706866" />
+  </metadata>
+
+  <trk>
+    <name>[25] Mpate Heights</name>
+    <extensions>
+      <gpxx:TrackExtension>
+        <gpxx:DisplayColor>Blue</gpxx:DisplayColor>
+      </gpxx:TrackExtension>
+    </extensions>
+    <trkseg>
+      <trkpt lat="-28.140595033764839" lon="30.179852647706866">
+        <ele>1356.5599999999999</ele>
+        <time>2015-05-04T06:25:59Z</time>
+      </trkpt>
+      <trkpt lat="-28.141471529379487" lon="30.182509627193213">
+        <ele>1358.96</ele>
+        <time>2015-05-04T06:26:09Z</time>
+      </trkpt>
+      <trkpt lat="-28.142546843737364" lon="30.185865489766002">
+        <ele>1341.1800000000001</ele>
+        <time>2015-05-04T06:26:23Z</time>
+      </trkpt>
+      <trkpt lat="-28.143664570525289" lon="30.18903368152678">
+        <ele>1316.1800000000001</ele>
+        <time>2015-05-04T06:26:36Z</time>
+      </trkpt>
+      <trkpt lat="-28.144868295639753" lon="30.190952466800809">
+        <ele>1301.76</ele>
+        <time>2015-05-04T06:26:45Z</time>
+      </trkpt>
+      <trkpt lat="-28.146543670445681" lon="30.193322114646435">
+        <ele>1283.02</ele>
+        <time>2015-05-04T06:26:57Z</time>
+      </trkpt>
+      <trkpt lat="-28.1485665589571" lon="30.196198364719748">
+        <ele>1264.27</ele>
+        <time>2015-05-04T06:27:12Z</time>
+      </trkpt>
+      <trkpt lat="-28.150809304788709" lon="30.199357671663165">
+        <ele>1248.8900000000001</ele>
+        <time>2015-05-04T06:27:28Z</time>
+      </trkpt>
+      <trkpt lat="-28.152771592140198" lon="30.202121520414948">
+        <ele>1235.9100000000001</ele>
+        <time>2015-05-04T06:27:42Z</time>
+      </trkpt>
+      <trkpt lat="-28.153987219557166" lon="30.203865123912692">
+        <ele>1223.9000000000001</ele>
+        <time>2015-05-04T06:27:49Z</time>
+      </trkpt>
+      <trkpt lat="-28.156333146616817" lon="30.207227440550923">
+        <ele>1221.49</ele>
+        <time>2015-05-04T06:28:03Z</time>
+      </trkpt>
+      <trkpt lat="-28.157926797866821" lon="30.209691300988197">
+        <ele>1226.78</ele>
+        <time>2015-05-04T06:28:14Z</time>
+      </trkpt>
+      <trkpt lat="-28.159000435844064" lon="30.211353097110987">
+        <ele>1230.6199999999999</ele>
+        <time>2015-05-04T06:28:24Z</time>
+      </trkpt>
+      <trkpt lat="-28.160243472084403" lon="30.213298872113228">
+        <ele>1239.76</ele>
+        <time>2015-05-04T06:28:37Z</time>
+      </trkpt>
+      <trkpt lat="-28.161443425342441" lon="30.215151440352201">
+        <ele>1248.8900000000001</ele>
+        <time>2015-05-04T06:28:51Z</time>
+      </trkpt>
+      <trkpt lat="-28.161835363134742" lon="30.215753093361855">
+        <ele>1251.29</ele>
+        <time>2015-05-04T06:28:59Z</time>
+      </trkpt>
+      <trkpt lat="-28.161870231851935" lon="30.215789135545492">
+        <ele>1253.22</ele>
+        <time>2015-05-04T06:29:07Z</time>
+      </trkpt>
+      <trkpt lat="-28.161999313160777" lon="30.215977393090725">
+        <ele>1254.1800000000001</ele>
+        <time>2015-05-04T06:29:21Z</time>
+      </trkpt>
+      <trkpt lat="-28.162414468824863" lon="30.216664457693696">
+        <ele>1254.1800000000001</ele>
+        <time>2015-05-04T06:29:30Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+
+</gpx>
