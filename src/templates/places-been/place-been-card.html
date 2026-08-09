@@ -7,11 +7,11 @@
 
         <div class="card-image-container {{ ImageRatio }}">
             <img 
-                src="./images/places-been/been/{{ ImageLink }}" 
-                onerror="this.onerror=null; this.src='./images/places-been/default-place-been.jpg';" 
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 3'%3E%3C/svg%3E" 
+                data-src="./images/places-been/been/{{ ImageLink }}" 
+                onerror="this.onerror=null; this.src='./images/pictures/default-place-visited.jpg';" 
                 alt="{{ Name }}" 
-                class="place-thumb" 
-                loading="lazy"
+                class="place-thumb lazy-thumb" 
             />
             {{ vehicle_badge_html }}
         </div>

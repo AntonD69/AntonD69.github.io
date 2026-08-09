@@ -357,3 +357,14 @@
   border-color: #1d4ed8;
   box-shadow: 0 0 0 2px #93c5fd;
 }
+
+img.lazy-thumb {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out, transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Loaded state once IntersectionObserver triggers */
+img.loaded {
+  opacity: 1;
+}
+

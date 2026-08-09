@@ -167,3 +167,33 @@ document.addEventListener('DOMContentLoaded', () => {
     cards.forEach(card => card.style.display = 'flex');
   }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const lazyImages = document.querySelectorAll('img.lazy-thumb');
+
+  // Check if IntersectionObserver is supported
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        // Trigger loading when image is inside or near viewport
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src; // Swap data-src to src to begin download
+          img.classList.remove('lazy-thumb');
+          img.classList.add('loaded');
+          observer.unobserve(img); // Stop watching this image once loaded
+        }
+      });
+    }, {
+      rootMargin: '200px 0px', // Preloads image 200px before it scrolls onto screen
+      threshold: 0.01
+    });
+
+    lazyImages.forEach(img => imageObserver.observe(img));
+  } else {
+    // Fallback for very old browsers
+    lazyImages.forEach(img => {
+      img.src = img.dataset.src;
+    });
+  }
+});
