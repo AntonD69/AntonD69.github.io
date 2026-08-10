@@ -44,10 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     3. FILTER MATRIX COMPONENT (TYPE, LETTER, YEAR & PROVINCE)
+     3. FILTER & SORT MATRIX COMPONENT
      ========================================================================== */
   const matrixContainer = document.getElementById('filter-matrix');
   const resetBtn = document.getElementById('reset-filter-btn');
+  const sortDateBtn = document.getElementById('sort-date-btn');
+  const sortNameBtn = document.getElementById('sort-name-btn');
+  const gridContainer = document.querySelector('.visited-grid');
   const cards = Array.from(document.querySelectorAll('.visitedPlace-card'));
 
   if (!matrixContainer || cards.length === 0) return;
@@ -82,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2. Full Province / Region Names Mapping
   const PROVINCE_NAMES = {
-    // South Africa (ZA)
     "ZA-EC": "Eastern Cape",
     "ZA-FS": "Free State",
     "ZA-GP": "Gauteng",
@@ -94,14 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
     "ZA-NW": "North West",
     "ZA-WC": "Western Cape",
 
-    // Lesotho (LS)
     "LS-BB": "Berea",
     "LS-LR": "Leribe",
     "LS-MA": "Maseru",
     "LS-ML": "Mokhotlong",
     "LS-TT": "Thaba-Tseka",
 
-    // Other Regions
     "ES-HH": "Hhohho (Eswatini)",
     "NL-SH": "South Holland (Netherlands)"
   };
@@ -146,13 +146,42 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Pre-process card metadata
-  const cardData = cards.map(card => ({
+  let cardData = cards.map(card => ({
     element: card,
     type: card.dataset.pointtype || '',
+    name: (card.dataset.name || '').trim(),
     nameLetter: (card.dataset.name || '').trim().charAt(0).toUpperCase(),
+    date: card.dataset.date || '',
     year: (card.dataset.date || '').split('-')[0],
     province: (card.dataset.area || '').trim()
   }));
+
+  /* --- Sorting Functionality --- */
+  function sortCards(type) {
+    if (type === 'date') {
+      if (sortDateBtn) sortDateBtn.classList.add('active');
+      if (sortNameBtn) sortNameBtn.classList.remove('active');
+      cardData.sort((a, b) => b.date.localeCompare(a.date)); // Newest first
+    } else if (type === 'name') {
+      if (sortNameBtn) sortNameBtn.classList.add('active');
+      if (sortDateBtn) sortDateBtn.classList.remove('active');
+      cardData.sort((a, b) => a.name.localeCompare(b.name)); // A to Z
+    }
+
+    if (gridContainer) {
+      cardData.forEach(item => gridContainer.appendChild(item.element));
+    }
+  }
+
+  if (sortDateBtn) {
+    sortDateBtn.addEventListener('click', () => sortCards('date'));
+  }
+  if (sortNameBtn) {
+    sortNameBtn.addEventListener('click', () => sortCards('name'));
+  }
+
+  // Initial Sort Pass (Default to Date)
+  sortCards('date');
 
   // Render Matrix Header Row
   let matrixHtml = `<div class="matrix-cell-header">Type</div>`;
@@ -234,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     matrixHtml += `</div></div>`;
   }
 
-  // Render Bottom Province Row (Uses PROVINCE_NAMES)
+  // Render Bottom Province Row
   if (provinces.length > 0) {
     matrixHtml += `
       <div class="matrix-province-row">

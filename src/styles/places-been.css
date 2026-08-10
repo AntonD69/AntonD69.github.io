@@ -238,7 +238,14 @@ img.loaded {
   margin-bottom: 12px;
 }
 
-.btn-reset {
+.filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-reset,
+.btn-sort {
   background: #222;
   color: #fff;
   border: none;
@@ -246,16 +253,23 @@ img.loaded {
   border-radius: 4px;
   font-size: 0.8rem;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease;
 }
 
-.btn-reset:hover {
+.btn-reset:hover,
+.btn-sort:hover {
   background: #444;
+}
+
+.btn-sort.active {
+  background: hsl(107, 100%, 34%);
+  color: #ffffff;
+  font-weight: bold;
 }
 
 .filter-matrix {
   display: grid;
-  grid-template-columns: 120px repeat(26, minmax(24px, 1fr));
+  grid-template-columns: 130px repeat(26, minmax(24px, 1fr));
   gap: 4px;
   overflow-x: auto;
   padding-bottom: 8px;
@@ -323,23 +337,30 @@ img.loaded {
   opacity: 0.5;
 }
 
-/* --- Matrix Row Labels (Type Buttons) --- */
+/* --- Matrix Row Labels --- */
 
 .matrix-row-label {
   font-weight: bold;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
+  gap: 4px;
   background: #222222;
   color: #ffffff;
   border: 1px solid #222222;
   border-radius: 3px;
-  padding: 2px 8px;
+  padding: 2px 4px;
   cursor: pointer;
   transition: all 0.15s ease;
   user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.matrix-row-label span {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .matrix-row-label:hover {
@@ -358,6 +379,7 @@ img.loaded {
   height: 14px;
   accent-color: hsl(107, 100%, 34%);
   margin: 0;
+  flex-shrink: 0;
 }
 
 /* --- Matrix Action Buttons --- */
@@ -388,16 +410,15 @@ img.loaded {
 }
 
 /* ==========================================================================
-   4. BOTTOM EXTRA FILTERS (YEAR & PROVINCE - MATCHING TYPE BUTTON STYLE)
+   4. BOTTOM EXTRA FILTERS (YEAR & PROVINCE)
    ========================================================================== */
 
 .matrix-year-row,
 .matrix-province-row {
   grid-column: 1 / -1;
   display: flex;
-  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 8px;
-  align-items: center;
   padding-top: 10px;
   margin-top: 6px;
   border-top: 2px dashed #e2e8f0;
@@ -407,15 +428,22 @@ img.loaded {
   font-weight: bold;
   font-size: 0.85rem;
   color: #222222;
-  margin-right: 4px;
-  min-width: 70px;
+  min-width: 80px;
+  padding-top: 2px;
+  flex-shrink: 0;
 }
 
-/* Formatted to match .matrix-row-label exactly */
+.matrix-extra-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex-grow: 1;
+}
+
 .matrix-year-item,
 .matrix-province-item {
   font-weight: bold;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
@@ -424,10 +452,11 @@ img.loaded {
   color: #ffffff;
   border: 1px solid #222222;
   border-radius: 3px;
-  padding: 2px 8px;
+  padding: 2px 6px;
   cursor: pointer;
   transition: all 0.15s ease;
   user-select: none;
+  white-space: nowrap;
 }
 
 .matrix-year-item:hover,
