@@ -51,52 +51,92 @@ export function build_GeocachesFound_Page(navHtml) {
     fs.writeFileSync(geocacheJsonFile, JSON.stringify(geocachesFoundJson, null, 2), 'utf-8');
         console.log('      ✓ Saved ImageLink to original json file.');
   
-    // // Report findings in console
-    // if (missingImages.length > 0) {
-    //     console.warn(`        ⚠️ Found ${missingImages.length} missing image(s):`);
-    //     missingImages.forEach(report => {
-    //         console.warn(`        ⚠️  ${report.name} - ${report.code} - : Missing file "${report.fileName}"`);
-    //     });
-    // } else {
-    //     console.log('      ✓ All visited geocache photos verified.');
-    // }
+    // Report findings in console
+    if (missingImages.length > 0) {
+        console.warn(`        ⚠️ Found ${missingImages.length} missing image(s):`);
+        missingImages.forEach(report => {
+            console.warn(`        ⚠️  ${report.name} - ${report.code} - : Missing file "${report.fileName}"`);
+        });
+    } else {
+        console.log('      ✓ All visited geocache photos verified.');
+    }
 
  
-    //  //-- Orphaned files:
-    // const unreferencedFiles = [];
+     //-- Orphaned files:
+    const unreferencedFiles = [];
 
-    // console.log ("referencedImages: " + referencedImages.size);
-    // const firstItem = referencedImages.values().next().value;
-    // console.log ("referencedImages[0]: " + firstItem)
+    console.log ("referencedImages: " + referencedImages.size);
+    const firstItem = referencedImages.values().next().value;
+    console.log ("referencedImages[0]: " + firstItem)
 
-    // if (fs.existsSync(imagesDir)) {
-    //     const diskFiles = fs.readdirSync(imagesDir);
+    if (fs.existsSync(imagesDir)) {
+        const diskFiles = fs.readdirSync(imagesDir);
 
-    //     diskFiles.forEach(file => {
-    //         // Ignore hidden files like .DS_Store or subdirectories
-    //         const fullPath = path.join(imagesDir, file);
+        diskFiles.forEach(file => {
+            // Ignore hidden files like .DS_Store or subdirectories
+            const fullPath = path.join(imagesDir, file);
             
-    //         if (fs.statSync(fullPath).isFile() && !file.startsWith('.')) {
-    //             if (!referencedImages.has(file)) {
-    //                 console.log ("disk file: " + file)
-    //                 unreferencedFiles.push(file);
-    //             }
-    //         }
-    //     });
-    // }
+            if (fs.statSync(fullPath).isFile() && !file.startsWith('.')) {
+                if (!referencedImages.has(file)) {
+                    console.log ("disk file: " + file)
+                    unreferencedFiles.push(file);
+                }
+            }
+        });
+    }
 
-    // if (unreferencedFiles.length > 0) {
-    //     unreferencedFiles.forEach(file => {
-    //         //console.warn(`  - Unused file: "${file}"`);
-    //     });
-    //     console.warn(`\n📂 Found ${unreferencedFiles.length} file(s) in folder NOT listed in JSON:`);
+    if (unreferencedFiles.length > 0) {
+        unreferencedFiles.forEach(file => {
+            //console.warn(`  - Unused file: "${file}"`);
+        });
+        console.warn(`\n📂 Found ${unreferencedFiles.length} file(s) in folder NOT listed in JSON:`);
 
-    // } else {
-    //     console.log('      ✓ No unreferenced files found in images directory.');
-    // }
+    } else {
+        console.log('      ✓ No unreferenced files found in images directory.');
+    }
 
     //--- Start Page Build
+    try {
+        // 1. Read source data and templates
+        const rawData = fs.readFileSync(path.resolve('data/geocachesFound.json'), 'utf-8');
+        const geocaches = JSON.parse(rawData);
+        const cardTemplate = fs.readFileSync(path.resolve('src/templates/geocaching/geocacheFound-card.html'), 'utf-8');
+        const pageTemplate = fs.readFileSync(path.resolve('src/templates/geocaching/geocachesFound-page.html'), 'utf-8');
 
- 
+        // 2. Render each item into card HTML
+        const cardsHtml = geocaches.map(item => {
+            const imageLink = (item.ImageLink && item.ImageLink.trim() !== '') 
+            ? item.ImageLink.trim() 
+            : 'default.jpg';
+
+            const foundByText = item.FoundBy ? `Found by: ${item.FoundBy}` : '';
+
+            return utils.renderTemplate(cardTemplate, {
+            ...item,
+            Find: item.Find || '',
+            GcCode: item.GcCode || '',
+            Name: item.Name || 'Unnamed Cache',
+            Detail: item.Detail || '',
+            Date: item.Date || '',
+            Coords: item.Coords || '',
+            FoundBy: foundByText,
+            ImageLink: imageLink
+            });
+        }).join('\n');
+
+        // 3. Inject navigation menu, total count, and card grid
+        const finalHtml = pageTemplate
+            .replace('<!--NAV_MENU-->', navHtml)
+            .replace('{{ total_count }}', geocaches.length)
+            .replace('{{ content }}', cardsHtml);
+
+        // 4. Output geocachesFound.html at project root
+        fs.writeFileSync(path.resolve('geocachesFound.html'), finalHtml, 'utf-8');
+
+        console.log('       Successfully generated geocachesFound.html with injected menu!');
+    } catch (error) {
+        console.error('Error building Geocaches Found page:', error);
+    }
+
     console.log('      Successfully generated geocachesFound.html with injected menu!.');
 }

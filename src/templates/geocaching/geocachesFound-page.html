@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geocaches Found</title>
+  <link rel="stylesheet" href="src/styles/geocaches-found.css" />
+</head>
+<body>
+
+  <!--NAV_MENU-->
+
+  <main class="container">
+    <header class="page-header">
+      <h1>Geocaches Found</h1>
+      <p class="page-stats">Total Found: <strong id="total-count">{{ total_count }}</strong></p>
+    </header>
+
+    <div id="geocaches-grid" class="grid-container">
+      {{ content }}
+    </div>
+  </main>
+
+  <script src="src/scripts/geocachesFound-controls.js"></script>
+</body>
+</html>
