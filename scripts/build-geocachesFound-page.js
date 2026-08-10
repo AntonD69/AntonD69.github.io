@@ -8,11 +8,94 @@ import * as utils from './utils.js';
 
 
 export function build_GeocachesFound_Page(navHtml) {
-  //-- STEP 2 -  Create Geocaches-Found page
-  const rawData = fs.readFileSync(path.resolve('data/geocachesFound.json'), 'utf-8');
-  const geocachesFound = JSON.parse(rawData);
-  const cardTemplate = fs.readFileSync(path.resolve('src/templates/geocaching/geocacheFound-card.html'), 'utf-8');
-  const pageTemplate = fs.readFileSync(path.resolve('src/templates/geocaching/geocachesFound-page.html'), 'utf-8');
+    //-- STEP 2 -  Create Geocaches-Found page
+    const geocacheJsonFile = 'data/geocachesFound.json'
+    const rawData = fs.readFileSync(path.resolve(geocacheJsonFile), 'utf-8');
+    const geocachesFoundJson = JSON.parse(rawData);
+    const cardTemplate = fs.readFileSync(path.resolve('src/templates/geocaching/geocacheFound-card.html'), 'utf-8');
+    const pageTemplate = fs.readFileSync(path.resolve('src/templates/geocaching/geocachesFound-page.html'), 'utf-8');
+    
+    const referencedImages = new Set();
 
-  console.log('      Successfully generated parkruns.html with injected menu!.');
+    //STEP 1 -- Ensure all images exist
+    const imagesDir = path.resolve('public/images/geocaches/photos');
+
+    console.log('      🔎 image folder: ' + imagesDir);
+
+    // Check for missing images
+    const missingImages = [];
+
+    geocachesFoundJson.forEach((geocache, index) => {
+        const imageName = ("0000" + geocache.Find).slice(-4) + ".jpg"
+
+        if (imageName) {
+            const imagePath = path.join(imagesDir, imageName);
+            
+            referencedImages.add(imageName);
+
+            if (!fs.existsSync(imagePath)) {
+                geocache.ImageLink = "default.png"
+
+                missingImages.push({
+                    index,
+                    name: geocache.Name,
+                    code: geocache.GcCode,
+                    fileName: imageName
+                })
+            } else {
+            }
+        }
+    });
+
+    fs.writeFileSync(geocacheJsonFile, JSON.stringify(geocachesFoundJson, null, 2), 'utf-8');
+        console.log('      ✓ Saved ImageLink to original json file.');
+  
+    // Report findings in console
+    if (missingImages.length > 0) {
+        console.warn(`        ⚠️ Found ${missingImages.length} missing image(s):`);
+        missingImages.forEach(report => {
+            console.warn(`        ⚠️  ${report.name} - ${report.code} - : Missing file "${report.fileName}"`);
+        });
+    } else {
+        console.log('      ✓ All visited geocache photos verified.');
+    }
+
+ 
+     //-- Orphaned files:
+    const unreferencedFiles = [];
+
+    console.log ("referencedImages: " + referencedImages.size);
+    const firstItem = referencedImages.values().next().value;
+    console.log ("referencedImages[0]: " + firstItem)
+
+    if (fs.existsSync(imagesDir)) {
+        const diskFiles = fs.readdirSync(imagesDir);
+
+        diskFiles.forEach(file => {
+            // Ignore hidden files like .DS_Store or subdirectories
+            const fullPath = path.join(imagesDir, file);
+            
+            if (fs.statSync(fullPath).isFile() && !file.startsWith('.')) {
+                if (!referencedImages.has(file)) {
+                    console.log ("disk file: " + file)
+                    unreferencedFiles.push(file);
+                }
+            }
+        });
+    }
+
+    if (unreferencedFiles.length > 0) {
+        unreferencedFiles.forEach(file => {
+            //console.warn(`  - Unused file: "${file}"`);
+        });
+        console.warn(`\n📂 Found ${unreferencedFiles.length} file(s) in folder NOT listed in JSON:`);
+
+    } else {
+        console.log('      ✓ No unreferenced files found in images directory.');
+    }
+
+    //--- Start Page Build
+
+ 
+    console.log('      Successfully generated geocachesFound.html with injected menu!.');
 }
