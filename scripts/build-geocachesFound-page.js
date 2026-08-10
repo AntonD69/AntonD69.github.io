@@ -43,6 +43,7 @@ export function build_GeocachesFound_Page(navHtml) {
                     fileName: imageName
                 })
             } else {
+                geocache.ImageLink = imageName
             }
         }
     });
@@ -50,49 +51,49 @@ export function build_GeocachesFound_Page(navHtml) {
     fs.writeFileSync(geocacheJsonFile, JSON.stringify(geocachesFoundJson, null, 2), 'utf-8');
         console.log('      ✓ Saved ImageLink to original json file.');
   
-    // Report findings in console
-    if (missingImages.length > 0) {
-        console.warn(`        ⚠️ Found ${missingImages.length} missing image(s):`);
-        missingImages.forEach(report => {
-            console.warn(`        ⚠️  ${report.name} - ${report.code} - : Missing file "${report.fileName}"`);
-        });
-    } else {
-        console.log('      ✓ All visited geocache photos verified.');
-    }
+    // // Report findings in console
+    // if (missingImages.length > 0) {
+    //     console.warn(`        ⚠️ Found ${missingImages.length} missing image(s):`);
+    //     missingImages.forEach(report => {
+    //         console.warn(`        ⚠️  ${report.name} - ${report.code} - : Missing file "${report.fileName}"`);
+    //     });
+    // } else {
+    //     console.log('      ✓ All visited geocache photos verified.');
+    // }
 
  
-     //-- Orphaned files:
-    const unreferencedFiles = [];
+    //  //-- Orphaned files:
+    // const unreferencedFiles = [];
 
-    console.log ("referencedImages: " + referencedImages.size);
-    const firstItem = referencedImages.values().next().value;
-    console.log ("referencedImages[0]: " + firstItem)
+    // console.log ("referencedImages: " + referencedImages.size);
+    // const firstItem = referencedImages.values().next().value;
+    // console.log ("referencedImages[0]: " + firstItem)
 
-    if (fs.existsSync(imagesDir)) {
-        const diskFiles = fs.readdirSync(imagesDir);
+    // if (fs.existsSync(imagesDir)) {
+    //     const diskFiles = fs.readdirSync(imagesDir);
 
-        diskFiles.forEach(file => {
-            // Ignore hidden files like .DS_Store or subdirectories
-            const fullPath = path.join(imagesDir, file);
+    //     diskFiles.forEach(file => {
+    //         // Ignore hidden files like .DS_Store or subdirectories
+    //         const fullPath = path.join(imagesDir, file);
             
-            if (fs.statSync(fullPath).isFile() && !file.startsWith('.')) {
-                if (!referencedImages.has(file)) {
-                    console.log ("disk file: " + file)
-                    unreferencedFiles.push(file);
-                }
-            }
-        });
-    }
+    //         if (fs.statSync(fullPath).isFile() && !file.startsWith('.')) {
+    //             if (!referencedImages.has(file)) {
+    //                 console.log ("disk file: " + file)
+    //                 unreferencedFiles.push(file);
+    //             }
+    //         }
+    //     });
+    // }
 
-    if (unreferencedFiles.length > 0) {
-        unreferencedFiles.forEach(file => {
-            //console.warn(`  - Unused file: "${file}"`);
-        });
-        console.warn(`\n📂 Found ${unreferencedFiles.length} file(s) in folder NOT listed in JSON:`);
+    // if (unreferencedFiles.length > 0) {
+    //     unreferencedFiles.forEach(file => {
+    //         //console.warn(`  - Unused file: "${file}"`);
+    //     });
+    //     console.warn(`\n📂 Found ${unreferencedFiles.length} file(s) in folder NOT listed in JSON:`);
 
-    } else {
-        console.log('      ✓ No unreferenced files found in images directory.');
-    }
+    // } else {
+    //     console.log('      ✓ No unreferenced files found in images directory.');
+    // }
 
     //--- Start Page Build
 
