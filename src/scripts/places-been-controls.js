@@ -1,82 +1,111 @@
 document.addEventListener('DOMContentLoaded', () => {
+  /* ==========================================================================
+     1. CARD IMAGE HOVER ANIMATIONS
+     ========================================================================== */
   const cardImages = document.querySelectorAll('.place-thumb, .parkrun-thumb');
 
   cardImages.forEach(img => {
     img.addEventListener('mouseenter', () => {
-      // Pick either -5deg or 5deg randomly
       const angle = Math.random() < 0.5 ? -5 : 5;
-      // Rotates by random angle AND zooms by 5% (scale 1.05)
       img.style.transform = `rotate(${angle}deg) scale(1.05)`;
     });
 
     img.addEventListener('mouseleave', () => {
-      // Reset back to original state
       img.style.transform = 'rotate(0deg) scale(1)';
     });
   });
-});
 
+  /* ==========================================================================
+     2. LAZY LOADING IMAGES
+     ========================================================================== */
+  const lazyImages = document.querySelectorAll('img.lazy-thumb');
 
-document.addEventListener('DOMContentLoaded', () => {
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.remove('lazy-thumb');
+            img.classList.add('loaded');
+            observer.unobserve(img);
+          }
+        });
+      },
+      { rootMargin: '200px 0px', threshold: 0.01 }
+    );
+
+    lazyImages.forEach(img => imageObserver.observe(img));
+  } else {
+    lazyImages.forEach(img => {
+      img.src = img.dataset.src;
+    });
+  }
+
+  /* ==========================================================================
+     3. FILTER MATRIX COMPONENT (CHECKED BY DEFAULT)
+     ========================================================================== */
   const matrixContainer = document.getElementById('filter-matrix');
   const resetBtn = document.getElementById('reset-filter-btn');
   const cards = Array.from(document.querySelectorAll('.visitedPlace-card'));
 
   if (!matrixContainer || cards.length === 0) return;
 
-  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-  // 1. Extract unique PointTypes from card dataset
-  const pointTypes = [...new Set(
-    cards.map(card => card.dataset.pointtype).filter(Boolean)
-  )].sort();
+  // Extract unique PointTypes
+  const pointTypes = [
+    ...new Set(cards.map(card => card.dataset.pointtype).filter(Boolean))
+  ].sort();
 
-  // 2. Render Header Row (Top-Left Cell + Clickable A-Z Letter Buttons)
+  // Pre-process card metadata
+  const cardData = cards.map(card => ({
+    element: card,
+    type: card.dataset.pointtype || '',
+    nameLetter: (card.dataset.name || '').trim().charAt(0).toUpperCase()
+  }));
+
+  // Render Matrix Header Row (Top Row with Checkboxes CHECKED by default)
   let matrixHtml = `<div class="matrix-cell-header">Type</div>`;
-  alphabet.forEach(letter => {
-    // Check if ANY card across all types starts with this letter
-    const totalLetterCount = cards.filter(card => {
-      const name = card.dataset.name ? card.dataset.name.toUpperCase() : '';
-      return name.startsWith(letter);
-    }).length;
 
+  // Render Top Header Column Letters with Checkboxes
+  ALPHABET.forEach(letter => {
+    const totalLetterCount = cardData.filter(c => c.nameLetter === letter).length;
     const isDisabled = totalLetterCount === 0;
 
     matrixHtml += `
-      <button 
+      <label 
         class="matrix-column-header ${isDisabled ? 'disabled' : ''}" 
-        data-letter="${letter}"
-        ${isDisabled ? 'disabled' : ''}
-        title="Show all places starting with ${letter} (${totalLetterCount})"
+        title="Toggle all places starting with ${letter} (${totalLetterCount})"
       >
-        ${letter}
-      </button>
+        <span>${letter}</span>
+        <input 
+          type="checkbox" 
+          class="header-letter-checkbox" 
+          data-letter="${letter}" 
+          ${isDisabled ? 'disabled' : 'checked'} 
+        />
+      </label>
     `;
   });
 
-  // 3. Render Type Rows
+  // Render Matrix Type Rows (Left Headers with Checkboxes CHECKED by default)
   pointTypes.forEach(type => {
-    const typeCount = cards.filter(card => card.dataset.pointtype === type).length;
+    const typeCount = cardData.filter(c => c.type === type).length;
 
-    // Type Label Button
     matrixHtml += `
-      <button 
-        class="matrix-row-label" 
-        data-type="${type}" 
-        title="Show all ${type} places (${typeCount})"
-      >
-        ${type}
-      </button>
+      <label class="matrix-row-label" title="Toggle all ${type} places (${typeCount})">
+        <span>${type}</span>
+        <input type="checkbox" class="type-checkbox" data-type="${type}" checked />
+      </label>
     `;
 
-    // Individual Cell Letter Buttons (Type + Letter combo)
-    alphabet.forEach(letter => {
-      const matchCount = cards.filter(card => {
-        const cType = card.dataset.pointtype;
-        const cName = card.dataset.name ? card.dataset.name.toUpperCase() : '';
-        return cType === type && cName.startsWith(letter);
-      }).length;
-
+    // Inner Grid Cells: Standard Buttons (NO Checkboxes)
+    ALPHABET.forEach(letter => {
+      const matchCount = cardData.filter(
+        c => c.type === type && c.nameLetter === letter
+      ).length;
       const isDisabled = matchCount === 0;
 
       matrixHtml += `
@@ -95,105 +124,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
   matrixContainer.innerHTML = matrixHtml;
 
-  // 4. Multi-Behavior Click Filter Handler
-  let activeElement = null;
+  /* --- Unified Filter Engine --- */
+  let activeCellBtn = null;
 
-  matrixContainer.addEventListener('click', (e) => {
-    // Detect clicks on Top Header Buttons, Side Type Labels, or Cell Buttons
-    const btn = e.target.closest('.matrix-column-header, .matrix-row-label, .matrix-btn');
+  function applyFilters() {
+    // 1. Collect checked Types
+    const checkedTypes = Array.from(
+      matrixContainer.querySelectorAll('.type-checkbox:checked')
+    ).map(cb => cb.dataset.type);
+
+    // 2. Collect checked Top-Row Letters
+    const checkedLetters = Array.from(
+      matrixContainer.querySelectorAll('.header-letter-checkbox:checked')
+    ).map(cb => cb.dataset.letter);
+
+    // 3. Highlight labels containing checked inputs
+    matrixContainer.querySelectorAll('.matrix-row-label, .matrix-column-header').forEach(label => {
+      const cb = label.querySelector('input[type="checkbox"]');
+      label.classList.toggle('has-checked', Boolean(cb && cb.checked));
+    });
+
+    const activeCellType = activeCellBtn ? activeCellBtn.dataset.type : null;
+    const activeCellLetter = activeCellBtn ? activeCellBtn.dataset.letter : null;
+
+    // 4. Evaluate card visibility
+    cardData.forEach(({ element, type, nameLetter }) => {
+      const matchesType = checkedTypes.includes(type);
+      const matchesLetter = checkedLetters.includes(nameLetter);
+
+      // Enforce cell-level filtering if an interior button is clicked
+      let matchesCell = true;
+      if (activeCellType && activeCellLetter) {
+        matchesCell = (type === activeCellType && nameLetter === activeCellLetter);
+      }
+
+      element.style.display = (matchesType && matchesLetter && matchesCell) ? 'flex' : 'none';
+    });
+  }
+
+  // Initial Filter Pass on Page Load (Applies default checked states)
+  applyFilters();
+
+  // Handle Checkbox State Changes (Type Rows & Top Letter Headers)
+  matrixContainer.addEventListener('change', e => {
+    if (e.target.matches('input[type="checkbox"]')) {
+      applyFilters();
+    }
+  });
+
+  // Handle Inner Cell Clicks (No Checkboxes)
+  matrixContainer.addEventListener('click', e => {
+    if (e.target.closest('.matrix-row-label, .matrix-column-header')) return;
+
+    const btn = e.target.closest('.matrix-btn');
     if (!btn || btn.classList.contains('disabled')) return;
 
-    // Toggle off if clicking the currently active button again
-    if (activeElement === btn) {
+    if (activeCellBtn === btn) {
       btn.classList.remove('active');
-      activeElement = null;
-      showAllCards();
+      activeCellBtn = null;
+      applyFilters();
       return;
     }
 
-    // Deactivate previous active button
-    if (activeElement) activeElement.classList.remove('active');
+    if (activeCellBtn) activeCellBtn.classList.remove('active');
 
-    // Activate selected button
     btn.classList.add('active');
-    activeElement = btn;
+    activeCellBtn = btn;
 
-    const filterType = btn.dataset.type || null;
-    const filterLetter = btn.dataset.letter || null;
-
-    cards.forEach(card => {
-      const cType = card.dataset.pointtype;
-      const cName = card.dataset.name ? card.dataset.name.toUpperCase() : '';
-
-      // CASE 1: Specific Cell Clicked (Type AND Letter)
-      if (filterType && filterLetter) {
-        if (cType === filterType && cName.startsWith(filterLetter)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      } 
-      // CASE 2: Side Row Button Clicked (Type ONLY)
-      else if (filterType && !filterLetter) {
-        if (cType === filterType) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      } 
-      // CASE 3: Top Header Button Clicked (Letter ONLY across all Types)
-      else if (!filterType && filterLetter) {
-        if (cName.startsWith(filterLetter)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      }
-    });
+    applyFilters();
   });
 
-  // Reset Button
+  // Handle Reset Button (Restores ALL to CHECKED)
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
-      if (activeElement) {
-        activeElement.classList.remove('active');
-        activeElement = null;
+      matrixContainer
+        .querySelectorAll('input[type="checkbox"]:not(:disabled)')
+        .forEach(cb => (cb.checked = true));
+
+      if (activeCellBtn) {
+        activeCellBtn.classList.remove('active');
+        activeCellBtn = null;
       }
-      showAllCards();
-    });
-  }
 
-  function showAllCards() {
-    cards.forEach(card => card.style.display = 'flex');
-  }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const lazyImages = document.querySelectorAll('img.lazy-thumb');
-
-  // Check if IntersectionObserver is supported
-  if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        // Trigger loading when image is inside or near viewport
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          img.src = img.dataset.src; // Swap data-src to src to begin download
-          img.classList.remove('lazy-thumb');
-          img.classList.add('loaded');
-          observer.unobserve(img); // Stop watching this image once loaded
-        }
-      });
-    }, {
-      rootMargin: '200px 0px', // Preloads image 200px before it scrolls onto screen
-      threshold: 0.01
-    });
-
-    lazyImages.forEach(img => imageObserver.observe(img));
-  } else {
-    // Fallback for very old browsers
-    lazyImages.forEach(img => {
-      img.src = img.dataset.src;
+      applyFilters();
     });
   }
 });
