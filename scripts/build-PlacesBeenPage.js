@@ -27,8 +27,6 @@ export function build_PlacesBeen_Page(navHtml) {
             
             referencedImages.add(imageName);
 
-            console.log ("index: " + index + ", name : " + place.Name);
-
             if (!fs.existsSync(imagePath)) {
                 missingImages.push({
                     index,

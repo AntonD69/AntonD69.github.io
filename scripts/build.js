@@ -1,5 +1,6 @@
 import { buildParkrunPage } from './build-parkruns.js';
 import { build_PlacesBeen_Page } from './build-PlacesBeenPage.js';
+import { build_GeocachesFound_Page } from './build-geocachesFound-page.js';
 import * as utils from './utils.js';
 
 
@@ -57,7 +58,11 @@ function buildSite() {
     //-- Create Places Visited Page
     console.log('  - Building Places-Been page ...');
     build_PlacesBeen_Page(navHtml);
-  
+
+    //-- Create Geocaches Found Page
+    console.log('  - Building Geocaches-Found page ...');
+    build_GeocachesFound_Page(navHtml);
+    
   console.log('+------------------------------------------+');
   console.log('| Successfully generated static HTML files |');
   console.log('+------------------------------------------+');

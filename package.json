@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "fetch:all": "node scripts/fetch-sheet-parkruns.mjs && node scripts/fetch-sheet-places-been.mjs",
+    "fetch:all": "node scripts/fetch-sheet-geocaches.mjs &&  node scripts/fetch-sheet-parkruns.mjs && node scripts/fetch-sheet-places-been.mjs",
+    "fetch:geocaches": "node scripts/fetch-sheet-geocaches.mjs",
     "fetch:parkruns": "node scripts/fetch-sheet-parkruns.mjs",
     "fetch:places-been": "node scripts/fetch-sheet-places-been.mjs",
     "generate": "npm run fetch:all && node scripts/build.js",
