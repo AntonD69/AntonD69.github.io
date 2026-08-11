@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "fetch:all": "node scripts/fetch-sheet-geocaches.mjs &&  node scripts/fetch-sheet-parkruns.mjs && node scripts/fetch-sheet-places-been.mjs",
+    "copy:geocache-files": "node scripts/copy-geocache-files.js",
     "fetch:geocaches": "node scripts/fetch-sheet-geocaches.mjs",
     "fetch:parkruns": "node scripts/fetch-sheet-parkruns.mjs",
     "fetch:places-been": "node scripts/fetch-sheet-places-been.mjs",
