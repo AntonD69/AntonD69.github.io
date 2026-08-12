@@ -28,74 +28,6 @@ export async function build_GeocachesFound_Page(navHtml) {
 
 
 /************************************************************************************************************** */
-/* Rename files from numbers to GCCode
-/************************************************************************************************************** */
-
-    // // // // // // const allFiles = await readdir(imagesDir, { withFileTypes: true });
-
-    // // // // // // const numberedFiles = allFiles
-    // // // // // //     .filter(file => file.isFile() && /^\d/.test(file.name))
-    // // // // // //     .map(file => file.name);
-
-    // // // // // // for (const fileName of numberedFiles) {
-    // // // // // //     const index2 = fileName.indexOf("_");
-        
-    // // // // // //     if (index2 > 0) {
-    // // // // // //         const parts = fileName.split("_");
-            
-    // // // // // //         // 1. Properly strip leading zeros (0110 -> 110)
-    // // // // // //         const filepart = parts[0].replace(/^0+/, "");
-
-    // // // // // //         console.log("part '" + filepart + "' of '" + fileName + "'");
-
-    // // // // // //         // Ensure type equality (cast find number if JSON stores it as an integer)
-    // // // // // //         const match = geocachesFoundJson.find(item => String(item.Find) === filepart);
-
-    // // // // // //         if (match) {
-    // // // // // //             const newFileName = match.GcCode + "_" + parts.slice(1).join("_");
-    // // // // // //             console.log(" Match : '" + newFileName + "'");
-
-    // // // // // //             // 2. Include full file paths with imagesDir
-    // // // // // //             const oldPath = join(imagesDir, fileName);
-    // // // // // //             const newPath = join(imagesDir, newFileName);
-
-    // // // // // //             // 3. Promise-based rename with await
-    // // // // // //             console.log(oldPath + " --> " + newPath);
-    // // // // // //             await rename(oldPath, newPath);
-    // // // // // //         } else {
-    // // // // // //             // 4. Safely log the missing match without calling match.GcCode
-    // // // // // //             console.log("error : No match found in JSON for find #" + filepart);
-    // // // // // //         }
-    // // // // // //     }
-    // // // // // //     }
-
-    // // // // // // geocachesFoundJson.forEach((geocache, index) => {
-    // // // // // //     const fromImageName = ("0000" + geocache.Find).slice(-4) + ".jpg"
-    // // // // // //     const toImageName =  geocache.GcCode + "_01.jpg"
-
-    // // // // // //     const fromImagePath = path.join(imagesDir, fromImageName);
-    // // // // // //     const toImagePath = path.join(imagesDir, toImageName );
-
-    // // // // // //     if (fs.existsSync(fromImagePath)) {
-    // // // // // //       console.log ("Rename '" + fromImagePath + "' to '" + toImagePath + "'");
-    // // // // // //         try {
-    // // // // // //             //rename(fromImagePath,  toImagePath);
-    // // // // // //             console.log('File renamed successfully');
-    // // // // // //         } catch (error) {
-    // // // // // //             console.error('Error renaming file:', error);
-    // // // // // //         }
-    // // // // // //     }
-    // // // // // //     else {
-    // // // // // //       //console.log ("File '" + fromImagePath + "' does not exist");
-    // // // // // //     }
-    // // // // // // });
-
-    // // // // // // console.log('      Successfully generated renamed files!.');
-
-/************************************************************************************************************** */
-/************************************************************************************************************** */
-/************************************************************************************************************** */
-/************************************************************************************************************** */
 /************************************************************************************************************** */
 
     geocachesFoundJson.forEach((geocache, index) => {
@@ -127,32 +59,6 @@ export async function build_GeocachesFound_Page(navHtml) {
 
     fs.writeFileSync(geocacheJsonFile, JSON.stringify(geocachesFoundJson, null, 2), 'utf-8');
 
-/*********************************************************** */
-    // const logEntries = [];
-    
-    // const outputPath = './output.txt';
-
-    // for (const geocache of geocachesFoundJson) {
-    //     logEntries.push(geocache.Find + "\t" + geocache.ImageLink);
-    // }
-    
-    // await writeFile(outputPath, logEntries.join('\n'), 'utf8');
-/*********************************************************** */
-
-
-    // console.log('      ✓ Saved ImageLink to original json file.');
-  
-    // // Report findings in console
-    // if (missingImages.length > 0) {
-    //     console.warn(`        ⚠️ Found ${missingImages.length} missing image(s):`);
-    //     missingImages.forEach(report => {
-    //         console.warn(`        ⚠️  ${report.index}, ${report.name} - ${report.code} - : Missing file "${report.fileName}"`);
-    //     });
-    // } else {
-    //     console.log('      ✓ All visited geocache photos verified.');
-    // }
-
- 
     //  //-- Orphaned files:
     // const unreferencedFiles = [];
 
@@ -188,9 +94,6 @@ export async function build_GeocachesFound_Page(navHtml) {
     //     console.log('      ✓ No unreferenced files found in images directory.');
     // }
 
-/************************************************************************************************************** */
-/************************************************************************************************************** */
-/************************************************************************************************************** */
 /************************************************************************************************************** */
 /************************************************************************************************************** */
 
