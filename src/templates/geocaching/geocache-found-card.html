@@ -1,0 +1,18 @@
+<article 
+  class="geocache-card" 
+  data-name="{{ Name }} {{ GcCode }}" 
+  data-year="{{ Year }}" 
+  data-country="{{ Country }}" 
+  data-province="{{ Province }}"
+>
+  <div class="card-image-wrapper">
+    <img src="images/geocaches/photos/{{ ImageLink }}" alt="{{ Name }}" loading="lazy" />
+  </div>
+  <div class="card-content">
+    <h3>#{{ Find }} - {{ Name }}</h3>
+    <p class="gc-code"><strong>{{ GcCode }}</strong></p>
+    <p class="meta">📅 {{ Date }} | 📍 {{ Country }} / {{ Province }}</p>
+    <p class="detail-code">Code: <code>{{ Detail }}</code></p>
+    {{ FoundBy }}
+  </div>
+</article>
