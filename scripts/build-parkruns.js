@@ -11,8 +11,8 @@ export function buildParkrunPage(navHtml) {
   //-- STEP 2 -  Create Parkrun
   const rawData = fs.readFileSync(path.resolve('data/parkruns.json'), 'utf-8');
   const parkruns = JSON.parse(rawData);
-  const cardTemplate = fs.readFileSync(path.resolve('src/templates/parkruns-card.html'), 'utf-8');
-  const parkrunLayoutTemplate = fs.readFileSync(path.resolve('src/templates/parkruns-page.html'), 'utf-8');
+  const cardTemplate = fs.readFileSync(path.resolve('src/templates/parkruns/parkruns-card.html'), 'utf-8');
+  const parkrunLayoutTemplate = fs.readFileSync(path.resolve('src/templates/parkruns/parkruns-page.html'), 'utf-8');
 
   // 2. Render each item into HTML cards
   const defaultParkRunImage = 'EmptyParkrun2.jpg';

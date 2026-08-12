@@ -1,18 +1,36 @@
-<article 
-  class="geocache-card" 
+<div 
+  class="card geocache-card" 
   data-name="{{ Name }} {{ GcCode }}" 
   data-year="{{ Year }}" 
   data-country="{{ Country }}" 
   data-province="{{ Province }}"
 >
-  <div class="card-image-wrapper">
-    <img src="images/geocaches/photos/{{ ImageLink }}" alt="{{ Name }}" loading="lazy" />
+  <div class="card-media">
+    <img 
+      src="images/geocaches/photos/{{ ImageLink }}" 
+      alt="{{ Name }}" 
+      class="card-image" 
+      loading="lazy" 
+      onerror="this.src='images/geocaches/photos/default.jpg';" 
+    />
   </div>
-  <div class="card-content">
-    <h3>#{{ Find }} - {{ Name }}</h3>
-    <p class="gc-code"><strong>{{ GcCode }}</strong></p>
-    <p class="meta">📅 {{ Date }} | 📍 {{ Country }} / {{ Province }}</p>
-    <p class="detail-code">Code: <code>{{ Detail }}</code></p>
-    {{ FoundBy }}
+  <div class="card-body">
+    <div class="card-header">
+      <span class="card-number">#{{ Find }}</span>
+      <span class="card-gc">{{ GcCode }}</span>
+    </div>
+    <h2 class="card-title">{{ Name }}</h2>
+    <p class="card-detail">{{ Detail }}</p>
+    <div class="card-coords">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      <span>{{ Coords }}</span>
+    </div>
   </div>
-</article>
+  <div class="card-footer">
+    <span class="card-date">{{ Date }}</span>
+    <span class="card-found-by">{{ FoundBy }}</span>
+  </div>
+</div>
