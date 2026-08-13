@@ -10,17 +10,64 @@
 <body>
   <header>
     <!-- Navigation Menu Placeholder -->
+    <nav class="main-nav" id="mainNav">
+  <div class="nav-container">
     
-    <nav class="site-nav">
-      <ul>
-        <li><a href="./index.html" class="active">main</a></li>
-        <li><a href="./parkruns.html" >Parkruns</a></li>
-        <li><a href="./places-been.html" >Places been</a></li>
-        <li><a href="./damhuisclan.html" >DamhuisClan</a></li>
-        <li><a href="./cnc.html" >CNC Projects</a></li>
-      </ul>
-    </nav>
-  
+    <!-- Brand / Logo Area -->
+    <a href="./index.html" class="nav-brand" aria-label="Home">
+      <img src="public/images/logo.png" alt="Back to the Adventure Logo" class="brand-img" />
+      <span class="brand-text">Back to the Adventure</span>
+    </a>
+
+    <!-- Mobile Hamburger Toggle Button -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="hamburger"></span>
+    </button>
+
+    <!-- Navigation Menu (Supports 2 Levels) -->
+    <ul class="nav-menu" id="navMenu">
+      
+      <!-- Level 1 Link -->
+      <li class="nav-item">
+        <a href="./index.html" class="nav-link active">Home</a>
+      </li>
+
+      <!-- Level 1 Link with Level 2 Dropdown -->
+      <li class="nav-item has-dropdown">
+        <a href="./places-been.html" class="nav-link">
+          Places Been <span class="arrow">&darr;</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="./places-been.html#passes" class="dropdown-item">Mountain Passes</a></li>
+          <li><a href="./places-been.html#towns" class="dropdown-item">Towns Visited</a></li>
+          <li><a href="https://parkruns.backtotheadventure.com/places-been.html" class="dropdown-item">Interactive Map</a></li>
+        </ul>
+      </li>
+
+      <!-- Level 1 Link with Level 2 Dropdown -->
+      <li class="nav-item has-dropdown">
+        <a href="./parkruns.html" class="nav-link">
+          Parkruns <span class="arrow">&darr;</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="./parkruns.html#stats" class="dropdown-item">Run Stats</a></li>
+          <li><a href="./parkruns.html#locations" class="dropdown-item">Locations</a></li>
+        </ul>
+      </li>
+
+      <!-- Level 1 Link -->
+      <li class="nav-item">
+        <a href="https://damhuisclan.backtotheadventure.com/damhuisclan.html" class="nav-link">DamhuisClan</a>
+      </li>
+
+      <!-- Level 1 Link -->
+      <li class="nav-item">
+        <a href="https://cnc.backtotheadventure.com/cnc.html" class="nav-link">CNC Projects</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
   </header>
   <main>
     <h1>Places been</h1>
