@@ -261,29 +261,27 @@
   justify-content: space-between;
 }
 
-/* Brand & Logo shrink effect */
+/* Brand Area Container */
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  height: 100%;       /* Fill full navbar height */
   text-decoration: none;
-  color: var(--nav-text);
-  font-weight: 700;
-  font-size: 1.1rem;
+  padding: 4px 0;
 }
 
+/* Logo Image - Spans full height of the header */
 .brand-img {
-  width: var(--img-size-large);
-  height: var(--img-size-large);
+  height: calc(var(--nav-height-large, 90px) - 12px); /* Spans full height minus padding */
+  width: auto;                                        /* Keeps natural aspect ratio */
+  max-width: 250px;                                   /* Optional limit so it doesn't crowd menu links */
   object-fit: contain;
-  border-radius: 8px;
-  transition: width 0.3s ease, height 0.3s ease;
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Shrink image on scroll */
+/* Shrink image smoothy when scrolled */
 .main-nav.scrolled .brand-img {
-  width: var(--img-size-small);
-  height: var(--img-size-small);
+  height: calc(var(--nav-height-small, 56px) - 10px);
 }
 
 /* Hide full site title on small scrolled bar if space is tight */
@@ -416,39 +414,85 @@
    ========================================================================== */
 
 @media (max-width: 768px) {
+
+  /* 1. SHOW THE HAMBURGER BUTTON ON MOBILE (MISSING PIECE!) */
   .nav-toggle {
-    display: block;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
   }
 
+  /* 2. ENSURE HAMBURGER LINES ARE VISIBLE */
+  .hamburger,
+  .hamburger::before,
+  .hamburger::after {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--nav-text, #2d3748); /* Fallback color */
+    position: relative;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .hamburger::before { top: -7px; }
+  .hamburger::after { top: 7px; }
+
+  /* 3. Hide menu by default on mobile */
   .nav-menu {
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: var(--nav-bg);
+    background-color: var(--nav-bg, #ffffff);
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    border-bottom: 1px solid var(--nav-border);
+    border-bottom: 1px solid var(--nav-border, #e2e8f0);
+    
+    /* Animation setup */
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.35s ease-in-out, opacity 0.25s ease, visibility 0.25s ease;
   }
 
+  /* SHOW MENU when 'is-open' class is added by JS */
   .nav-menu.is-open {
-    max-height: 500px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+    max-height: 800px; /* High enough to fit all 12+ links */
+    opacity: 1;
+    visibility: visible;
+    overflow-y: auto; /* Enable scrolling if menu exceeds mobile screen */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
   }
 
   .nav-item {
+    width: 100%;
     border-top: 1px solid #f1f5f9;
   }
 
   .nav-link {
-    padding: 14px 20px;
+    display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    width: 100%;
+    color: var(--nav-text, #2d3748);
   }
 
+  /* Submenu items on mobile */
   .dropdown-menu {
     position: static;
     opacity: 1;
@@ -457,7 +501,7 @@
     box-shadow: none;
     border: none;
     background-color: #f8fafc;
-    display: none;
+    display: none; /* Hidden until parent has .open */
     padding: 0;
   }
 

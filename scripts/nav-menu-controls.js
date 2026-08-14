@@ -1,10 +1,10 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const mainNav = document.getElementById('mainNav');
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const mainNav = document.getElementById('mainNav');
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
-
-    // 1. Shrink header image and bar on scroll
+  // 1. Header scroll effect
+  if (mainNav) {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 40) {
         mainNav.classList.add('scrolled');
@@ -12,25 +12,28 @@
         mainNav.classList.remove('scrolled');
       }
     });
+  }
 
-    // 2. Mobile Menu Toggle
-    navToggle.addEventListener('click', () => {
+  // 2. Mobile Hamburger Toggle
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
       const isOpen = navMenu.classList.toggle('is-open');
       navToggle.setAttribute('aria-expanded', isOpen);
     });
+  }
 
-    // 3. Level 2 Dropdown handling for Mobile tap/click
-    const dropdownParents = document.querySelectorAll('.has-dropdown');
-    
-    dropdownParents.forEach(item => {
-      const link = item.querySelector('.nav-link');
-      
+  // 3. Level 2 Dropdown toggle for Mobile
+  const dropdownParents = document.querySelectorAll('.has-dropdown');
+  dropdownParents.forEach(item => {
+    const link = item.querySelector('.nav-link');
+    if (link) {
       link.addEventListener('click', (e) => {
-        // Only override click behavior on mobile screens
         if (window.innerWidth <= 768) {
           e.preventDefault();
           item.classList.toggle('open');
         }
       });
-    });
+    }
   });
+});
