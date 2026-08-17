@@ -1,0 +1,96 @@
+/* Container for the grid */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* Card Outer Frame */
+.card.geocache-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Force image container to a fixed crop height */
+.card-media {
+  width: 100%;
+  height: 200px; /* Adjust height as preferred (e.g. 180px - 220px) */
+  overflow: hidden;
+  background-color: #f8f9fa;
+  flex-shrink: 0;
+}
+
+/* Crop image cleanly within container */
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Crops portrait/landscape photos without distortion */
+  display: block;
+}
+
+/* Internal body padding and layout */
+.card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.card-number {
+  font-weight: bold;
+  color: #333;
+}
+
+.card-gc {
+  font-weight: 600;
+  color: #0066cc;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.3;
+  color: #111;
+}
+
+.card-detail {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+  font-family: monospace;
+}
+
+.card-coords {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+/* Pin footer to the bottom of the card */
+.card-footer {
+  padding: 12px 16px;
+  background-color: #fafafa;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #666;
+  margin-top: auto;
+}

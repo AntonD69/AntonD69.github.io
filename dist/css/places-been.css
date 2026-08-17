@@ -1,0 +1,481 @@
+/* ==========================================================================
+   1. GRID & LAYOUT
+   ========================================================================== */
+
+.visited-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+/* ==========================================================================
+   2. CARD COMPONENT
+   ========================================================================== */
+
+.visitedPlace-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+}
+
+.visitedPlace-card:hover {
+  background: #d9dad9;
+}
+
+/* --- Card Image Area --- */
+
+.card-image-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 2px solid #000000;
+}
+
+.card-image-container.s4x3 {
+  aspect-ratio: 4 / 3;
+}
+
+.card-image-container.s16x9 {
+  aspect-ratio: 16 / 9;
+}
+
+.place-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: center center;
+  will-change: transform;
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.visitedPlace-card:nth-child(odd):hover .place-thumb {
+  transform: scale(1.12) rotate(-5deg);
+}
+
+.visitedPlace-card:nth-child(even):hover .place-thumb {
+  transform: scale(1.12) rotate(5deg);
+}
+
+/* Lazy Loading States */
+img.lazy-thumb {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out, transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+img.loaded {
+  opacity: 1;
+}
+
+/* Badges */
+.vehicle-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(254, 254, 254, 0.65);
+  color: #fff;
+  padding: 4px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.area-badge {
+  background: #e0e0e0;
+  color: #444;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* --- Card Body & Typography --- */
+
+.card-content {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-family: "Arial Black", sans-serif;
+  font-weight: normal;
+  font-size: 1.25rem;
+  color: #222;
+  letter-spacing: 0.5px;
+}
+
+.card-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.82rem;
+  color: #666;
+  margin: 8px 0;
+}
+
+.card-coords {
+  font-size: 0.8rem;
+  color: #555;
+  font-family: monospace;
+  margin-bottom: 12px;
+}
+
+/* --- Card Meta Micro-Grid (12-Unit System) --- */
+
+.card-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 6px 4px;
+  align-items: center;
+  font-size: 0.82rem;
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin: 10px 0;
+}
+
+/* Emoji Columns (1st & 3rd) */
+.card-meta-grid > .meta-icon {
+  grid-column: span 1;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Value Columns (2nd & 4th) */
+.card-meta-grid > .meta-val {
+  grid-column: span 5;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Row 3 Items */
+.meta-row3-item {
+  grid-column: span 4;
+  font-size: 0.78rem;
+  color: #555;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 3px 2px;
+}
+
+.meta-row3-item span {
+  color: #888;
+  font-size: 0.72rem;
+}
+
+/* --- Card Actions & Buttons --- */
+
+.card-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.youtube-btn {
+  background-color: #ff0000;
+  color: #ffffff;
+}
+
+.gpx-btn {
+  background-color: #2e7d32;
+  color: #ffffff;
+}
+
+.yt-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==========================================================================
+   3. FILTER MATRIX COMPONENT
+   ========================================================================== */
+
+.filter-matrix-wrapper {
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+.filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-reset,
+.btn-sort {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-reset:hover,
+.btn-sort:hover {
+  background: #444;
+}
+
+.btn-sort.active {
+  background: hsl(107, 100%, 34%);
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.filter-matrix {
+  display: grid;
+  grid-template-columns: 130px repeat(26, minmax(24px, 1fr));
+  gap: 4px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+/* --- Matrix Headers --- */
+
+.matrix-cell-header {
+  font-weight: bold;
+  font-size: 0.75rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  background: #f0f0f0;
+  border-radius: 3px;
+  color: #333;
+}
+
+/* --- Top Column Headers (A-Z) Alignment --- */
+
+.matrix-column-header {
+  background: #333333;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border: 1px solid #333333;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 4px 6px;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.matrix-column-header:hover:not(.disabled) {
+  background: #555555;
+  border-color: #000000;
+}
+
+.matrix-column-header input[type="checkbox"] {
+  width: 12px;
+  height: 12px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: hsl(107, 100%, 34%);
+}
+
+/* --- Disabled State Fix --- */
+
+.matrix-column-header.disabled,
+.matrix-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #94a3b8;
+}
+
+.matrix-column-header.disabled input[type="checkbox"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* --- Matrix Row Labels --- */
+
+.matrix-row-label {
+  font-weight: bold;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  background: #222222;
+  color: #ffffff;
+  border: 1px solid #222222;
+  border-radius: 3px;
+  padding: 2px 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.matrix-row-label span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.matrix-row-label:hover {
+  background: #444444;
+  border-color: #000000;
+}
+
+.matrix-row-label.has-checked {
+  border-color: hsl(107, 100%, 34%);
+  color: #ffffff;
+}
+
+.matrix-row-label input[type="checkbox"] {
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  accent-color: hsl(107, 100%, 34%);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* --- Matrix Action Buttons --- */
+
+.matrix-btn {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  padding: 4px 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.matrix-btn:hover:not(.disabled) {
+  background: #e2e8f0;
+  border-color: #000;
+}
+
+.matrix-btn.active {
+  background: hsl(107, 100%, 34%);
+  color: #ffffff;
+  border-color: hsl(107, 100%, 34%);
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   4. BOTTOM EXTRA FILTERS (YEAR & PROVINCE)
+   ========================================================================== */
+
+.matrix-year-row,
+.matrix-province-row {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding-top: 10px;
+  margin-top: 6px;
+  border-top: 2px dashed #e2e8f0;
+}
+
+.matrix-filter-label-title {
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #222222;
+  min-width: 80px;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+
+.matrix-extra-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex-grow: 1;
+}
+
+.matrix-year-item,
+.matrix-province-item {
+  font-weight: bold;
+  font-size: 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  background: #222222;
+  color: #ffffff;
+  border: 1px solid #222222;
+  border-radius: 3px;
+  padding: 2px 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.matrix-year-item:hover,
+.matrix-province-item:hover {
+  background: #444444;
+  border-color: #000000;
+}
+
+.matrix-year-item.has-checked,
+.matrix-province-item.has-checked {
+  border-color: hsl(107, 100%, 34%);
+  color: #ffffff;
+}
+
+.matrix-year-item input[type="checkbox"],
+.matrix-province-item input[type="checkbox"] {
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  accent-color: hsl(107, 100%, 34%);
+  margin: 0;
+}

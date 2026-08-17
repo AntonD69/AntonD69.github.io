@@ -7,7 +7,7 @@ import * as utils from './utils.js';
 
 
 
-export function buildParkrunPage(navHtml) {
+export function build_Parkrun_page(navHtml) {
   //-- STEP 2 -  Create Parkrun
   const rawData = fs.readFileSync(path.resolve('src/data/parkruns.json'), 'utf-8');
   const parkruns = JSON.parse(rawData);
@@ -93,7 +93,7 @@ export function buildParkrunPage(navHtml) {
           .replace('{{ alphabet_grid }}' , alphabetGridHtml);
 
   // 4. Output the compiled index.html at root
-  fs.writeFileSync(path.resolve('parkruns.html'), parkrunsFinalHtml, 'utf-8');
+  fs.writeFileSync(path.resolve('dist/parkruns.html'), parkrunsFinalHtml, 'utf-8');
 
   console.log('      Successfully generated parkruns.html with injected menu!.');
 }

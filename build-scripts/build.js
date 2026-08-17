@@ -1,7 +1,7 @@
-import { buildParkrunPage } from './build-parkruns.js';
-import { build_PlacesBeen_Page } from './build-PlacesBeenPage.js';
-import { build_GeocachesFound_Page } from './build-geocachesFound-page.js';
-import { build_Home_Page } from './build-home-page.js';
+import { build_Parkrun_page } from './build-parkruns.js';
+import { build_PlacesBeen_page } from './build-PlacesBeen-page.js';
+import { build_GeocachesFound_page } from './build-geocachesFound-page.js';
+import { build_Home_page } from './build-home-page.js';
 
 import * as utils from './utils.js';
 import fs from 'fs';
@@ -15,14 +15,24 @@ function buildSite() {
 	console.log('| Copying folder for Production |');
 	console.log('+-------------------------------+');
 	const publicImagesDir = path.resolve('public/images');
-	const targetImagesDir = path.resolve('images');
+	const targetImagesDir = path.resolve('dist/images');
 	
 	utils.copyRecursiveSync(publicImagesDir, targetImagesDir)
 
 	const sourceScriptsDir = path.resolve('src/scripts');
-	const targetScriptsDir = path.resolve('scripts');
+	const targetScriptsDir = path.resolve('dist/scripts');
   
-  utils.copyRecursiveSync(sourceScriptsDir, targetScriptsDir)
+	utils.copyRecursiveSync(sourceScriptsDir, targetScriptsDir)
+
+	const sourceCssFolder = path.resolve('src/styles');
+	const targetCssFolder = path.resolve('dist/css');
+  
+	utils.copyRecursiveSync(sourceCssFolder, targetCssFolder)
+
+	const sourceGpxFolder = path.resolve('public/gpx-tracks');
+	const targetGpxFolder = path.resolve('dist/gpx-tracks');
+  
+	utils.copyRecursiveSync(sourceGpxFolder, targetGpxFolder)
 
 	console.log('+------------------------------+');
 	console.log('| Generating Nav Menu          |');
@@ -40,20 +50,20 @@ function buildSite() {
 
 
 	console.log('  - Building Main page...');
-	build_Home_Page(navHtml);
+	build_Home_page(navHtml);
 
 
     //-- Create Parkrun Page
     console.log('  - Building Parkrun page ...');
-    buildParkrunPage(navHtml);
+    build_Parkrun_page(navHtml);
 
     //-- Create Places Visited Page
     console.log('  - Building Places-Been page ...');
-    build_PlacesBeen_Page(navHtml);
+    build_PlacesBeen_page(navHtml);
 
     //-- Create Geocaches Found Page
     console.log('  - Building Geocaches-Found page ...');
-    build_GeocachesFound_Page(navHtml);
+    build_GeocachesFound_page(navHtml);
     
   console.log('+------------------------------------------+');
   console.log('| Successfully generated static HTML files |');

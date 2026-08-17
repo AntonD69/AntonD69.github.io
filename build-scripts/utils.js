@@ -6,72 +6,72 @@ import path from 'path';
 // import { Readable } from 'stream';
 
 export function copyRecursiveSync(src, dest) {
-  if (fs.existsSync(src)) {
-    // Copy directory recursively (requires Node.js 16.7+)
-    fs.rmSync(dest, { recursive: true, force: true });
-    console.log(`  Clear out old files in ${dest}`);
+	if (fs.existsSync(src)) {
+		// Copy directory recursively (requires Node.js 16.7+)
+		fs.rmSync(dest, { recursive: true, force: true });
+		console.log(`  Clear out old files in ${dest}`);
 
-    fs.cpSync(src, dest, { recursive: true, force: true });
-    console.log(`  Successfully copied ${src} -> ${dest}`);
-  } else {
-    console.warn(`  Source path non-existent, skipped copying: ${src}`);
-  }
+		fs.cpSync(src, dest, { recursive: true, force: true });
+		console.log(`  Successfully copied ${src} -> ${dest}`);
+	} else {
+		console.warn(`  Source path non-existent, skipped copying: ${src}`);
+	}
 }
 
 // Helper function to replace {{ key }} placeholders
 export function renderTemplate(template, data) {
-  let result = template;
+	let result = template;
 
-  // Handle conditional logic like {{ #if pb }}class-name{{ /if }}
-  result = result.replace(/\{\{\s*#if\s+(\w+)\s*\}\}(.*?)\{\{\s*\/if\s*\}\}/g, (_, key, content) => {
-    return data[key] ? content : '';
-  });
+	// Handle conditional logic like {{ #if pb }}class-name{{ /if }}
+	result = result.replace(/\{\{\s*#if\s+(\w+)\s*\}\}(.*?)\{\{\s*\/if\s*\}\}/g, (_, key, content) => {
+		return data[key] ? content : '';
+	});
 
-  // Handle variable replacements like {{ name }}
-  Object.keys(data).forEach(key => {
-    const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'g');
-    result = result.replace(regex, data[key]);
-  });
+	// Handle variable replacements like {{ name }}
+	Object.keys(data).forEach(key => {
+		const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'g');
+		result = result.replace(regex, data[key]);
+	});
 
-  return result;
+	return result;
 }
 
 // scripts/utils.js
 export function generateNavMenu(navLinks, currentPage, templateHtml) {
-  const menuItemsHtml = navLinks.map(link => {
-    const isActive = link.url.includes(currentPage) ? 'active' : '';
+	const menuItemsHtml = navLinks.map(link => {
+		const isActive = link.url.includes(currentPage) ? 'active' : '';
 
-    if (link.children && link.children.length > 0) {
-      const dropdownItems = link.children.map(child => `
-        <li>
-          <a href="${child.subdomain || ''}${child.url}" class="dropdown-item">
-            ${child.label}
-          </a>
-        </li>
-      `).join('');
+		if (link.children && link.children.length > 0) {
+			const dropdownItems = link.children.map(child => `
+				<li>
+				<a href="${child.subdomain || ''}${child.url}" class="dropdown-item">
+					${child.label}
+				</a>
+				</li>
+			`).join('');
 
-      return `
-        <li class="nav-item has-dropdown">
-          <a href="${link.subdomain || ''}${link.url}" class="nav-link ${isActive}">
-            ${link.label} <span class="arrow">&darr;</span>
-          </a>
-          <ul class="dropdown-menu">
-            ${dropdownItems}
-          </ul>
-        </li>
-      `;
-    }
+			return `
+				<li class="nav-item has-dropdown">
+				<a href="${link.subdomain || ''}${link.url}" class="nav-link ${isActive}">
+					${link.label} <span class="arrow">&darr;</span>
+				</a>
+				<ul class="dropdown-menu">
+					${dropdownItems}
+				</ul>
+				</li>
+			`;
+		}
 
-    return `
-      <li class="nav-item">
-        <a href="${link.subdomain || ''}${link.url}" class="nav-link ${isActive}">
-          ${link.label}
-        </a>
-      </li>
-    `;
-  }).join('');
+		return `
+			<li class="nav-item">
+				<a href="${link.subdomain || ''}${link.url}" class="nav-link ${isActive}">
+					${link.label}
+				</a>
+			</li>
+		`;
+  	}).join('');
 
-  return templateHtml.replace('<!--NAV_ITEMS-->', menuItemsHtml);
+	return templateHtml.replace('<!--NAV_ITEMS-->', menuItemsHtml);
 }
 
 

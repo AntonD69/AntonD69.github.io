@@ -9,8 +9,8 @@
     "fetch:parkruns": "node build-scripts/fetch-sheet-parkruns.mjs",
     "fetch:places-been": "node build-scripts/fetch-sheet-places-been.mjs",
     "generate": "npm run fetch:all && node build-scripts/build.js",
-    "dev": "npm run generate && vite",
-    "build": "npm run generate && vite build"
+    "dev": "npm run generate",
+    "build": "npm run generate"
   },
   "devDependencies": {
     "vite": "^5.0.0"

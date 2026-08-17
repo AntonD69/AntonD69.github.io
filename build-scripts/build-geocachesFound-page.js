@@ -11,7 +11,7 @@ function parseDetail(detailStr) {
   return { country, province };
 }
 
-export async function build_GeocachesFound_Page(navHtml) {
+export async function build_GeocachesFound_page(navHtml) {
     const geocacheJsonFile = 'src/data/geocachesFound.json';
     const rawData = fs.readFileSync(path.resolve(geocacheJsonFile), 'utf-8');
     const geocaches = JSON.parse(rawData);
@@ -69,7 +69,7 @@ export async function build_GeocachesFound_Page(navHtml) {
 			.replace(/\{\{\s*total_count\s*\}\}/g, geocaches.length)
 			.replace(/\{\{\s*content\s*\}\}/g, cardsHtml);
 
-        fs.writeFileSync(path.resolve('geocaches-found.html'), finalHtml, 'utf-8');
+        fs.writeFileSync(path.resolve('dist/geocaches-found.html'), finalHtml, 'utf-8');
         console.log('      Successfully generated geocaches-found.html!');
     } catch (error) {
         console.error('Error building Geocaches Found page:', error);
