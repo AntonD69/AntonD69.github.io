@@ -29,7 +29,7 @@ function buildSite() {
 	console.log('+------------------------------+');
 
 	console.log('  - Building navigation...');
-	const siteConfig = JSON.parse(fs.readFileSync(path.resolve('data/site-config.json'), 'utf-8'));
+	const siteConfig = JSON.parse(fs.readFileSync(path.resolve('src/data/site-config.json'), 'utf-8'));
 	const navTemplate = fs.readFileSync(path.resolve('src/templates/nav-menu/nav-menu.html'), 'utf-8');
 
 	const navHtml = utils.generateNavMenu(siteConfig.navLinks, 'index.html', navTemplate);

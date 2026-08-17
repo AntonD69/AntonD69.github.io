@@ -12,7 +12,7 @@ function parseDetail(detailStr) {
 }
 
 export async function build_GeocachesFound_Page(navHtml) {
-    const geocacheJsonFile = 'data/geocachesFound.json';
+    const geocacheJsonFile = 'src/data/geocachesFound.json';
     const rawData = fs.readFileSync(path.resolve(geocacheJsonFile), 'utf-8');
     const geocaches = JSON.parse(rawData);
     const cardTemplate = fs.readFileSync(path.resolve('src/templates/geocaching/geocache-found-card.html'), 'utf-8');

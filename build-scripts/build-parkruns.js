@@ -9,7 +9,7 @@ import * as utils from './utils.js';
 
 export function buildParkrunPage(navHtml) {
   //-- STEP 2 -  Create Parkrun
-  const rawData = fs.readFileSync(path.resolve('data/parkruns.json'), 'utf-8');
+  const rawData = fs.readFileSync(path.resolve('src/data/parkruns.json'), 'utf-8');
   const parkruns = JSON.parse(rawData);
   const cardTemplate = fs.readFileSync(path.resolve('src/templates/parkruns/parkruns-card.html'), 'utf-8');
   const parkrunLayoutTemplate = fs.readFileSync(path.resolve('src/templates/parkruns/parkruns-page.html'), 'utf-8');

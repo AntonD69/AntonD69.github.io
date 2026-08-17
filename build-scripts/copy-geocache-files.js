@@ -10,7 +10,7 @@ import { join } from 'node:path';
 
 export async function copy_geocache_files() {
 
-    const rawData = fs.readFileSync(path.resolve('data/AllGeocaches.json'), 'utf-8');
+    const rawData = fs.readFileSync(path.resolve('src/data/AllGeocaches.json'), 'utf-8');
     const geocachesFoundJson = JSON.parse(rawData);
 
     console.log("   geocachesFoundJson : " + geocachesFoundJson.length);

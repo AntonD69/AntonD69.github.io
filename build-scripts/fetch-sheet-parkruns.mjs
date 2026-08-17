@@ -11,7 +11,7 @@ const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR
 // File destination
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const OUTPUT_PATH = path.resolve(__dirname, '../data/parkruns.json');
+const OUTPUT_PATH = path.resolve(__dirname, '../src/data/parkruns.json');
 
 /**
  * Automatically converts raw string values into JS types.

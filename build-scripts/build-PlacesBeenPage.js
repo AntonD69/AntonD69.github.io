@@ -7,7 +7,7 @@ import * as utils from './utils.js';
 
 
 export function build_PlacesBeen_Page(navHtml) {
-    const rawData = fs.readFileSync(path.resolve('data/places-been.json'), 'utf-8');
+    const rawData = fs.readFileSync(path.resolve('src/data/places-been.json'), 'utf-8');
     const allVisitedPlacesJson = JSON.parse(rawData);
     const cardTemplate = fs.readFileSync(path.resolve('src/templates/places-been/place-been-card.html'), 'utf-8');
     const pageTemplate = fs.readFileSync(path.resolve('src/templates/places-been/places-been-page.html'), 'utf-8');

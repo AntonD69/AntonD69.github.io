@@ -12,6 +12,6 @@ const google_sheet_csv_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR
 // File destination
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
-const outputpathAndFileName = path.resolve(dirname, '../data/geocachesFound.json');
+const outputpathAndFileName = path.resolve(dirname, '../src/data/geocachesFound.json');
 
 utils.fetchAndTransformSheet("geocaches", google_sheet_csv_url,outputpathAndFileName);
