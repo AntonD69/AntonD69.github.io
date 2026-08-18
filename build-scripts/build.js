@@ -34,9 +34,9 @@ function buildSite() {
   
 	utils.copyRecursiveSync(sourceGpxFolder, targetGpxFolder)
 
-	console.log('+------------------------------+');
-	console.log('| Generating Nav Menu          |');
-	console.log('+------------------------------+');
+	console.log('+---------------------+');
+	console.log('| Generating Nav Menu |');
+	console.log('+---------------------+');
 
 	console.log('  - Building navigation...');
 	const siteConfig = JSON.parse(fs.readFileSync(path.resolve('src/data/site-config.json'), 'utf-8'));
