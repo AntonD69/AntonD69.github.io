@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages and VPS
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'npm'
 
       - name: Install dependencies
@@ -36,6 +36,7 @@ jobs:
       - name: Build site
         run: npm run build
 
+      # --- DEPLOYMENT 1: GITHUB PAGES ---
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -47,3 +48,38 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # --- DEPLOYMENT 2: VPS (CUSTOM NAMED ZIP ARCHIVE) ---
+      - name: Set Custom Zip Filename Variable
+        run: echo "DEPLOY_FILENAME=prd-backToTheAdventure-static($(date +'%Y-%m-%d_%H-%M-%S')).zip" >> $GITHUB_ENV
+
+      - name: Create Zip Archive
+        run: |
+          cd dist
+          zip -r "../${{ env.DEPLOY_FILENAME }}" .
+
+      - name: Copy Zip Archive to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEVOOPS_HOST }}
+          username: ${{ secrets.DEVOOPS_USERNAME }}
+          key: ${{ secrets.DEVOOPS }}
+          port: 22
+          source: "${{ env.DEPLOY_FILENAME }}"
+          target: "/srv/www/deployment-backups"
+
+      - name: Unzip and Deploy on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          DEPLOY_FILENAME: ${{ env.DEPLOY_FILENAME }}
+        with:
+          host: ${{ secrets.DEVOOPS_HOST }}
+          username: ${{ secrets.DEVOOPS_USERNAME }}
+          key: ${{ secrets.DEVOOPS }}
+          port: 22
+          envs: DEPLOY_FILENAME
+          script: |
+            # Clear old live assets before unzipping
+            rm -rf /srv/www/prd-backToTheAdventure-static/*
+            # Extract from the preserved backup archive to live web folder
+            unzip -o "/srv/www/deployment-backups/$DEPLOY_FILENAME" -d /srv/www/prd-backToTheAdventure-static
