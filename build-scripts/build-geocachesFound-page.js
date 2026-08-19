@@ -47,7 +47,7 @@ export async function build_GeocachesFound_page(navHtml) {
 		// 4. Standardize ImageLink property as an array containing the .webp name
 		geocache.ImageLink = [finalImage];
 
-		console.log(`Processing single geocache - imageName = '${finalImage}'`);
+		//console.log(`Processing single geocache - imageName = '${finalImage}'`);
 	});
 
     fs.writeFileSync(geocacheJsonFile, JSON.stringify(geocaches, null, 2), 'utf-8');

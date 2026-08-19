@@ -5,24 +5,44 @@ import csv from 'csv-parser';
 import { Readable } from 'stream';
 import * as utils from './utils.js';
 
-
-
 export function build_Parkrun_page(navHtml) {
-  //-- STEP 2 -  Create Parkrun
-  const rawData = fs.readFileSync(path.resolve('src/data/parkruns.json'), 'utf-8');
+  //-- STEP 1 - Initialize and read data
+  const parkrunJsonFile = 'src/data/parkruns.json';
+  const rawData = fs.readFileSync(path.resolve(parkrunJsonFile), 'utf-8');
   const parkruns = JSON.parse(rawData);
   const cardTemplate = fs.readFileSync(path.resolve('src/templates/parkruns/parkruns-card.html'), 'utf-8');
   const parkrunLayoutTemplate = fs.readFileSync(path.resolve('src/templates/parkruns/parkruns-page.html'), 'utf-8');
+  const imagesFolder = path.resolve('dist/webp-images/parkruns'); // Adjust path to match your actual output folder
 
-  // 2. Render each item into HTML cards
-  const defaultParkRunImage = 'EmptyParkrun2.jpg';
+  console.log(`Processing parkruns`);
 
-  //-- ParkRuns.Map
+  // -- NEW STEP: Image auditing & WebP normalization loop
+  parkruns.forEach((parkrun) => {
+    let imageName = (parkrun.PhotoUrl && parkrun.PhotoUrl.trim() !== 'null' && parkrun.PhotoUrl.trim() !== '') 
+      ? parkrun.PhotoUrl.trim() 
+      : '';
+
+    if (!imageName) {
+      // Set fallback image if data is missing
+      imageName = 'EmptyParkrun2.webp';
+    } else {
+      // Force replace .jpg / .jpeg / .png extensions with .webp
+      imageName = imageName.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+    }
+
+    // Verify existence in dist folder, defaulting to fallback if missing
+    const imagePath = path.join(imagesFolder, imageName);
+    const finalImage = fs.existsSync(imagePath) ? imageName : 'EmptyParkrun2.webp';
+
+    // Standardize PhotoUrl property back to the JSON object
+    parkrun.PhotoUrl = finalImage;
+  });
+
+  // Save the updated JSON back to disk with the new .webp links
+  fs.writeFileSync(path.resolve(parkrunJsonFile), JSON.stringify(parkruns, null, 2), 'utf-8');
+
+  // -- STEP 2 - Render each item into HTML cards
   const cardsHtml = parkruns.map(item => {
-    const photo = (item.PhotoUrl && item.PhotoUrl.trim() !== 'null') 
-      ? item.PhotoUrl.trim() 
-      : defaultParkRunImage;
-
       const hasYoutube = item.YoutubeLink && item.YoutubeLink !== 'null' && item.YoutubeLink.trim() !== '';
 
       const youtubeBtnHtml = hasYoutube
@@ -45,21 +65,21 @@ export function build_Parkrun_page(navHtml) {
 
     return utils.renderTemplate(cardTemplate, {
       ...item,
-      PhotoUrl: photo,
+      // PhotoUrl is already guaranteed to be a valid .webp string from the audit loop
+      PhotoUrl: item.PhotoUrl, 
       country_class: countryClass,
       youtube_button_html: youtubeBtnHtml
     });
   }).join('\n');
 
 
-  // -- STEP 2 -- Alpabet 
+  // -- STEP 3 -- Alphabet Grid
   const completedLetters = new Set(
     parkruns
       .map(item => (item.Name || '').trim().charAt(0).toUpperCase())
       .filter(char => /[A-Z]/.test(char))
   );
 
-  // 2. Generate A-Z list
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
   const alphabetGridHtml = alphabet.map(letter => {
@@ -86,14 +106,14 @@ export function build_Parkrun_page(navHtml) {
     }).join('\n');
 
 
-  // 3. Inject cards into the main layout
+  // -- STEP 4 -- Inject cards into the main layout
   const parkrunsFinalHtml = parkrunLayoutTemplate
           .replace('<!--NAV_MENU-->', navHtml)
           .replace('{{ content }}', cardsHtml)
           .replace('{{ alphabet_grid }}' , alphabetGridHtml);
 
-  // 4. Output the compiled index.html at root
+  // Output the compiled HTML file at root
   fs.writeFileSync(path.resolve('dist/parkruns.html'), parkrunsFinalHtml, 'utf-8');
 
-  console.log('      Successfully generated parkruns.html with injected menu!.');
+  console.log('      Successfully generated parkruns.html with injected menu!');
 }

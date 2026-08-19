@@ -6,63 +6,67 @@ import sharp from 'sharp';
 
 
 export async function convertAndResizeImagesAssets() {
-	const srcDir = 'public/images';
-	const distDir = 'dist/webp-images';
+    const srcDir = 'public/images';
+    const distDir = 'dist/webp-images';
 
-	const files = await glob(`${srcDir}/**/*.{png,jpg,jpeg}`, { nodir: true });
+    // Added webp to the glob pattern
+    const files = await glob(`${srcDir}/**/*.{png,jpg,jpeg,webp}`, { nodir: true });
 
-	let convertedCount = 0;
-	let skippedCount = 0;
+    let convertedCount = 0;
+    let skippedCount = 0;
 
-	console.log(`  Checking ${files.length} images in ${srcDir}...`);
+    console.log(`  Checking ${files.length} images in ${srcDir}...`);
 
-	for (const file of files) {
-		const relativePath = path.relative(srcDir, file);
-		const parsed = path.parse(relativePath);
-		const targetFolder = path.join(distDir, parsed.dir);
-		const targetPath = path.join(targetFolder, `${parsed.name}.webp`);
+    for (const file of files) {
+        const relativePath = path.relative(srcDir, file);
+        const parsed = path.parse(relativePath);
+        const targetFolder = path.join(distDir, parsed.dir);
+        const targetPath = path.join(targetFolder, `${parsed.name}.webp`);
 
-		// Ensure output subfolder exists
-		fs.mkdirSync(targetFolder, { recursive: true });
+        // Ensure output subfolder exists
+        fs.mkdirSync(targetFolder, { recursive: true });
 
-		// --- INCREMENTAL CACHE CHECK ---
-		const srcStats = fs.statSync(file);
-		if (fs.existsSync(targetPath)) {
-			const targetStats = fs.statSync(targetPath);
-			// Skip if output WebP is newer than source file
-			if (targetStats.mtimeMs > srcStats.mtimeMs) {
-			skippedCount++;
-			continue;
-			}
-		}
+        // --- INCREMENTAL CACHE CHECK ---
+        const srcStats = fs.statSync(file);
+        if (fs.existsSync(targetPath)) {
+            const targetStats = fs.statSync(targetPath);
+            // Skip if output WebP is newer than source file
+            if (targetStats.mtimeMs > srcStats.mtimeMs) {
+                skippedCount++;
+                continue;
+            }
+        }
 
-		// --- METADATA & DYNAMIC ORIENTATION RESIZING ---
-		try{
-			const image = sharp(file);
-			const metadata = await image.metadata();
+        try {
+            // Direct copy for existing .webp files if no resizing is required
+            if (parsed.ext.toLowerCase() === '.webp') {
+                fs.copyFileSync(file, targetPath);
+            } else {
+                // --- METADATA & DYNAMIC ORIENTATION RESIZING FOR PNG/JPG ---
+                const image = sharp(file);
+                const metadata = await image.metadata();
 
-			const isPortrait = (metadata.height || 0) > (metadata.width || 0);
+                const isPortrait = (metadata.height || 0) > (metadata.width || 0);
 
-			const resizeOptions = isPortrait
-			? { height: 480, withoutEnlargement: true }
-			: { width: 480, withoutEnlargement: true };
+                const resizeOptions = isPortrait
+                    ? { height: 480, withoutEnlargement: true }
+                    : { width: 480, withoutEnlargement: true };
 
-			// Transform and write to dist
-			await image
-			.resize(resizeOptions)
-			.webp({ quality: 80 })
-			.toFile(targetPath);
+                // Transform and write to dist
+                await image
+                    .resize(resizeOptions)
+                    .webp({ quality: 80 })
+                    .toFile(targetPath);
+            }
 
-			convertedCount++;
-			//console.log(`[Converted] ${relativePath} -> ${parsed.name}.webp`);
-		} catch (err) {
-			console.error(`\n❌ ERROR processing file: ${file}`);
-			console.error(`Reason: ${err.message}\n`);
-			// Skip this broken file and continue processing the rest of the images
-		}
-	}
+            convertedCount++;
+        } catch (err) {
+            console.error(`\n❌ ERROR processing file: ${file}`);
+            console.error(`Reason: ${err.message}\n`);
+        }
+    }
 
-	console.log(`\n✨ Conversion complete: ${convertedCount} processed, ${skippedCount} skipped (cached).`);
+    console.log(`\n✨ Conversion complete: ${convertedCount} processed, ${skippedCount} skipped (cached).`);
 }
 
 export async function updateAndVerifyJsonImageFilesForWebp() {
