@@ -10,14 +10,14 @@ import fetch from 'node-fetch';
 import csv from 'csv-parser';
 import { Readable } from 'stream';
 
-function buildSite() {
+async function buildSite() {
 	console.log('+-------------------------------+');
 	console.log('| Copying folder for Production |');
 	console.log('+-------------------------------+');
 
-	utils.convertAndResizeImagesAssets().catch(console.error);
+	await utils.convertAndResizeImagesAssets().catch(console.error);
 
-	utils.updateAndVerifyJsonImageFilesForWebp().catch(console.error);
+	await utils.updateAndVerifyJsonImageFilesForWebp().catch(console.error);
 
 	const sourceScriptsDir = path.resolve('src/scripts');
 	const targetScriptsDir = path.resolve('dist/scripts');
@@ -44,9 +44,9 @@ function buildSite() {
 
 	const navHtml = utils.generateNavMenu(siteConfig.navLinks, 'index.html', navTemplate);
 
-  console.log('+------------------------------+');
-  console.log('| Generating static HTML files |');
-  console.log('+------------------------------+');
+	console.log('+------------------------------+');
+	console.log('| Generating static HTML files |');
+	console.log('+------------------------------+');
 
 
 	console.log('  - Building Main page...');
