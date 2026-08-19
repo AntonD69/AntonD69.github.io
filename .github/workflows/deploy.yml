@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages and VPS
 
 on:
   push:
@@ -36,6 +36,7 @@ jobs:
       - name: Build site
         run: npm run build
 
+      # --- DEPLOYMENT 1: GITHUB PAGES ---
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -47,3 +48,15 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # --- DEPLOYMENT 2: VPS OVER SSH/RSYNC ---
+      - name: Deploy build output to VPS
+        uses: appleboy/rsync-action@v0.1.2
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          source: "./dist/*"
+          target: "/srv/www/prd-backToTheAdventure-static" # Replace with your target VPS directory
+          delete: true
