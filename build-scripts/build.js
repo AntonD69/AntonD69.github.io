@@ -14,10 +14,10 @@ function buildSite() {
 	console.log('+-------------------------------+');
 	console.log('| Copying folder for Production |');
 	console.log('+-------------------------------+');
-	const publicImagesDir = path.resolve('public/images');
-	const targetImagesDir = path.resolve('dist/images');
-	
-	utils.copyRecursiveSync(publicImagesDir, targetImagesDir)
+
+	utils.convertAndResizeImagesAssets().catch(console.error);
+
+	utils.updateAndVerifyJsonImageFilesForWebp().catch(console.error);
 
 	const sourceScriptsDir = path.resolve('src/scripts');
 	const targetScriptsDir = path.resolve('dist/scripts');

@@ -17,25 +17,38 @@ export async function build_GeocachesFound_page(navHtml) {
     const geocaches = JSON.parse(rawData);
     const cardTemplate = fs.readFileSync(path.resolve('src/templates/geocaching/geocache-found-card.html'), 'utf-8');
     const pageTemplate = fs.readFileSync(path.resolve('src/templates/geocaching/geocaches-found-page.html'), 'utf-8');
-    const imagesDir = path.resolve('public/images/geocaches/photos');
+    const imagesFolder = path.resolve('dist/webp-images/geocaches/photos');
 
-    // Image auditing & array normalization
-    geocaches.forEach((geocache) => {
-        let imageName = '';
-        if (Array.isArray(geocache.ImageLink) && geocache.ImageLink.length > 0) {
-            imageName = geocache.ImageLink[0];
-        } else if (typeof geocache.ImageLink === 'string' && geocache.ImageLink !== '') {
-            imageName = geocache.ImageLink;
-        }
+	console.log(`Processing geocaches`)
 
-        if (!imageName) {
-            imageName = `${geocache.GcCode}_01.jpg`;
-            const imagePath = path.join(imagesDir, imageName);
-            geocache.ImageLink = fs.existsSync(imagePath) ? [imageName] : ['default.jpg'];
-        } else if (typeof geocache.ImageLink === 'string') {
-            geocache.ImageLink = [geocache.ImageLink];
-        }
-    });
+	// Image auditing & array normalization
+	geocaches.forEach((geocache) => {
+		let imageName = '';
+
+		// 1. Extract raw filename regardless of array or string format
+		if (Array.isArray(geocache.ImageLink) && geocache.ImageLink.length > 0) {
+			imageName = geocache.ImageLink[0];
+		} else if (typeof geocache.ImageLink === 'string' && geocache.ImageLink !== '') {
+			imageName = geocache.ImageLink;
+		}
+
+		// 2. If missing, fall back to GcCode naming pattern
+		if (!imageName) {
+			imageName = `${geocache.GcCode}_01.webp`;
+		} else {
+			// Force replace .jpg / .jpeg extensions with .webp
+			imageName = imageName.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+		}
+
+		// 3. Verify existence in dist folder, defaulting to 'default.webp' if missing
+		const imagePath = path.join(imagesFolder, imageName);
+		const finalImage = fs.existsSync(imagePath) ? imageName : 'default.webp';
+
+		// 4. Standardize ImageLink property as an array containing the .webp name
+		geocache.ImageLink = [finalImage];
+
+		console.log(`Processing single geocache - imageName = '${finalImage}'`);
+	});
 
     fs.writeFileSync(geocacheJsonFile, JSON.stringify(geocaches, null, 2), 'utf-8');
 

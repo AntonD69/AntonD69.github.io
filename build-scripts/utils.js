@@ -1,9 +1,110 @@
 import fs from 'fs';
 import { parse } from 'csv-parse/sync';
 import path from 'path';
-// import fetch from 'node-fetch';
-// import csv from 'csv-parser';
-// import { Readable } from 'stream';
+import { glob } from 'glob';
+import sharp from 'sharp';
+
+
+export async function convertAndResizeImagesAssets() {
+	const srcDir = 'public/images';
+	const distDir = 'dist/webp-images';
+
+	const files = await glob(`${srcDir}/**/*.{png,jpg,jpeg}`, { nodir: true });
+
+	let convertedCount = 0;
+	let skippedCount = 0;
+
+	console.log(`  Checking ${files.length} images in ${srcDir}...`);
+
+	for (const file of files) {
+		const relativePath = path.relative(srcDir, file);
+		const parsed = path.parse(relativePath);
+		const targetFolder = path.join(distDir, parsed.dir);
+		const targetPath = path.join(targetFolder, `${parsed.name}.webp`);
+
+		// Ensure output subfolder exists
+		fs.mkdirSync(targetFolder, { recursive: true });
+
+		// --- INCREMENTAL CACHE CHECK ---
+		const srcStats = fs.statSync(file);
+		if (fs.existsSync(targetPath)) {
+			const targetStats = fs.statSync(targetPath);
+			// Skip if output WebP is newer than source file
+			if (targetStats.mtimeMs > srcStats.mtimeMs) {
+			skippedCount++;
+			continue;
+			}
+		}
+
+		// --- METADATA & DYNAMIC ORIENTATION RESIZING ---
+		try{
+			const image = sharp(file);
+			const metadata = await image.metadata();
+
+			const isPortrait = (metadata.height || 0) > (metadata.width || 0);
+
+			const resizeOptions = isPortrait
+			? { height: 480, withoutEnlargement: true }
+			: { width: 480, withoutEnlargement: true };
+
+			// Transform and write to dist
+			await image
+			.resize(resizeOptions)
+			.webp({ quality: 80 })
+			.toFile(targetPath);
+
+			convertedCount++;
+			//console.log(`[Converted] ${relativePath} -> ${parsed.name}.webp`);
+		} catch (err) {
+			console.error(`\n❌ ERROR processing file: ${file}`);
+			console.error(`Reason: ${err.message}\n`);
+			// Skip this broken file and continue processing the rest of the images
+		}
+	}
+
+	console.log(`\n✨ Conversion complete: ${convertedCount} processed, ${skippedCount} skipped (cached).`);
+}
+
+export async function updateAndVerifyJsonImageFilesForWebp() {
+	const jsonFiles = await glob('src/data/**/*.json'); // Adjust to your JSON folder
+	const distWebpDir = 'dist/webp-images';
+	const missingImages = [];
+
+	// 1. Get a map/list of all generated .webp files in dist/webp-images and all subfolders
+	const allWebpFiles = await glob(`${distWebpDir}/**/*.webp`, { nodir: true });
+
+	// Normalize paths to relative filenames for fast lookup
+	const webpSet = new Set(allWebpFiles.map(file => path.basename(file)));
+
+	for (const jsonFile of jsonFiles) {
+	const rawData = fs.readFileSync(jsonFile, 'utf8');
+
+	// Matches any image filename ending in .png, .jpg, or .jpeg
+	const updatedData = rawData.replace(/(?:[\w\/-]+\/)?([^\/"]+)\.(png|jpg|jpeg)/gi, (match, filename) => {
+		const webpFileName = `${filename}.webp`;
+
+		// Check if the file exists anywhere inside dist/webp-images (including subfolders)
+		if (!webpSet.has(webpFileName)) {
+		missingImages.push({
+			sourceJson: jsonFile,
+			expectedAsset: webpFileName
+		});
+		}
+
+		// Return only the clean filename with .webp extension
+		return webpFileName;
+	});
+
+	fs.writeFileSync(jsonFile, updatedData, 'utf8');
+	}
+
+	if (missingImages.length > 0) {
+		console.warn('\n⚠️ MISSING WEBP ASSETS REPORT:');
+		console.table(missingImages);
+	} else {
+		console.log('\n✅ All JSON image links updated to .webp and verified across all subfolders!');
+	}
+}
 
 export function copyRecursiveSync(src, dest) {
 	if (fs.existsSync(src)) {

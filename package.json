@@ -13,6 +13,8 @@
     "build": "npm run generate"
   },
   "devDependencies": {
+    "glob": "^13.0.6",
+    "sharp": "^0.35.3",
     "vite": "^5.0.0"
   },
   "dependencies": {
