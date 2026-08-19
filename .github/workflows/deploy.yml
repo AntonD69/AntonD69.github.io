@@ -61,9 +61,9 @@ jobs:
       - name: Copy Zip Archive to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          host: ${{ secrets.DEVOOPS_HOST }}
+          username: ${{ secrets.DEVOOPS_USERNAME }}
+          key: ${{ secrets.DEVOOPS }}
           port: 22
           source: "${{ env.DEPLOY_FILENAME }}"
           target: "/srv/www/deployment-backups"
@@ -73,9 +73,9 @@ jobs:
         env:
           DEPLOY_FILENAME: ${{ env.DEPLOY_FILENAME }}
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          host: ${{ secrets.DEVOOPS_HOST }}
+          username: ${{ secrets.DEVOOPS_USERNAME }}
+          key: ${{ secrets.DEVOOPS }}
           port: 22
           envs: DEPLOY_FILENAME
           script: |
