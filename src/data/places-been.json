@@ -1,5 +1,21 @@
 [
   {
+    "PointType": "SP",
+    "Area": "ZA-MP",
+    "Date": "2026-08-23",
+    "Time": "11:50",
+    "Coords": "S25 43.401 E30 20.933",
+    "Name": "Torburnlea Trout Lodge",
+    "LookupCode": null,
+    "ImageRatio": "16x9",
+    "Vehicle": "car",
+    "GpxTrackLink": null,
+    "YoutubeLink": null,
+    "ImageLink": "20260823_TorburnleaTroutLodge.webp",
+    "Duplicate": null,
+    "Top10": null
+  },
+  {
     "PointType": "JH",
     "Area": "ZA-MP",
     "Date": "2026-07-26",
@@ -121,8 +137,8 @@
     "LookupCode": "DP-ZAMP-DJN1",
     "ImageRatio": "16x9",
     "Vehicle": "car",
-    "GpxTrackLink": null,
-    "YoutubeLink": null,
+    "GpxTrackLink": "2026-06-16_DeJagersnek.gpx",
+    "YoutubeLink": "https://youtu.be/NF46K13SSDM",
     "ImageLink": "2026-06-16-3_DeJagersnekPass.webp",
     "Duplicate": null,
     "Top10": null
@@ -137,8 +153,8 @@
     "LookupCode": "TP-ZAKZ-LAI1",
     "ImageRatio": "16x9",
     "Vehicle": "car",
-    "GpxTrackLink": null,
-    "YoutubeLink": null,
+    "GpxTrackLink": "2026-06-16_LaingsNek.gpx",
+    "YoutubeLink": "https://youtu.be/eGWfaujhgLg",
     "ImageLink": "2026-06-16-2_ LaingsNek.webp",
     "Duplicate": 1,
     "Top10": null
@@ -153,8 +169,8 @@
     "LookupCode": "TP-ZAKZ-ING1",
     "ImageRatio": "16x9",
     "Vehicle": "car",
-    "GpxTrackLink": null,
-    "YoutubeLink": null,
+    "GpxTrackLink": "2026-06-16_IngogoHeights.gpx",
+    "YoutubeLink": "https://youtu.be/RLH9BVOgltg",
     "ImageLink": "2026-06-16-1_IngogoHeights.webp",
     "Duplicate": 1,
     "Top10": null
@@ -201,8 +217,8 @@
     "LookupCode": "TP-ZAKZ-NOR1",
     "ImageRatio": "16x9",
     "Vehicle": "car",
-    "GpxTrackLink": null,
-    "YoutubeLink": null,
+    "GpxTrackLink": "2026-06-14_NormandienPass.gpx",
+    "YoutubeLink": "https://youtu.be/U2Okw1Wemzk",
     "ImageLink": "2026-06-14-3_NormandienPass.webp",
     "Duplicate": 1,
     "Top10": null
