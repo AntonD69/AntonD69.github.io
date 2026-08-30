@@ -41,7 +41,7 @@ export function build_Parkrun_page(navHtml) {
   // Save the updated JSON back to disk with the new .webp links
   fs.writeFileSync(path.resolve(parkrunJsonFile), JSON.stringify(parkruns, null, 2), 'utf-8');
 
-  // -- STEP 2 - Render each item into HTML cards
+// -- STEP 2 - Render each item into HTML cards
   const cardsHtml = parkruns.map(item => {
       const hasYoutube = item.YoutubeLink && item.YoutubeLink !== 'null' && item.YoutubeLink.trim() !== '';
 
@@ -63,15 +63,19 @@ export function build_Parkrun_page(navHtml) {
       if (item.Country && item.Country.trim().toUpperCase() === 'SZ') {
         countryClass = 'sz-country';}
 
+      // Check if NPR exists and is truthy
+      const nprClass = item.Type == "NPR" ? 'npr-title' : '';
+	  console.log ("nprClass:"  + nprClass);
+
     return utils.renderTemplate(cardTemplate, {
       ...item,
       // PhotoUrl is already guaranteed to be a valid .webp string from the audit loop
       PhotoUrl: item.PhotoUrl, 
       country_class: countryClass,
+      npr_class: nprClass,
       youtube_button_html: youtubeBtnHtml
     });
   }).join('\n');
-
 
   // -- STEP 3 -- Alphabet Grid
   const completedLetters = new Set(

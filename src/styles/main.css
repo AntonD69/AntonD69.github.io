@@ -79,7 +79,7 @@
 /* Styling specifically for South African Parkrun Cards */
 .parkrun-card.za-country {
   /* Apply the background image */
-  background-image: url('/images/parkruns/background-za-light.jpg');
+  background-image: url('/webp-images/parkruns/background-za-light.webp');
   
   /* Ensure it covers the whole card neatly without tiling */
   background-size: cover;
@@ -106,14 +106,12 @@
 }
 
 /* Ensure text inside ZA cards is white or light for contrast */
-.parkrun-card.za-country,
-.parkrun-card.za-country h3,
-.parkrun-card.za-country .details p {
+.parkrun-card.za-country {
   color: #000000 !important;
 }
 
 .parkrun-card.nl-country {
-  background-image: url('/images/parkruns/background-nl-light.jpg');
+  background-image: url('/webp-images/parkruns/background-nl-light.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -208,6 +206,10 @@
   display: flex;
   justify-content: flex-end; /* Keeps run number neatly aligned right */
   margin-bottom: 8px;
+}
+
+.card-title-full.npr-title {
+  color: brown !important;;
 }
 
 
