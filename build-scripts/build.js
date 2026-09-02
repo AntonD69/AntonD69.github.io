@@ -2,7 +2,7 @@ import { build_Parkrun_page } from './build-parkruns.js';
 import { build_PlacesBeen_page } from './build-PlacesBeen-page.js';
 import { build_GeocachesFound_page } from './build-geocachesFound-page.js';
 import { build_Home_page } from './build-home-page.js';
-import { build_workshop_key_ring_page} from './build-workshop-key-ring-page.js';
+import { build_workshop_key_ring_page} from './build-workshop-keyring-page.js';
 
 import * as utils from './utils.js';
 import fs from 'fs';

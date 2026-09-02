@@ -53,7 +53,7 @@ export async function build_workshop_key_ring_page(navHtml) {
             .replace(/\{\{\s*total_count\s*\}\}/g, keyrings.length)
             .replace(/\{\{\s*grid\s*\}\}/g, cardsHtml);
 
-        fs.writeFileSync(path.resolve('dist/workshop/keyrings.html'), finalHtml, 'utf-8');
+        fs.writeFileSync(path.resolve('dist/workshop-keyrings.html'), finalHtml, 'utf-8');
 
         console.log('      Successfully generated workshop-Keyring page');
     } catch (error) {
