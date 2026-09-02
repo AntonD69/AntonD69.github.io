@@ -14,9 +14,11 @@
 	"fetch-build-run": "npm run fetch:all && node build-scripts/build.js && npx vite preview --outDir dist --open",
 
 	"build": "node build-scripts/build.js",
-	"build-run": "node build-scripts/build.js && npx vite preview --outDir dist --open",
+	"build-run": "node build-scripts/build.js && npm run run",
+	"build-run:page": "node build-scripts/build.js && npm run run:page",
 	
-	"run": "npx vite preview --outDir dist --open"
+	"run": "npx vite preview --outDir dist --open",
+	"run:page": "npx vite preview --outDir dist --open /workshop/keyrings.html"
   },
   "devDependencies": {
     "glob": "^13.0.6",
