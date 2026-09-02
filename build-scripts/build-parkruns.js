@@ -1,8 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import fetch from 'node-fetch';
-import csv from 'csv-parser';
-import { Readable } from 'stream';
 import * as utils from './utils.js';
 
 export function build_Parkrun_page(navHtml) {
@@ -13,8 +10,6 @@ export function build_Parkrun_page(navHtml) {
   const cardTemplate = fs.readFileSync(path.resolve('src/templates/parkruns/parkruns-card.html'), 'utf-8');
   const parkrunLayoutTemplate = fs.readFileSync(path.resolve('src/templates/parkruns/parkruns-page.html'), 'utf-8');
   const imagesFolder = path.resolve('dist/webp-images/parkruns'); // Adjust path to match your actual output folder
-
-  console.log(`Processing parkruns`);
 
   // -- NEW STEP: Image auditing & WebP normalization loop
   parkruns.forEach((parkrun) => {
@@ -65,11 +60,10 @@ export function build_Parkrun_page(navHtml) {
 
       // Check if NPR exists and is truthy
       const nprClass = item.Type == "NPR" ? 'npr-title' : '';
-	  console.log ("nprClass:"  + nprClass);
+	  //console.log ("nprClass:"  + nprClass);
 
     return utils.renderTemplate(cardTemplate, {
       ...item,
-      // PhotoUrl is already guaranteed to be a valid .webp string from the audit loop
       PhotoUrl: item.PhotoUrl, 
       country_class: countryClass,
       npr_class: nprClass,

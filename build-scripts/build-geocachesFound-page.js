@@ -19,8 +19,6 @@ export async function build_GeocachesFound_page(navHtml) {
     const pageTemplate = fs.readFileSync(path.resolve('src/templates/geocaching/geocaches-found-page.html'), 'utf-8');
     const imagesFolder = path.resolve('dist/webp-images/geocaches/photos');
 
-	console.log(`Processing geocaches`)
-
 	// Image auditing & array normalization
 	geocaches.forEach((geocache) => {
 		let imageName = '';

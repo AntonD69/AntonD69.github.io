@@ -3,13 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "copy:geocache-files": "node build-scripts/copy-geocache-files.js",
-
-	"fetch:all": "node build-scripts/fetch-sheet-geocaches.mjs &&  node build-scripts/fetch-sheet-parkruns.mjs && node build-scripts/fetch-sheet-places-been.mjs",
     "fetch:geocaches": "node build-scripts/fetch-sheet-geocaches.mjs",
     "fetch:parkruns": "node build-scripts/fetch-sheet-parkruns.mjs",
     "fetch:places-been": "node build-scripts/fetch-sheet-places-been.mjs",
-    "fetch-build": "npm run fetch:all && node build-scripts/build.js",
+    "fetch:keyrings": "node build-scripts/fetch-sheet-key-rings.mjs",
+	"fetch:all": "node build-scripts/fetch-sheet-geocaches.mjs &&  node build-scripts/fetch-sheet-parkruns.mjs && node build-scripts/fetch-sheet-places-been.mjs && node build-scripts/fetch-sheet-key-rings.mjs",
+
+	"fetch-build": "npm run fetch:all && node build-scripts/build.js",
 
 	"fetch-build-run": "npm run fetch:all && node build-scripts/build.js && npx vite preview --outDir dist --open",
 

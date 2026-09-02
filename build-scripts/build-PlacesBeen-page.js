@@ -1,8 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import fetch from 'node-fetch';
-import csv from 'csv-parser';
-import { Readable } from 'stream';
 import * as utils from './utils.js';
 
 

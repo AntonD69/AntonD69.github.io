@@ -3,7 +3,18 @@ import { parse } from 'csv-parse/sync';
 import path from 'path';
 import { glob } from 'glob';
 import sharp from 'sharp';
+import { fileURLToPath } from 'url';
 
+export function logHeader(label) {
+  const width = label.length + 4; // Add padding for borders
+
+  const border = '+' + '-'.repeat(width - 2) + '+';
+  const paddedLabel = `| ${label.padEnd(width - 4)} |`;
+
+  console.log(border);
+  console.log(paddedLabel);
+  console.log(border);
+}
 
 export async function convertAndResizeImagesAssets() {
     const srcDir = 'public/images';
@@ -179,6 +190,58 @@ export function generateNavMenu(navLinks, currentPage, templateHtml) {
 	return templateHtml.replace('<!--NAV_ITEMS-->', menuItemsHtml);
 }
 
+export async function fetchSheetAndSaveAsJson(name, google_sheet_url, output_json_fileName) {
+  logHeader ('Fetching data for ' + name );
+
+  try {
+    // 1. Added await here
+    const response = await fetch(google_sheet_url);
+
+    const filename = fileURLToPath(import.meta.url);
+    const dirname = path.dirname(filename);
+    const outputPathAndFile = path.resolve(dirname, '../src/data/' + output_json_fileName);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // 2. Added await here
+    const csvText = await response.text();
+
+    const rawRecords = parse(csvText, {
+      columns: true,           // Uses the first row as object keys
+      skip_empty_lines: true,   // Skips blank lines in the sheet
+      trim: true                // Trims whitespace around headers/cells
+    });
+
+    // Transform string values into typed JSON fields
+    const typedRecords = rawRecords.map(row => {
+      const typedRow = {};
+
+      for (const [key, value] of Object.entries(row)) {
+        // Clean key name if it ended with array markers like "tags[]" -> "tags"
+        const cleanKey = key.replace(/\[\]$/, '');
+        typedRow[cleanKey] = parseTypedValue(key, value);
+      }
+
+      return typedRow;
+    });
+
+    // Ensure output folder exists
+    const dir = path.dirname(outputPathAndFile);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    // Write formatted JSON to file
+    fs.writeFileSync(outputPathAndFile, JSON.stringify(typedRecords, null, 2), 'utf-8');
+    console.log(`Successfully written ${typedRecords.length} records to: ${outputPathAndFile}`);
+
+  } catch (error) {
+    console.error('Failed to update data from Google Sheets:', error.message);
+    process.exit(1);
+  }
+}
 
 /*==================================================
     FETCH GOOGLE SHEET CODE

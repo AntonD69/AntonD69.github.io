@@ -2,13 +2,11 @@ import { build_Parkrun_page } from './build-parkruns.js';
 import { build_PlacesBeen_page } from './build-PlacesBeen-page.js';
 import { build_GeocachesFound_page } from './build-geocachesFound-page.js';
 import { build_Home_page } from './build-home-page.js';
+import { build_workshop_key_ring_page} from './build-workshop-key-ring-page.js';
 
 import * as utils from './utils.js';
 import fs from 'fs';
 import path from 'path';
-import fetch from 'node-fetch';
-import csv from 'csv-parser';
-import { Readable } from 'stream';
 
 async function buildSite() {
 	console.log('+-------------------------------+');
@@ -49,22 +47,25 @@ async function buildSite() {
 	console.log('+------------------------------+');
 
 
-	console.log('  - Building Main page...');
+	console.log('  ⚡ Building Main page...');
 	build_Home_page(navHtml);
 
 
     //-- Create Parkrun Page
-    console.log('  - Building Parkrun page ...');
+    console.log('  ⚡ Building Parkrun page ...');
     build_Parkrun_page(navHtml);
 
     //-- Create Places Visited Page
-    console.log('  - Building Places-Been page ...');
+    console.log('  ⚡ Building Places-Been page ...');
     build_PlacesBeen_page(navHtml);
 
     //-- Create Geocaches Found Page
-    console.log('  - Building Geocaches-Found page ...');
+    console.log('  ⚡ Building Geocaches-Found page ...');
     build_GeocachesFound_page(navHtml);
-    
+
+    console.log('  ⚡ Building Workshop-keyring-page ...');
+    build_workshop_key_ring_page(navHtml);
+
   console.log('+------------------------------------------+');
   console.log('| Successfully generated static HTML files |');
   console.log('+------------------------------------------+');
