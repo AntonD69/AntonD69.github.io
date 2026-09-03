@@ -476,3 +476,17 @@ img.loaded {
   accent-color: hsl(107, 100%, 34%);
   margin: 0;
 }
+
+.has-url-hash .hidden-by-hash {
+  display: none !important;
+}
+
+/* Hide type checkboxes inside row labels when URL hashes are active */
+.has-url-hash .matrix-row-label input[type="checkbox"] {
+  display: none !important;
+}
+
+/* Optional: ensure label cursor looks non-interactive when checkbox is hidden */
+.has-url-hash .matrix-row-label {
+  cursor: default;
+}

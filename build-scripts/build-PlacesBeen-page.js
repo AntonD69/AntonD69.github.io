@@ -119,6 +119,7 @@ export function build_PlacesBeen_page(navHtml) {
         return utils.renderTemplate(cardTemplate, {
             ...place,
             ImageLink: place.ImageLink, // Guaranteed to be .webp from normalization loop
+			Category: place.PointType || 'all',
             youtube_btn_html: youtubeBtnHtml,
             gpx_btn_html: gpxBtnHtml,
             vehicle_badge_html: vehicleBadgeHtml,

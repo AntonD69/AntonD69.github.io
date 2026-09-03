@@ -57,30 +57,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 1. Full Type Names Mapping
   const TYPE_NAMES = {
-    TT: "Tar Town",
+    TT: "Tar Towns",
     TP: "Tar Passes",
-    DT: "Dusty Town",
+    DT: "Dusty Towns",
     DP: "Dusty Passes",
-    CS: "Campsite",
+    CS: "Campsites",
     SP: "Special Points",
-    P1: "Top place",
+    P1: "Top places",
 
-    MM: "Monument",
-    MT: "Tunnel",
-    GR: "Game Reserve",
-    NR: "Nature Reserve",
+    MM: "Monuments",
+    MT: "Tunnels",
+    GR: "Game Reserves",
+    NR: "Nature Reserves",
 
-    BP: "Border Post",
-    DM: "Dam",
+    BP: "Border Posts",
+    DM: "Dams",
     DW: "Dam Walls",
 
-    DR: "DirtRoad",
+    DR: "DirtRoads",
     JH: "JotH",
-    LH: "Lighthouse",
-    TR: "Toyrun",
-    MR: "Railway Tunnel",
+    LH: "Lighthouses",
+    TR: "Toyruns",
+    MR: "Railway Tunnels",
     OT: "Other",
     HB: "Harbours"
+  };
+
+  // Category map linking URL hash tags to PointType codes
+  const CATEGORY_MAP = {
+    'towns': ['TT', 'DT'],
+    'passes': ['TP', 'DP'],
+	'interesting': ['SP', 'CS', 'JH'],
+	'reserves' : ['GR','NR'],
+	'other' : ['MM','BP','DR', 'TR', 'OT'],
+	'water' : ['DM','DW','LH','HB'],
+	'tunnels' : ['MR','MT'],
+	'roads' : ['TP', 'DP', 'DR']
   };
 
   // 2. Full Province / Region Names Mapping
@@ -296,44 +308,99 @@ document.addEventListener('DOMContentLoaded', () => {
      ========================================================================== */
   let activeCellBtn = null;
 
-  function applyFilters() {
-    // 1. Collect checked Types
+function applyFilters() {
+    // Extract URL hashes (e.g., #Towns#Passes)
+    const rawHash = window.location.hash.replace(/^#/, '');
+    const hashFilters = rawHash
+      .split('#')
+      .map(tag => tag.trim().toLowerCase())
+      .filter(Boolean);
+
+    // 1. Toggle container class based on hash presence
+    if (hashFilters.length > 0) {
+      matrixContainer.classList.add('has-url-hash');
+
+      // Expand mapped categories into target PointType codes
+      const hashTypes = new Set();
+      hashFilters.forEach(filter => {
+        if (CATEGORY_MAP[filter]) {
+          CATEGORY_MAP[filter].forEach(code => hashTypes.add(code.toUpperCase()));
+        } else {
+          hashTypes.add(filter.toUpperCase());
+        }
+      });
+
+      // Update type checkboxes based on matching URL tags
+      matrixContainer.querySelectorAll('.type-checkbox').forEach(cb => {
+        cb.checked = hashTypes.has(cb.dataset.type.toUpperCase());
+      });
+    } else {
+      matrixContainer.classList.remove('has-url-hash');
+    }
+
+    // 2. Collect checked values across all categories
     const checkedTypes = Array.from(
       matrixContainer.querySelectorAll('.type-checkbox:checked')
     ).map(cb => cb.dataset.type);
 
-    // 2. Collect checked Top-Row Letters
     const checkedLetters = Array.from(
       matrixContainer.querySelectorAll('.header-letter-checkbox:checked')
     ).map(cb => cb.dataset.letter);
 
-    // 3. Collect checked Years
     const checkedYears = Array.from(
       matrixContainer.querySelectorAll('.year-checkbox:checked')
     ).map(cb => cb.dataset.year);
 
-    // 4. Collect checked Provinces
     const checkedProvinces = Array.from(
       matrixContainer.querySelectorAll('.province-checkbox:checked')
     ).map(cb => cb.dataset.province);
 
-    // Update 'has-checked' visual state for all filter badges
-    matrixContainer.querySelectorAll('.matrix-row-label, .matrix-column-header, .matrix-year-item, .matrix-province-item').forEach(label => {
-      const cb = label.querySelector('input[type="checkbox"]');
-      label.classList.toggle('has-checked', Boolean(cb && cb.checked));
+    // 3. Update visual state & hide ONLY unchecked Type rows when hash exists
+    matrixContainer.querySelectorAll('.matrix-row-label').forEach(label => {
+      const cb = label.querySelector('.type-checkbox');
+      const isChecked = Boolean(cb && cb.checked);
+      label.classList.toggle('has-checked', isChecked);
+
+      // Hide/Show ONLY the type row label and its 26 associated grid buttons
+      const type = cb ? cb.dataset.type : null;
+      if (type) {
+        label.classList.toggle('hidden-by-hash', !isChecked);
+        matrixContainer.querySelectorAll(`.matrix-btn[data-type="${type}"]`).forEach(btn => {
+          btn.classList.toggle('hidden-by-hash', !isChecked);
+        });
+      }
+    });
+
+    // 4. Update Year items visual state ONLY (Keep visible, just update checkbox/border)
+    matrixContainer.querySelectorAll('.matrix-year-item').forEach(item => {
+      const cb = item.querySelector('.year-checkbox');
+      item.classList.toggle('has-checked', Boolean(cb && cb.checked));
+      item.classList.remove('hidden-by-hash'); // Always keep visible
+    });
+
+    // 5. Update Province items visual state ONLY (Keep visible, just update checkbox/border)
+    matrixContainer.querySelectorAll('.matrix-province-item').forEach(item => {
+      const cb = item.querySelector('.province-checkbox');
+      item.classList.toggle('has-checked', Boolean(cb && cb.checked));
+      item.classList.remove('hidden-by-hash'); // Always keep visible
+    });
+
+    // 6. Update top column letter headers visual state
+    matrixContainer.querySelectorAll('.matrix-column-header').forEach(header => {
+      const cb = header.querySelector('.header-letter-checkbox');
+      header.classList.toggle('has-checked', Boolean(cb && cb.checked));
     });
 
     const activeCellType = activeCellBtn ? activeCellBtn.dataset.type : null;
     const activeCellLetter = activeCellBtn ? activeCellBtn.dataset.letter : null;
 
-    // 5. Evaluate card visibility
+    // 7. Evaluate card visibility
     cardData.forEach(({ element, type, nameLetter, year, province }) => {
       const matchesType = checkedTypes.includes(type);
       const matchesLetter = checkedLetters.includes(nameLetter);
       const matchesYear = checkedYears.length === 0 || checkedYears.includes(year);
       const matchesProvince = checkedProvinces.length === 0 || checkedProvinces.includes(province);
 
-      // Enforce cell-level filtering if an interior button is active
       let matchesCell = true;
       if (activeCellType && activeCellLetter) {
         matchesCell = (type === activeCellType && nameLetter === activeCellLetter);
@@ -343,15 +410,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Initial Filter Pass
-  applyFilters();
+  /* ==========================================================================
+     5. URL HASH SYNC ENGINE
+     ========================================================================== */
+  function syncFiltersWithHash() {
+    const rawHash = window.location.hash.replace(/^#/, '');
+    const activeTags = rawHash
+      .split('#')
+      .map(tag => tag.trim().toLowerCase())
+      .filter(tag => tag.length > 0);
+
+    // Reset active cell selection if active
+    if (activeCellBtn) {
+      activeCellBtn.classList.remove('active');
+      activeCellBtn = null;
+    }
+
+    if (activeTags.length === 0) {
+      // If no hash is set, default to checking all type checkboxes
+      matrixContainer.querySelectorAll('.type-checkbox').forEach(cb => {
+        cb.checked = true;
+      });
+    } else {
+      // Resolve target PointTypes from CATEGORY_MAP or direct type match
+      const targetPointTypes = new Set();
+      activeTags.forEach(tag => {
+        if (CATEGORY_MAP[tag]) {
+          CATEGORY_MAP[tag].forEach(code => targetPointTypes.add(code.toUpperCase()));
+        } else {
+          targetPointTypes.add(tag.toUpperCase());
+        }
+      });
+
+      // Update checkboxes to only check matched types
+      matrixContainer.querySelectorAll('.type-checkbox').forEach(cb => {
+        cb.checked = targetPointTypes.has(cb.dataset.type.toUpperCase());
+      });
+    }
+
+    applyFilters();
+  }
+
+  // Initial Filter Pass via Hash
+  syncFiltersWithHash();
+
+  // Re-apply filters on hash change (e.g. clicking anchor links)
+  window.addEventListener('hashchange', syncFiltersWithHash);
 
   // Handle Clicks on Matrix Headers, Row Labels, Years, and Provinces
+// Handle Clicks on Matrix Headers, Row Labels, Years, and Provinces
   matrixContainer.addEventListener('click', e => {
     const rowLabel = e.target.closest('.matrix-row-label');
     const colHeader = e.target.closest('.matrix-column-header');
     const yearItem = e.target.closest('.matrix-year-item');
     const provinceItem = e.target.closest('.matrix-province-item');
+
+    // Prevent toggling row checkboxes if URL hash mode is active
+    const hasHash = window.location.hash.length > 1;
 
     // Scenario A: User clicked directly on any <input type="checkbox">
     if (e.target.matches('input[type="checkbox"]')) {
@@ -363,9 +478,13 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Scenario B: User clicked the Label/Button body (Isolate single filter option)
+    // Scenario B: User clicked the Label/Button body
     if (rowLabel) {
       e.preventDefault();
+      
+      // Ignore click toggling if URL hash is pinning the categories
+      if (hasHash) return;
+
       const targetCb = rowLabel.querySelector('.type-checkbox');
 
       if (activeCellBtn) {
