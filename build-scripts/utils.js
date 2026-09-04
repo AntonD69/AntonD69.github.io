@@ -92,26 +92,31 @@ export async function updateAndVerifyJsonImageFilesForWebp() {
 	const webpSet = new Set(allWebpFiles.map(file => path.basename(file)));
 
 	for (const jsonFile of jsonFiles) {
-	const rawData = fs.readFileSync(jsonFile, 'utf8');
+		const rawData = fs.readFileSync(jsonFile, 'utf8');
 
-	// Matches any image filename ending in .png, .jpg, or .jpeg
-	const updatedData = rawData.replace(/(?:[\w\/-]+\/)?([^\/"]+)\.(png|jpg|jpeg)/gi, (match, filename) => {
-		const webpFileName = `${filename}.webp`;
+		console.log ("  Processing: " + jsonFile);
+		
+		// Matches any image filename ending in .png, .jpg, or .jpeg
+		const updatedData = rawData.replace(/(?:[\w\/-]+\/)?([^\/"]+)\.(png|jpg|jpeg)/gi, (match, filename) => {
+			const webpFileName = `${filename}.webp`;
 
-		// Check if the file exists anywhere inside dist/webp-images (including subfolders)
-		if (!webpSet.has(webpFileName)) {
-		missingImages.push({
-			sourceJson: jsonFile,
-			expectedAsset: webpFileName
+			// Check if the file exists anywhere inside dist/webp-images (including subfolders)
+			if (!webpSet.has(webpFileName)) {
+			missingImages.push({
+				sourceJson: jsonFile,
+				expectedAsset: webpFileName
+			});
+			}
+
+			// Return only the clean filename with .webp extension
+			return webpFileName;
 		});
-		}
 
-		// Return only the clean filename with .webp extension
-		return webpFileName;
-	});
-
-	fs.writeFileSync(jsonFile, updatedData, 'utf8');
+		fs.writeFileSync(jsonFile, updatedData, 'utf8');
 	}
+
+	console.log ("  Done!");
+
 
 	if (missingImages.length > 0) {
 		console.warn('\n⚠️ MISSING WEBP ASSETS REPORT:');
@@ -150,44 +155,6 @@ export function renderTemplate(template, data) {
 	});
 
 	return result;
-}
-
-// scripts/utils.js
-export function generateNavMenu(navLinks, currentPage, templateHtml) {
-	const menuItemsHtml = navLinks.map(link => {
-		const isActive = link.url.includes(currentPage) ? 'active' : '';
-
-		if (link.children && link.children.length > 0) {
-			const dropdownItems = link.children.map(child => `
-				<li>
-				<a href="${child.subdomain || ''}${child.url}" class="dropdown-item">
-					${child.label}
-				</a>
-				</li>
-			`).join('');
-
-			return `
-				<li class="nav-item has-dropdown">
-				<a href="${link.subdomain || ''}${link.url}" class="nav-link ${isActive}">
-					${link.label} <span class="arrow">&darr;</span>
-				</a>
-				<ul class="dropdown-menu">
-					${dropdownItems}
-				</ul>
-				</li>
-			`;
-		}
-
-		return `
-			<li class="nav-item">
-				<a href="${link.subdomain || ''}${link.url}" class="nav-link ${isActive}">
-					${link.label}
-				</a>
-			</li>
-		`;
-  	}).join('');
-
-	return templateHtml.replace('<!--NAV_ITEMS-->', menuItemsHtml);
 }
 
 export async function fetchSheetAndSaveAsJson(name, google_sheet_url, output_json_fileName) {

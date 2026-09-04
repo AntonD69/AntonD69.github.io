@@ -1,0 +1,168 @@
+/* ==========================================================================
+   1. ADVENTURES 5-COLUMN GRID LAYOUT
+   ========================================================================== */
+
+.adventures-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    padding: 20px 0;
+}
+
+/* ==========================================================================
+   2. CARD COMPONENT STYLES
+   ========================================================================== */
+
+.adventure-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.adventure-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Card Image Area --- */
+
+.adventure-card .card-image-container {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Changed from 16/9 to 1/1 for square images */
+    overflow: hidden;
+    border-bottom: 2px solid #000000;
+    background-color: #f0f0f0;
+}
+
+.adventure-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image fills the square box cleanly without distortion */
+    transition: transform 0.3s ease;
+}
+
+.adventure-card:hover .adventure-thumb {
+    transform: scale(1.05);
+}
+
+/* --- Card Body & Typography --- */
+
+.card-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-title {
+    margin: 0 0 6px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #111111;
+}
+
+.card-description {
+    margin: 0 0 12px 0;
+    font-size: 0.8rem;
+    color: #555555;
+    line-height: 1.35;
+}
+
+/* ==========================================================================
+   3. FAVOURITES SECTION & BUTTONS
+   ========================================================================== */
+
+.favourites-section {
+    margin-top: auto;
+    border-top: 1px dashed #cccccc;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.favourites-title {
+    margin: 0 0 2px 0;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #333333;
+}
+
+/* Favourite Video Button Links */
+.btn-fav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 6px 8px;
+    background-color: #f8f9fa;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #111111;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.btn-fav:hover {
+    background-color: #ffe6e6;
+    border-color: #ff0000;
+    transform: translateY(-1px);
+}
+
+.btn-fav-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #ff0000;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-fav-desc {
+    font-size: 0.7rem;
+    color: #555555;
+    line-height: 1.2;
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   4. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+
+@media (max-width: 1400px) {
+    .adventures-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1100px) {
+    .adventures-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .adventures-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .adventures-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+img.lazy-thumb {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+img.loaded {
+  opacity: 1 !important;
+}

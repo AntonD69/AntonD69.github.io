@@ -1,0 +1,23 @@
+<div class="adventure-card">
+    <div class="card-image-container">
+        <img 
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+            data-src="/webp-images/interests/other-adventures/{{ PhotoUrl }}" 
+            alt="{{ Name }}" 
+            class="adventure-thumb lazy-thumb" 
+            onerror="this.onerror=null; this.src='/webp-images/pictures/default-place-visited.webp';"
+        />
+    </div>
+
+    <div class="card-body">
+        <h3 class="card-title">{{ Name }}</h3>
+        <p class="card-description">{{ Description }}</p>
+
+        <div class="favourites-section">
+            <h4 class="favourites-title">Favourites:</h4>
+            {{ fav1_html }}
+            {{ fav2_html }}
+            {{ fav3_html }}
+        </div>
+    </div>
+</div>

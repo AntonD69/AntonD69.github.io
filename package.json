@@ -7,7 +7,9 @@
     "fetch:parkruns": "node build-scripts/fetch-sheet-parkruns.mjs",
     "fetch:places-been": "node build-scripts/fetch-sheet-places-been.mjs",
     "fetch:keyrings": "node build-scripts/fetch-sheet-key-rings.mjs",
-	"fetch:all": "node build-scripts/fetch-sheet-geocaches.mjs &&  node build-scripts/fetch-sheet-parkruns.mjs && node build-scripts/fetch-sheet-places-been.mjs && node build-scripts/fetch-sheet-key-rings.mjs",
+    "fetch:other-adventures": "node build-scripts/fetch-sheet-other-adventures.mjs",
+	
+	"fetch:all": "node build-scripts/fetch-sheet-geocaches.mjs && node build-scripts/fetch-sheet-parkruns.mjs && node build-scripts/fetch-sheet-places-been.mjs && node build-scripts/fetch-sheet-key-rings.mjs && node buildscript fetch:other-adventures",
 
 	"fetch-build": "npm run fetch:all && node build-scripts/build.js",
 
@@ -15,10 +17,11 @@
 
 	"build": "node build-scripts/build.js",
 	"build-run": "npm run build && npm run run",
-	"build-run:page": "npm run build && npm run run:page",
+	"build-run:page": "npm run build && npm run run:page-i",
 	
 	"run": "npx vite preview --outDir dist --open",
-	"run:page": "npx vite preview --outDir dist --open /workshop-keyrings.html"
+	"run:page": "npx vite preview --outDir dist --open /workshop-keyrings.html",
+	"run:page-i": "npx vite preview --outDir dist --open /interests-other-adventures.html"
   },
   "devDependencies": {
     "glob": "^13.0.6",

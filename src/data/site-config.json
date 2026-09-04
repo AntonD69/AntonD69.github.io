@@ -1,9 +1,0 @@
-{
-  "navLinks": [
-    { "label": "main", "url": "./index.html", "subdomain": "https://backtotheadventure.com" },
-    { "label": "Parkruns", "url": "./parkruns.html", "subdomain": "https://parkruns.backtotheadventure.com" },
-    { "label": "Places been", "url": "./places-been.html", "subdomain": "https://parkruns.backtotheadventure.com" },
-    { "label": "DamhuisClan", "url": "./damhuisclan.html", "subdomain": "https://damhuisclan.backtotheadventure.com" },
-    { "label": "CNC Projects", "url": "./cnc.html", "subdomain": "https://cnc.backtotheadventure.com" }
-  ]
-}

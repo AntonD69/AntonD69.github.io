@@ -3,6 +3,8 @@ import { build_PlacesBeen_page } from './build-PlacesBeen-page.js';
 import { build_GeocachesFound_page } from './build-geocachesFound-page.js';
 import { build_Home_page } from './build-home-page.js';
 import { build_workshop_key_ring_page} from './build-workshop-keyring-page.js';
+import { build_static_page_with_menu} from './build-static-page-with-menu.js';
+import { build_OtherAdventures_page} from './build-other-adventures-page.js';
 
 import * as utils from './utils.js';
 import fs from 'fs';
@@ -15,6 +17,8 @@ async function buildSite() {
 
 	await utils.convertAndResizeImagesAssets().catch(console.error);
 
+	console.log ("next updateAndVerifyJsonImageFilesForWebp");
+	
 	await utils.updateAndVerifyJsonImageFilesForWebp().catch(console.error);
 
 	const sourceScriptsDir = path.resolve('src/scripts');
@@ -37,41 +41,41 @@ async function buildSite() {
 	console.log('+---------------------+');
 
 	console.log('  - Building navigation...');
-	const siteConfig = JSON.parse(fs.readFileSync(path.resolve('src/data/site-config.json'), 'utf-8'));
+	//const siteConfig = JSON.parse(fs.readFileSync(path.resolve('src/data/site-config.json'), 'utf-8'));
 	const navTemplate = fs.readFileSync(path.resolve('src/templates/nav-menu/nav-menu.html'), 'utf-8');
 
-	const navHtml = utils.generateNavMenu(siteConfig.navLinks, 'index.html', navTemplate);
 
 	console.log('+------------------------------+');
 	console.log('| Generating static HTML files |');
 	console.log('+------------------------------+');
 
-
 	console.log('  ⚡ Building Main page...');
-	build_Home_page(navHtml);
-
+	build_Home_page(navTemplate);
 
     //-- Create Parkrun Page
     console.log('  ⚡ Building Parkrun page ...');
-    build_Parkrun_page(navHtml);
+    build_Parkrun_page(navTemplate);
 
     //-- Create Places Visited Page
     console.log('  ⚡ Building Places-Been page ...');
-    build_PlacesBeen_page(navHtml);
+    build_PlacesBeen_page(navTemplate);
 
     //-- Create Geocaches Found Page
     console.log('  ⚡ Building Geocaches-Found page ...');
-    build_GeocachesFound_page(navHtml);
+    build_GeocachesFound_page(navTemplate);
 
     console.log('  ⚡ Building Workshop-keyring-page ...');
-    build_workshop_key_ring_page(navHtml);
+    build_workshop_key_ring_page(navTemplate);
+
+    console.log('  ⚡ Building interests-other-adventures-page ...');
+    build_OtherAdventures_page(navTemplate);
+
+	build_static_page_with_menu(navTemplate, 'src/templates/interests/damhuisclan-1-index.html', 'interests-damhuisclan-1-index.html');
 
   console.log('+------------------------------------------+');
   console.log('| Successfully generated static HTML files |');
   console.log('+------------------------------------------+');
 
-
-  //-- Places Visited
 
   //-- DamhuisClan site
 
@@ -79,17 +83,13 @@ async function buildSite() {
 
   //-- Drone Adventures
 
-  //-- Geocaching
-
   //-- Turkana 4
 
   //-- Workshop projects
-  //--    keyrings
   //--    Cnc Carving
   //--    Other Projects
 
-  //-- Blog posts
-  
+  //-- Blog posts  
 }
 
 buildSite();
