@@ -15,6 +15,40 @@ export function build_OtherAdventures_page(navHtml) {
     const missingImages = [];
     const referencedImages = new Set();
 
+	// --- Helper function to construct large multi-column buttons
+    function renderFavButton(link, title, description) {
+        if (!title || !link) return '';
+
+        const cleanLink = link.trim();
+        const isYoutube = /youtube\.com|youtu\.be/i.test(cleanLink);
+
+        // YouTube SVG icon vs External Link Emoji
+        const iconHtml = isYoutube
+            ? `<svg class="fav-icon yt-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`
+            : `<span class="fav-icon link-icon">🔗</span>`;
+
+        return `
+        <a href="${cleanLink}" target="_blank" rel="noopener noreferrer" class="btn-fav ${isYoutube ? 'btn-yt' : 'btn-ext'}">
+            <div class="fav-icon-col">
+                ${iconHtml}
+            </div>
+            <div class="fav-text-col">
+                <span class="fav-title">${title}</span>
+                ${description ? `<span class="fav-desc">${description}</span>` : ''}
+            </div>
+        </a>`;
+    }
+
+	function getLightTintHex(hexColor) {
+		if (!hexColor || typeof hexColor !== 'string') return '#f4f4f4';
+		let cleanHex = hexColor.trim();
+		if (!cleanHex.startsWith('#')) cleanHex = `#${cleanHex}`;
+		
+		// Append '1f' (~12% alpha transparency) to 6-digit hex
+		return cleanHex.length === 7 ? `${cleanHex}1f` : cleanHex;
+	}
+
+
     allItemsJson.forEach((item, index) => {
         let imageName = (item.Image || '').trim();
 
@@ -24,6 +58,16 @@ export function build_OtherAdventures_page(navHtml) {
             // Fallback image if missing in JSON
             imageName = 'unknown.webp';
         }
+
+		if (!item.Colour || typeof item.Colour !== 'string' || !item.Colour.trim()) {
+			item.Colour = '#333333'; // Default fallback color
+		} else {
+			item.Colour = item.Colour.trim();
+			// Prepend # if missing in JSON
+			if (!item.Colour.startsWith('#')) {
+				item.Colour = `#${item.Colour}`;
+			}
+		}
 
         const imagePath = path.join(imagesDir, imageName);
 
@@ -56,7 +100,11 @@ export function build_OtherAdventures_page(navHtml) {
                 item[`Favourite${i}-Description`] = null;
             }
         }
-    });
+
+		const validColor = (item.Colour && item.Colour.trim()) ? item.Colour.trim() : '#ff0000';
+		item.Colour = validColor.startsWith('#') ? validColor : `#${validColor}`;
+		item.CardBgTint = getLightTintHex(item.Colour);
+	});
 
     // STEP 2 -- Save updated JSON file back to disk with parsed keys & .webp links
     fs.writeFileSync(jsonFilePath, JSON.stringify(allItemsJson, null, 2), 'utf-8');
@@ -70,46 +118,25 @@ export function build_OtherAdventures_page(navHtml) {
     } else {
         console.log('      ✓ All visited images verified in WebP folder.');
     }
+    
 
     // --- Start Page Build
     const cardsHtml = allItemsJson.map(item => {
 
-        // Generate HTML for Favourite buttons dynamically (hides button if link/title is missing)
-        let fav1Html = '';
-        if (item['Favourite1-Title'] && item['Fovourite1-link']) {
-            fav1Html = `
-            <a href="${item['Fovourite1-link'].trim()}" target="_blank" rel="noopener noreferrer" class="btn-fav">
-                <span class="btn-fav-label">▶️ ${item['Favourite1-Title']}</span>
-                ${item['Favourite1-Description'] ? `<span class="btn-fav-desc">${item['Favourite1-Description']}</span>` : ''}
-            </a>`;
-        }
-
-        let fav2Html = '';
-        if (item['Favourite2-Title'] && item['Fovourite2-link']) {
-            fav2Html = `
-            <a href="${item['Fovourite2-link'].trim()}" target="_blank" rel="noopener noreferrer" class="btn-fav">
-                <span class="btn-fav-label">▶️ ${item['Favourite2-Title']}</span>
-                ${item['Favourite2-Description'] ? `<span class="btn-fav-desc">${item['Favourite2-Description']}</span>` : ''}
-            </a>`;
-        }
-
-        let fav3Html = '';
-        if (item['Favourite3-Title'] && item['Fovourite3-link']) {
-            fav3Html = `
-            <a href="${item['Fovourite3-link'].trim()}" target="_blank" rel="noopener noreferrer" class="btn-fav">
-                <span class="btn-fav-label">▶️ ${item['Favourite3-Title']}</span>
-                ${item['Favourite3-Description'] ? `<span class="btn-fav-desc">${item['Favourite3-Description']}</span>` : ''}
-            </a>`;
-        }
+        // Generate HTML for Favourite buttons dynamically
+        const fav1Html = renderFavButton(item['Fovourite1-link'], item['Favourite1-Title'], item['Favourite1-Description']);
+        const fav2Html = renderFavButton(item['Fovourite2-link'], item['Favourite2-Title'], item['Favourite2-Description']);
+        const fav3Html = renderFavButton(item['Fovourite3-link'], item['Favourite3-Title'], item['Favourite3-Description']);
 
         // Render template passing both the extracted string properties and generated button HTML
-        return utils.renderTemplate(cardTemplate, {
-            ...item,
-            PhotoUrl: item.ImageLink,
-            fav1_html: fav1Html,
-            fav2_html: fav2Html,
-            fav3_html: fav3Html
-        });
+		return utils.renderTemplate(cardTemplate, {
+			...item,
+			PhotoUrl: item.ImageLink,
+			CardBgTint: item.CardBgTint, // <-- Explicitly pass the 12% opacity hex string
+			fav1_html: fav1Html,
+			fav2_html: fav2Html,
+			fav3_html: fav3Html
+		});
     }).join('\n');
 
     // Inject cards and navigation into page layout

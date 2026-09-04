@@ -1,47 +1,65 @@
 /* ==========================================================================
-   1. ADVENTURES 5-COLUMN GRID LAYOUT
+   1. ADVENTURES GRID (STRICT ALIGNMENT)
    ========================================================================== */
 
 .adventures-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr)); /* Fixes column overflow */
     gap: 16px;
     padding: 20px 0;
+    align-items: start; /* Prevents cards from stretching vertically to match tallest sibling */
 }
 
 /* ==========================================================================
-   2. CARD COMPONENT STYLES
+   2. CARD COMPONENT
    ========================================================================== */
 
 .adventure-card {
     display: flex;
     flex-direction: column;
-    background: #ffffff;
-    border: 2px solid #000000;
+    /* Uses the 10% color mix as the card background, fallback to white */
+    background-color: var(--card-bg-tint, #ffffff); 
+    border: 2px solid var(--card-color, #000000); /* Tinted border matching the JSON color */
     border-radius: 8px;
     overflow: hidden;
     height: 100%;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.adventure-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* --- Card Image Area --- */
-
-.adventure-card .card-image-container {
     width: 100%;
-    aspect-ratio: 1 / 1; /* Changed from 16/9 to 1/1 for square images */
-    overflow: hidden;
-    border-bottom: 2px solid #000000;
-    background-color: #f0f0f0;
+    box-sizing: border-box;
+    position: relative;
+    isolation: isolate;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                opacity 0.3s ease, 
+                border-color 0.3s ease, 
+                box-shadow 0.3s ease,
+                background-color 0.3s ease;
 }
 
+.adventure-card {
+    display: flex;
+    flex-direction: column;
+    /* background-color is handled directly via inline style from build.js */
+    border: 2px solid var(--card-color, #000000);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    isolation: isolate;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                opacity 0.3s ease, 
+                border-color 0.3s ease, 
+                box-shadow 0.3s ease,
+                background-color 0.3s ease;
+}
+
+/* Force Image Crop & Fill */
 .adventure-thumb {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures image fills the square box cleanly without distortion */
+    object-fit: cover !important; /* Crops image cleanly into the 1:1 box */
+    object-position: center;
+    display: block;
     transition: transform 0.3s ease;
 }
 
@@ -49,8 +67,7 @@
     transform: scale(1.05);
 }
 
-/* --- Card Body & Typography --- */
-
+/* Card Body & Text Alignment */
 .card-body {
     padding: 12px;
     display: flex;
@@ -60,9 +77,10 @@
 
 .card-title {
     margin: 0 0 6px 0;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: bold;
     color: #111111;
+    line-height: 1.2;
 }
 
 .card-description {
@@ -73,7 +91,7 @@
 }
 
 /* ==========================================================================
-   3. FAVOURITES SECTION & BUTTONS
+   3. FAVOURITES LARGE BUTTON LAYOUT
    ========================================================================== */
 
 .favourites-section {
@@ -82,7 +100,7 @@
     padding-top: 10px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
 .favourites-title {
@@ -94,75 +112,132 @@
     color: #333333;
 }
 
-/* Favourite Video Button Links */
+/* Large Block Button Container */
 .btn-fav {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 6px 8px;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
     background-color: #f8f9fa;
-    border: 1px solid #000000;
-    border-radius: 5px;
+    border: 1.5px solid #000000;
+    border-radius: 6px;
     text-decoration: none;
     color: #111111;
+    width: 100%;
+    box-sizing: border-box;
     transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 }
 
 .btn-fav:hover {
-    background-color: #ffe6e6;
+    background-color: #ffffff;
     border-color: #ff0000;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.btn-fav-label {
-    font-size: 0.75rem;
-    font-weight: bold;
-    color: #ff0000;
+/* Left Icon Column */
+.fav-icon-col {
     display: flex;
     align-items: center;
-    gap: 4px;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-.btn-fav-desc {
-    font-size: 0.7rem;
+.fav-icon {
+    display: block;
+}
+
+.yt-icon {
+    width: 22px;
+    height: 22px;
+    color: #ff0000;
+}
+
+.link-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+/* Right Text Column */
+.fav-text-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.fav-title {
+    font-size: 0.82rem;
+    font-weight: bold;
+    color: #111111;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fav-desc {
+    font-size: 0.72rem;
+    font-weight: normal;
     color: #555555;
     line-height: 1.2;
     margin-top: 2px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 /* ==========================================================================
-   4. RESPONSIVE BREAKPOINTS
+   4. COLOR OVERLAY FOR INACTIVE CARDS
+   ========================================================================== */
+
+.adventure-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--active-hover-color, transparent);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+/* When a card is active, dim and tint all OTHER cards */
+.adventures-grid.has-active-card .adventure-card:not(.is-active) {
+    opacity: 0.5;
+}
+
+.adventures-grid.has-active-card .adventure-card:not(.is-active)::after {
+    opacity: 0.35; /* Adjusted to 0.35 for a clear tinge without blinding the card content */
+}
+
+.adventure-card.is-active {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+    border-color: var(--card-color, #ff0000) !important;
+    z-index: 20;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE BREAKPOINTS
    ========================================================================== */
 
 @media (max-width: 1400px) {
-    .adventures-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
+    .adventures-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 @media (max-width: 1100px) {
-    .adventures-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+    .adventures-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 768px) {
-    .adventures-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .adventures-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 480px) {
-    .adventures-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-img.lazy-thumb {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-img.loaded {
-  opacity: 1 !important;
+    .adventures-grid { grid-template-columns: 1fr; }
 }

@@ -3,7 +3,6 @@ import { build_PlacesBeen_page } from './build-PlacesBeen-page.js';
 import { build_GeocachesFound_page } from './build-geocachesFound-page.js';
 import { build_Home_page } from './build-home-page.js';
 import { build_workshop_key_ring_page} from './build-workshop-keyring-page.js';
-import { build_static_page_with_menu} from './build-static-page-with-menu.js';
 import { build_OtherAdventures_page} from './build-other-adventures-page.js';
 
 import * as utils from './utils.js';
@@ -70,7 +69,7 @@ async function buildSite() {
     console.log('  ⚡ Building interests-other-adventures-page ...');
     build_OtherAdventures_page(navTemplate);
 
-	build_static_page_with_menu(navTemplate, 'src/templates/interests/damhuisclan-1-index.html', 'interests-damhuisclan-1-index.html');
+	//build_static_page_with_menu(navTemplate, 'src/templates/interests/damhuisclan-1-index.html', 'interests-damhuisclan-1-index.html');
 
   console.log('+------------------------------------------+');
   console.log('| Successfully generated static HTML files |');

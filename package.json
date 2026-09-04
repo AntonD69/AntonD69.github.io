@@ -9,9 +9,9 @@
     "fetch:keyrings": "node build-scripts/fetch-sheet-key-rings.mjs",
     "fetch:other-adventures": "node build-scripts/fetch-sheet-other-adventures.mjs",
 	
-	"fetch:all": "node build-scripts/fetch-sheet-geocaches.mjs && node build-scripts/fetch-sheet-parkruns.mjs && node build-scripts/fetch-sheet-places-been.mjs && node build-scripts/fetch-sheet-key-rings.mjs && node buildscript fetch:other-adventures",
+	"fetch:all": "npm run fetch:geocaches && npm run fetch:parkruns && npm run fetch:places-been && npm run fetch:keyrings && npm run fetch:other-adventures",
 
-	"fetch-build": "npm run fetch:all && node build-scripts/build.js",
+	"fetch-build": "npm run fetch:all && npm run build",
 
 	"fetch-build-run": "npm run fetch:all && npm run build-run",
 
