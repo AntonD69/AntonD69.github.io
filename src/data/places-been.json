@@ -1,6 +1,6 @@
 [
   {
-    "PointType": "SP",
+    "PointType": "AC",
     "Area": "ZA-MP",
     "Date": "2026-08-23",
     "Time": "11:50",
@@ -48,7 +48,7 @@
     "Top10": null
   },
   {
-    "PointType": "SP",
+    "PointType": "AC",
     "Area": "ZA-MP",
     "Date": "2026-07-26",
     "Time": "08:20",
@@ -240,7 +240,7 @@
     "Top10": null
   },
   {
-    "PointType": "SP",
+    "PointType": "AC",
     "Area": "ZA-KZ",
     "Date": "2026-06-14",
     "Time": "11:25",
@@ -304,7 +304,7 @@
     "Top10": null
   },
   {
-    "PointType": "SP",
+    "PointType": "AC",
     "Area": "ZA-GP",
     "Date": "2026-04-05",
     "Time": "08:45",
@@ -640,7 +640,7 @@
     "Top10": null
   },
   {
-    "PointType": "SP",
+    "PointType": "AC",
     "Area": "ZA-GP",
     "Date": "2026-04-05",
     "Time": "08:45",
@@ -2640,7 +2640,7 @@
     "Top10": null
   },
   {
-    "PointType": "RT",
+    "PointType": "MR",
     "Area": "ZA-MP",
     "Date": "2022-10-29",
     "Time": "09:50",
@@ -5152,7 +5152,7 @@
     "Top10": null
   },
   {
-    "PointType": "SP",
+    "PointType": "OS",
     "Area": "ZA-EC",
     "Date": "2022-01-25",
     "Time": "07:20",
@@ -8192,7 +8192,7 @@
     "Top10": null
   },
   {
-    "PointType": "SP",
+    "PointType": "OS",
     "Area": "ZA-WC",
     "Date": "2020-02-27",
     "Time": "08:25",

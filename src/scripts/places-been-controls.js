@@ -61,12 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
     TP: "Tar Passes",
     DT: "Dusty Towns",
     DP: "Dusty Passes",
-    CS: "Campsites",
-    SP: "Special Points",
+
+	CS: "Campsites",
+	AC: "Accommodation",
+	SP: "Special Points",
     P1: "Top places",
 
     MM: "Monuments",
     MT: "Tunnels",
+    MR: "Railway Tunnels",
     GR: "Game Reserves",
     NR: "Nature Reserves",
 
@@ -78,9 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
     JH: "JotH",
     LH: "Lighthouses",
     TR: "Toyruns",
-    MR: "Railway Tunnels",
     OT: "Other",
-    HB: "Harbours"
+    HB: "Harbours",
+	OS: "Ocean/Sea"
   };
 
   // Category map linking URL hash tags to PointType codes
@@ -90,9 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	'interesting': ['SP', 'CS', 'JH'],
 	'reserves' : ['GR','NR'],
 	'other' : ['MM','BP','DR', 'TR', 'OT'],
-	'water' : ['DM','DW','LH','HB'],
+	'water' : ['DM','DW','LH','HB','OS'],
 	'tunnels' : ['MR','MT'],
-	'roads' : ['TP', 'DP', 'DR']
+	'roads' : ['TP', 'DP', 'DR'],
+	'accommodation' : ['CS','AC']
   };
 
   // 2. Full Province / Region Names Mapping
@@ -120,8 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 3. Custom Display Order for Types
   const TYPE_ORDER = [
-    "TT", "TP", "DT", "DP", "SP", "CS", "MT", "P1", "MM", "GR", "NR",
-    "DM", "DW", "DR", "JH", "LH", "TR", "MR", "OT", "HB", "BP"
+    "TT", "TP", "DT", "DP", "SP", "AC", "CS", 
+	"DM", "DW","LH","HB","OS",  //Water
+	"MT", "MR", "MM", "GR", "NR",
+    "DR", "JH",  "TR", "MR", "OT", , "BP"
   ];
 
   const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
