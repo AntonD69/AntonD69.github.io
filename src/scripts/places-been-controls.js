@@ -65,25 +65,27 @@ document.addEventListener('DOMContentLoaded', () => {
 	CS: "Campsites",
 	AC: "Accommodation",
 	SP: "Special Points",
-    P1: "Top places",
 
     MM: "Monuments",
-    MT: "Tunnels",
+    MT: "Road Tunnels",
     MR: "Railway Tunnels",
-    GR: "Game Reserves",
+
+	DM: "Dams",
+    DW: "Dam Walls",
+    LH: "Lighthouses",
+    HB: "Harbours",
+	OS: "Ocean/Sea",
+
+	GR: "Game Reserves",
     NR: "Nature Reserves",
 
-    BP: "Border Posts",
-    DM: "Dams",
-    DW: "Dam Walls",
-
-    DR: "DirtRoads",
+	DR: "DirtRoads",
     JH: "JotH",
-    LH: "Lighthouses",
     TR: "Toyruns",
     OT: "Other",
-    HB: "Harbours",
-	OS: "Ocean/Sea"
+
+	BP: "Border Posts",
+    P1: "Top places",
   };
 
   // Category map linking URL hash tags to PointType codes
