@@ -80,8 +80,8 @@ export async function build_GeocachesFound_page(navHtml) {
 			.replace(/\{\{\s*total_count\s*\}\}/g, geocaches.length)
 			.replace(/\{\{\s*content\s*\}\}/g, cardsHtml);
 
-        fs.writeFileSync(path.resolve('dist/geocaches-found.html'), finalHtml, 'utf-8');
-        console.log('      Successfully generated geocaches-found.html!');
+        fs.writeFileSync(path.resolve('dist/geocaching-geocaches-found.html'), finalHtml, 'utf-8');
+        console.log('      Successfully generated geocaching-geocaches-found.html');
     } catch (error) {
         console.error('Error building Geocaches Found page:', error);
     }
