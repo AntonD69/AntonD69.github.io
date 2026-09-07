@@ -3,7 +3,7 @@
     "Page": 2,
     "Category": "2023-namaqualand",
     "SubCategory": null,
-    "Year": null,
+    "Year": 2023,
     "Name": "Namaqualand",
     "Description": "Trish and I did a trip to Fishriver canyon and Namaqualand in September 2023",
     "Image": "cover.webp"
@@ -189,7 +189,7 @@
     "Image": "cover.webp"
   },
   {
-    "Page": null,
+    "Page": 3,
     "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
