@@ -91,11 +91,128 @@
   },
   {
     "Page": null,
-    "Category": "Rudi Bike Trip throguh Africa",
+    "Category": "rudi-ldn-to-ct",
     "SubCategory": null,
+    "Year": 2005,
+    "Name": "Rudi - London to Cape Town",
+    "Description": "Rudi traveled on his BMW 650 GS all the way from London to CapeTown in 2005.",
+    "Image": "cover.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
     "Year": null,
     "Name": null,
-    "Description": null,
-    "Image": null
+    "Description": "A small town",
+    "Image": "2005_0209_182706AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "Goats in the street",
+    "Image": "2005_0212_192726AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "Other travelers in the desert",
+    "Image": "2005_0213_184144AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "Garmin GPS showing the way",
+    "Image": "2005_0215_160034AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "Smore break",
+    "Image": "2005_0216_114812AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "Crossing the jungle",
+    "Image": "2005_0311_090250AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "Having a bear on his birthday in the middle of Africa",
+    "Image": "2005_0317_084252AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "Biek and Rider have a birthday bear",
+    "Image": "2005_0317_084556AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "Lots of water all over the place",
+    "Image": "2005_0317_120450AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "Heavy traffic on the road",
+    "Image": "2005_0317_172430AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "Done after a days riding",
+    "Image": "2005_0317_211304AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "Africa can be tough for some",
+    "Image": "2005_0324_160920AA.webp"
+  },
+  {
+    "Page": null,
+    "Category": "rudi-ldn-to-ct",
+    "SubCategory": "photos",
+    "Year": null,
+    "Name": null,
+    "Description": "made it to Johannesburg",
+    "Image": "2005_0325_164100AA.webp"
   }
 ]

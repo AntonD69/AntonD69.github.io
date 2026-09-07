@@ -5,6 +5,7 @@ import { build_Home_page } from './build-home-page.js';
 import { build_workshop_key_ring_page } from './build-workshop-keyring-page.js';
 import { build_OtherAdventures_page } from './build-other-adventures-page.js';
 import { build_static_page_with_menu } from './build-static-page-with-menu.js'
+import { build_PhotoAlbum_pages } from './build-photo-album-pages.js'
 
 import * as utils from './utils.js';
 import fs from 'fs';
@@ -73,17 +74,20 @@ async function buildSite() {
     console.log('  ⚡ Building interests-other-adventures-page ...');
     build_OtherAdventures_page(navTemplate, IS_STRICT);
 
-	console.log('+-----------------------------------+');
-	console.log('| Copy static HTML files & add menu |');
-	console.log('+-----------------------------------+');
+    console.log('  ⚡ Building photo-album-pages ...');
+	build_PhotoAlbum_pages(navTemplate, IS_STRICT);
 
-	build_static_page_with_menu(navTemplate, 'src/templates/geocaching/geocoins-page.html', 'geocaching-geocoins-1.html', IS_STRICT);
+	// console.log('+-----------------------------------+');
+	// console.log('| Copy static HTML files & add menu |');
+	// console.log('+-----------------------------------+');
 
-	build_static_page_with_menu(navTemplate, 'src/templates/workshop/cnc-projects-page.html', 'workshop-cnc-projects-1.html', IS_STRICT);
+	// build_static_page_with_menu(navTemplate, 'src/templates/geocaching/geocoins-page.html', 'geocaching-geocoins-1.html', IS_STRICT);
 
-	build_static_page_with_menu(navTemplate, 'src/templates/workshop/electronics-page.html', 'workshop-electronics-1.html', IS_STRICT);
+	// build_static_page_with_menu(navTemplate, 'src/templates/workshop/cnc-projects-page.html', 'workshop-cnc-projects-1.html', IS_STRICT);
 
-	build_static_page_with_menu(navTemplate, 'src/templates/workshop/wood-working-page.html', 'workshop-wood-working-1.html', IS_STRICT);
+	// build_static_page_with_menu(navTemplate, 'src/templates/workshop/electronics-page.html', 'workshop-electronics-1.html', IS_STRICT);
+
+	// build_static_page_with_menu(navTemplate, 'src/templates/workshop/wood-working-page.html', 'workshop-wood-working-1.html', IS_STRICT);
 	
   console.log('+------------------------------------------+');
   console.log('| Successfully generated static HTML files |');
