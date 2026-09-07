@@ -88,41 +88,49 @@ document.addEventListener('DOMContentLoaded', () => {
     P1: "Top places",
   };
 
-  // Category map linking URL hash tags to PointType codes
-  const CATEGORY_MAP = {
-    'towns': ['TT', 'DT'],
-    'passes': ['TP', 'DP'],
-	'interesting': ['SP', 'CS', 'JH'],
-	'reserves' : ['GR','NR'],
-	'other' : ['MM','BP','DR', 'TR', 'OT'],
-	'water' : ['DM','DW','LH','HB','OS'],
-	'tunnels' : ['MR','MT'],
-	'roads' : ['TP', 'DP', 'DR'],
-	'accommodation' : ['CS','AC']
-  };
+	// Category map linking URL hash tags to PointType codes
+	const CATEGORY_MAP = {
+		'towns': ['TT', 'DT'],
+		'passes': ['TP', 'DP'],
+		'interesting': ['SP', 'CS', 'JH'],
+		'reserves' : ['GR','NR'],
+		'other' : ['MM','BP','DR', 'TR', 'OT'],
+		'water' : ['DM','DW','LH','HB','OS'],
+		'tunnels' : ['MR','MT'],
+		'roads' : ['TP', 'DP', 'DR'],
+		'accommodation' : ['CS','AC']
+	};
 
-  // 2. Full Province / Region Names Mapping
-  const PROVINCE_NAMES = {
-    "ZA-EC": "Eastern Cape",
-    "ZA-FS": "Free State",
-    "ZA-GP": "Gauteng",
-    "ZA-KZN": "KwaZulu-Natal",
-    "ZA-KZ": "KwaZulu-Natal",
-    "ZA-LP": "Limpopo",
-    "ZA-MP": "Mpumalanga",
-    "ZA-NC": "Northern Cape",
-    "ZA-NW": "North West",
-    "ZA-WC": "Western Cape",
+	// 2. Country Names Mapping
+	const COUNTRY_NAMES = {
+		"ZA": "South Africa",
+		"LS": "Lesotho",
+		"ES": "Eswatini",
+		"NL": "Netherlands"
+	};
 
-    "LS-BB": "Berea",
-    "LS-LR": "Leribe",
-    "LS-MA": "Maseru",
-    "LS-ML": "Mokhotlong",
-    "LS-TT": "Thaba-Tseka",
+  	// 2. Full Province / Region Names Mapping
+	const PROVINCE_NAMES = {
+		"ZA-EC": "Eastern Cape",
+		"ZA-FS": "Free State",
+		"ZA-GP": "Gauteng",
+		"ZA-KZN": "KwaZulu-Natal",
+		"ZA-KZ": "KwaZulu-Natal",
+		"ZA-LP": "Limpopo",
+		"ZA-MP": "Mpumalanga",
+		"ZA-NC": "Northern Cape",
+		"ZA-NW": "North West",
+		"ZA-WC": "Western Cape",
 
-    "ES-HH": "Hhohho (Eswatini)",
-    "NL-SH": "South Holland (Netherlands)"
-  };
+		"LS-BB": "Berea",
+		"LS-LR": "Leribe",
+		"LS-MA": "Maseru",
+		"LS-ML": "Mokhotlong",
+		"LS-TT": "Thaba-Tseka",
+
+		"ES-HH": "Hhohho",
+		"NL-SH": "South Holland"
+	};
 
   // 3. Custom Display Order for Types
   const TYPE_ORDER = [
@@ -154,15 +162,37 @@ document.addEventListener('DOMContentLoaded', () => {
     )
   ].sort((a, b) => b - a);
 
-  // Extract unique Provinces/Areas (alphabetical)
+// Extract and group unique Provinces by Country
   const rawProvinces = [
     ...new Set(cards.map(card => (card.dataset.area || '').trim()).filter(Boolean))
   ];
 
-  const provinces = rawProvinces.sort((a, b) => {
-    const nameA = PROVINCE_NAMES[a] || a;
-    const nameB = PROVINCE_NAMES[b] || b;
+  const countryGroups = {};
+
+  rawProvinces.forEach(provCode => {
+    // Extract prefix before hyphen (e.g., 'ZA', 'LS', 'ES', 'NL')
+    const countryCode = provCode.includes('-') ? provCode.split('-')[0] : 'OTHER';
+    
+    if (!countryGroups[countryCode]) {
+      countryGroups[countryCode] = [];
+    }
+    countryGroups[countryCode].push(provCode);
+  });
+
+  // Sort countries alphabetically by full name
+  const sortedCountryCodes = Object.keys(countryGroups).sort((a, b) => {
+    const nameA = COUNTRY_NAMES[a] || a;
+    const nameB = COUNTRY_NAMES[b] || b;
     return nameA.localeCompare(nameB);
+  });
+
+  // Sort provinces alphabetically within each country group
+  sortedCountryCodes.forEach(code => {
+    countryGroups[code].sort((a, b) => {
+      const nameA = PROVINCE_NAMES[a] || a;
+      const nameB = PROVINCE_NAMES[b] || b;
+      return nameA.localeCompare(nameB);
+    });
   });
 
   // Pre-process card metadata
@@ -283,30 +313,50 @@ document.addEventListener('DOMContentLoaded', () => {
     matrixHtml += `</div></div>`;
   }
 
-  // Render Bottom Province Row
-  if (provinces.length > 0) {
+// Render Bottom Country & Province Section
+  if (sortedCountryCodes.length > 0) {
     matrixHtml += `
       <div class="matrix-province-row">
         <span class="matrix-filter-label-title">Province:</span>
-        <div class="matrix-extra-items">
+        <div class="matrix-country-groups">
     `;
-    provinces.forEach(prov => {
-      const displayName = PROVINCE_NAMES[prov] || prov;
-      const provCount = cardData.filter(c => c.province === prov).length;
+
+    sortedCountryCodes.forEach(cCode => {
+      const countryName = COUNTRY_NAMES[cCode] || cCode;
+      
+      matrixHtml += `
+        <div class="country-group">
+          <span class="country-group-title">${countryName}:</span>
+          <div class="matrix-extra-items">
+      `;
+
+      countryGroups[cCode].forEach(prov => {
+        const displayName = PROVINCE_NAMES[prov] || prov;
+        const provCount = cardData.filter(c => c.province === prov).length;
+
+        matrixHtml += `
+          <label class="matrix-province-item" title="Toggle ${displayName} (${provCount} places)">
+            <span>${displayName}</span>
+            <input 
+              type="checkbox" 
+              class="province-checkbox" 
+              data-province="${prov}" 
+              checked 
+            />
+          </label>
+        `;
+      });
 
       matrixHtml += `
-        <label class="matrix-province-item" title="Toggle ${displayName} (${provCount} places)">
-          <span>${displayName}</span>
-          <input 
-            type="checkbox" 
-            class="province-checkbox" 
-            data-province="${prov}" 
-            checked 
-          />
-        </label>
+          </div>
+        </div>
       `;
     });
-    matrixHtml += `</div></div>`;
+
+    matrixHtml += `
+        </div>
+      </div>
+    `;
   }
 
   matrixContainer.innerHTML = matrixHtml;

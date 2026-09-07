@@ -490,3 +490,23 @@ img.loaded {
 .has-url-hash .matrix-row-label {
   cursor: default;
 }
+
+.matrix-country-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.country-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.country-group-title {
+  font-weight: bold;
+  min-width: 110px;
+  color: #ccc;
+}
