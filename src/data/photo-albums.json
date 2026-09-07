@@ -1,12 +1,102 @@
 [
   {
     "Page": 2,
-    "Category": "Namaqualand",
+    "Category": "2023-namaqualand",
     "SubCategory": null,
     "Year": null,
     "Name": "Namaqualand",
-    "Description": null,
-    "Image": null
+    "Description": "Trish and I did a trip to Fishriver canyon and Namaqualand in September 2023",
+    "Image": "cover.webp"
+  },
+  {
+    "Page": null,
+    "Category": "2023-namaqualand",
+    "SubCategory": "2023-naq",
+    "Year": null,
+    "Name": null,
+    "Description": "Stopped at Die oog in Pofadder.",
+    "Image": "20220903_140714.webp"
+  },
+  {
+    "Page": null,
+    "Category": "2023-namaqualand",
+    "SubCategory": "2023-naq",
+    "Year": null,
+    "Name": null,
+    "Description": "Crossing into Namibia",
+    "Image": "20220904_100657.webp"
+  },
+  {
+    "Page": null,
+    "Category": "2023-namaqualand",
+    "SubCategory": "2023-naq",
+    "Year": null,
+    "Name": null,
+    "Description": "My first (and  only) geocahcign in Namibia",
+    "Image": "20220904_122318.webp"
+  },
+  {
+    "Page": null,
+    "Category": "2023-namaqualand",
+    "SubCategory": "2023-naq",
+    "Year": null,
+    "Name": null,
+    "Description": "A huge quiver tree",
+    "Image": "20220904_153840.webp"
+  },
+  {
+    "Page": null,
+    "Category": "2023-namaqualand",
+    "SubCategory": "2023-naq",
+    "Year": null,
+    "Name": null,
+    "Description": "Braaing in Namibia under a starlit sky",
+    "Image": "20220904_202259.webp"
+  },
+  {
+    "Page": null,
+    "Category": "2023-namaqualand",
+    "SubCategory": "2023-naq",
+    "Year": null,
+    "Name": null,
+    "Description": "Wetting our feet in the Atlantic ocian",
+    "Image": "20220907_110637.webp"
+  },
+  {
+    "Page": null,
+    "Category": "2023-namaqualand",
+    "SubCategory": "2023-naq",
+    "Year": null,
+    "Name": null,
+    "Description": "A geocach surrounded by flowers",
+    "Image": "20220907_130320.webp"
+  },
+  {
+    "Page": null,
+    "Category": "2023-namaqualand",
+    "SubCategory": "2023-naq",
+    "Year": null,
+    "Name": null,
+    "Description": "Flowers everywhere",
+    "Image": "20220907_132054.webp"
+  },
+  {
+    "Page": null,
+    "Category": "2023-namaqualand",
+    "SubCategory": "2023-naq",
+    "Year": null,
+    "Name": null,
+    "Description": "A sea of Orange",
+    "Image": "IMG-20220907-WA0033.webp"
+  },
+  {
+    "Page": null,
+    "Category": "2023-namaqualand",
+    "SubCategory": "2023-naq",
+    "Year": null,
+    "Name": null,
+    "Description": "Taking the Tram in Kimberly",
+    "Image": "20220909_100338.webp"
   },
   {
     "Page": null,
@@ -91,7 +181,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": null,
     "Year": 2005,
     "Name": "Rudi - London to Cape Town",
@@ -100,7 +190,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -109,7 +199,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -118,7 +208,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -127,7 +217,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -136,7 +226,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -145,7 +235,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -154,7 +244,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -163,7 +253,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -172,7 +262,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -181,7 +271,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -190,7 +280,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -199,7 +289,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
@@ -208,7 +298,7 @@
   },
   {
     "Page": null,
-    "Category": "rudi-ldn-to-ct",
+    "Category": "2005-rudi-ldn-to-ct",
     "SubCategory": "photos",
     "Year": null,
     "Name": null,
