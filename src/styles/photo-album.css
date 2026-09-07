@@ -1,0 +1,182 @@
+/* --- Base Page Setup (Light Theme) --- */
+:root {
+  --bg-color: #f8fafc;
+  --surface-color: #ffffff;
+  --primary-color: #2563eb;
+  --border-color: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --border-radius: 8px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* --- Header & Navigation --- */
+.album-header, .site-header {
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+}
+
+.back-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.album-description {
+  color: var(--text-muted);
+  max-width: 800px;
+  font-size: 1.05rem;
+}
+
+/* --- Subcategory Grouping & Photo Grid --- */
+.subcategory-group {
+  margin-bottom: 3rem;
+}
+
+.subcategory-group h2 {
+  font-size: 1.4rem;
+  color: var(--text-main);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* --- Photo Card --- */
+.photo-card {
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.photo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.photo-wrapper {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: #f1f5f9;
+}
+
+.photo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.photo-wrapper:hover img {
+  transform: scale(1.04);
+}
+
+.photo-meta {
+  padding: 1rem;
+  font-size: 0.925rem;
+}
+
+.photo-description {
+  margin: 0;
+  color: var(--text-main);
+}
+
+/* --- Lightbox Modal --- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-content {
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+}
+
+.lightbox-caption {
+  margin-top: 1rem;
+  color: var(--text-main);
+  text-align: center;
+  max-width: 700px;
+  font-size: 0.95rem;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 2.25rem;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
+}
+
+.lightbox-close:hover {
+  opacity: 1;
+}

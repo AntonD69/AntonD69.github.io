@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BttA - {{ Name }} - Photo Album</title>
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/css/photo-album.css">
+</head>
+<body class="album-display-page">
+	<header>
+		<!-- Navigation Menu Placeholder -->
+		<!--NAV_MENU-->
+	</header>
+
+  <header class="album-header">
+    <div class="container">
+      <a href="album-index.html" class="back-link">&larr; Back to Albums</a>
+      <h1>{{ Name }}</h1>
+      <p class="album-description">{{ Description }}</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="album-gallery">
+      {{ Content }}
+    </div>
+  </main>
+
+	<script type="module" src="./scripts/photo-album-controls.js"></script>
+</body>
+</html>
