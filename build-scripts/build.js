@@ -10,7 +10,10 @@ import * as utils from './utils.js';
 import fs from 'fs';
 import path from 'path';
 
+const IS_STRICT = process.argv.includes('--strict');
+
 async function buildSite() {
+	console.log('');
 	console.log('+-------------------------------+');
 	console.log('| Copying folder for Production |');
 	console.log('+-------------------------------+');
@@ -44,44 +47,43 @@ async function buildSite() {
 	//const siteConfig = JSON.parse(fs.readFileSync(path.resolve('src/data/site-config.json'), 'utf-8'));
 	const navTemplate = fs.readFileSync(path.resolve('src/templates/nav-menu/nav-menu.html'), 'utf-8');
 
-
 	console.log('+------------------------------+');
 	console.log('| Generating static HTML files |');
 	console.log('+------------------------------+');
 
 	console.log('  ⚡ Building Main page...');
-	build_Home_page(navTemplate);
+	build_Home_page(navTemplate, IS_STRICT);
+
 
     //-- Create Parkrun Page
     console.log('  ⚡ Building Parkrun page ...');
-    build_Parkrun_page(navTemplate);
+    build_Parkrun_page(navTemplate, IS_STRICT);
 
     //-- Create Places Visited Page
     console.log('  ⚡ Building Places-Been page ...');
-    build_PlacesBeen_page(navTemplate);
+    build_PlacesBeen_page(navTemplate, IS_STRICT);
 
     //-- Create Geocaches Found Page
     console.log('  ⚡ Building Geocaches-Found page ...');
-    build_GeocachesFound_page(navTemplate);
+    build_GeocachesFound_page(navTemplate, IS_STRICT);
 
     console.log('  ⚡ Building Workshop-keyring-page ...');
-    build_workshop_key_ring_page(navTemplate);
+    build_workshop_key_ring_page(navTemplate, IS_STRICT);
 
     console.log('  ⚡ Building interests-other-adventures-page ...');
-    build_OtherAdventures_page(navTemplate);
+    build_OtherAdventures_page(navTemplate, IS_STRICT);
 
 	console.log('+-----------------------------------+');
 	console.log('| Copy static HTML files & add menu |');
 	console.log('+-----------------------------------+');
 
-	build_static_page_with_menu(navTemplate, 'src/templates/geocaching/geocoins-page.html', 'geocaching-geocoins-1.html');
+	build_static_page_with_menu(navTemplate, 'src/templates/geocaching/geocoins-page.html', 'geocaching-geocoins-1.html', IS_STRICT);
 
-	build_static_page_with_menu(navTemplate, 'src/templates/workshop/cnc-projects-page.html', 'workshop-cnc-projects-1.html');
+	build_static_page_with_menu(navTemplate, 'src/templates/workshop/cnc-projects-page.html', 'workshop-cnc-projects-1.html', IS_STRICT);
 
-	build_static_page_with_menu(navTemplate, 'src/templates/workshop/electronics-page.html', 'workshop-electronics-1.html');
+	build_static_page_with_menu(navTemplate, 'src/templates/workshop/electronics-page.html', 'workshop-electronics-1.html', IS_STRICT);
 
-	build_static_page_with_menu(navTemplate, 'src/templates/workshop/wood-working-page.html', 'workshop-wood-working-1.html');
-
+	build_static_page_with_menu(navTemplate, 'src/templates/workshop/wood-working-page.html', 'workshop-wood-working-1.html', IS_STRICT);
 	
   console.log('+------------------------------------------+');
   console.log('| Successfully generated static HTML files |');

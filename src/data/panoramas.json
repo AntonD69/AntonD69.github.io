@@ -1,0 +1,24 @@
+[
+  {
+    "ID": 1,
+    "Type": 360,
+    "Name": "Groot Kerk",
+    "Date": "2009-10-09",
+    "Location": null,
+    "GPS-Coords": null,
+    "Image": null,
+    "Description": null,
+    "PanoramaImage": null
+  },
+  {
+    "ID": 2,
+    "Type": 180,
+    "Name": "Kuwait",
+    "Date": null,
+    "Location": null,
+    "GPS-Coords": null,
+    "Image": null,
+    "Description": null,
+    "PanoramaImage": null
+  }
+]

@@ -3,7 +3,7 @@ import path from 'path';
 import * as utils from './utils.js';
 
 
-export function build_PlacesBeen_page(navHtml) {
+export function build_PlacesBeen_page(navHtml, isStrictMode) {
     const jsonFilePath = path.resolve('src/data/places-been.json');
     const rawData = fs.readFileSync(jsonFilePath, 'utf-8');
     const allVisitedPlacesJson = JSON.parse(rawData);
@@ -50,13 +50,15 @@ export function build_PlacesBeen_page(navHtml) {
 
     // Report findings in console
     if (missingImages.length > 0) {
-        console.warn(`        ⚠️ Found ${missingImages.length} missing image(s):`);
+        console.warn(`        ⚠️  Found ${missingImages.length} missing image(s):`);
         missingImages.forEach(place => {
             console.warn(`        ⚠️  ${place.name} - ${place.date} - : Missing file "${place.fileName}"`);
         });
+		utils.handleStrictErrorMode(isStrictMode);
     } else {
-        console.log('      ✓ All visited place images verified in WebP folder.');
+        console.log('      ✅  All visited place images verified in WebP folder.');
     }
+
 
     // -- Orphaned files check:
     const unreferencedFiles = [];
@@ -80,8 +82,9 @@ export function build_PlacesBeen_page(navHtml) {
         unreferencedFiles.forEach(file => {
             console.warn(`  - Unused file: "${file}"`);
         });
+		utils.handleStrictErrorMode(isStrictMode);
     } else {
-        console.log('      ✓ No unreferenced files found in images directory.');
+        console.log('      ✅  No unreferenced files found in images directory.');
     }
 
     // --- Start Page Build

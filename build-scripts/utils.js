@@ -1,9 +1,9 @@
-import fs from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
 import { parse } from 'csv-parse/sync';
-import path from 'path';
 import { glob } from 'glob';
 import sharp from 'sharp';
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 
 export function logHeader(label) {
   const width = label.length + 4; // Add padding for borders
@@ -121,6 +121,7 @@ export async function updateAndVerifyJsonImageFilesForWebp() {
 	if (missingImages.length > 0) {
 		console.warn('\n⚠️ MISSING WEBP ASSETS REPORT:');
 		console.table(missingImages);
+		utils.handleStrictErrorMode(isStrictMode);
 	} else {
 		console.log('\n✅ All JSON image links updated to .webp and verified across all subfolders!');
 	}
@@ -158,54 +159,60 @@ export function renderTemplate(template, data) {
 }
 
 export async function fetchSheetAndSaveAsJson(name, google_sheet_url, output_json_fileName) {
-  logHeader ('Fetching data for ' + name );
+  logHeader('Fetching data for ' + name);
+
+  function isRowNotEmpty(row) {
+    return Object.values(row).some(
+      (value) => value !== null && value !== undefined && String(value).trim() !== ''
+    );
+  }
 
   try {
-    // 1. Added await here
+    // 1. Fetch CSV network resource first
     const response = await fetch(google_sheet_url);
 
-    const filename = fileURLToPath(import.meta.url);
-    const dirname = path.dirname(filename);
-    const outputPathAndFile = path.resolve(dirname, '../src/data/' + output_json_fileName);
-
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      throw new Error(`HTTP error! Status: ${response.status} (${response.statusText})`);
     }
 
-    // 2. Added await here
     const csvText = await response.text();
 
+    // 2. Parse CSV text
     const rawRecords = parse(csvText, {
       columns: true,           // Uses the first row as object keys
-      skip_empty_lines: true,   // Skips blank lines in the sheet
-      trim: true                // Trims whitespace around headers/cells
+      skip_empty_lines: true,   // Skips completely empty lines
+      trim: true               // Trims whitespace around headers/cells
     });
 
-    // Transform string values into typed JSON fields
+    // 3. Transform typed fields & sanitize array keys
     const typedRecords = rawRecords.map(row => {
       const typedRow = {};
-
       for (const [key, value] of Object.entries(row)) {
-        // Clean key name if it ended with array markers like "tags[]" -> "tags"
         const cleanKey = key.replace(/\[\]$/, '');
         typedRow[cleanKey] = parseTypedValue(key, value);
       }
-
       return typedRow;
     });
 
-    // Ensure output folder exists
+    // 4. Strip out rows where every property parsed to null or empty
+    const cleanedTypedRecords = typedRecords.filter(isRowNotEmpty);
+
+    // 5. Resolve path and write output file
+    const filename = fileURLToPath(import.meta.url);
+    const dirname = path.dirname(filename);
+    const outputPathAndFile = path.resolve(dirname, '../src/data/', output_json_fileName);
+
     const dir = path.dirname(outputPathAndFile);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
 
-    // Write formatted JSON to file
-    fs.writeFileSync(outputPathAndFile, JSON.stringify(typedRecords, null, 2), 'utf-8');
-    console.log(`Successfully written ${typedRecords.length} records to: ${outputPathAndFile}`);
-
+    fs.writeFileSync(outputPathAndFile, JSON.stringify(cleanedTypedRecords, null, 2), 'utf-8');
+    console.log(`  ✅ Successfully written ${cleanedTypedRecords.length} records to: ${outputPathAndFile}`);
+	console.log(``);
   } catch (error) {
-    console.error('Failed to update data from Google Sheets:', error.message);
+    console.error(`  ❌️ Failed to update data for ${name}:`, error.message);
+	console.log(``);
     process.exit(1);
   }
 }
@@ -297,4 +304,11 @@ export async function fetchAndTransformSheet(dataname, goole_sheet_csv_url, outp
     console.error('Failed to get data from Google Sheets:', error.message);
     process.exit(1);
   }
+}
+
+export function handleStrictErrorMode(isStrictMode) {
+	if (isStrictMode) {
+		console.error(`❌ [STRICT ERROR] ❌ -- Execution halted`);
+		process.exit(1); // Halts execution immediately
+	}
 }

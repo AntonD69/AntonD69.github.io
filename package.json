@@ -3,19 +3,22 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "fetch:geocaches": "node build-scripts/fetch-sheet-geocaches.mjs",
-    "fetch:parkruns": "node build-scripts/fetch-sheet-parkruns.mjs",
-    "fetch:places-been": "node build-scripts/fetch-sheet-places-been.mjs",
-    "fetch:keyrings": "node build-scripts/fetch-sheet-key-rings.mjs",
-    "fetch:other-adventures": "node build-scripts/fetch-sheet-other-adventures.mjs",
-	
-	"fetch:all": "npm run fetch:geocaches && npm run fetch:parkruns && npm run fetch:places-been && npm run fetch:keyrings && npm run fetch:other-adventures",
+    "fetch": "node build-scripts/fetch-sheets.mjs",
+    "fetch:geocaches": "node build-scripts/fetch-sheets.mjs geocaches",
+    "fetch:parkruns": "node build-scripts/fetch-sheets.mjs parkruns",
+    "fetch:places-been": "node build-scripts/fetch-sheets.mjs places-been",
+    "fetch:keyrings": "node build-scripts/fetch-sheets.mjs keyrings",
+    "fetch:other-adventures": "node build-scripts/fetch-sheets.mjs other-adventures",
+    "fetch:panoramas": "node build-scripts/fetch-sheets.mjs panoramas",
+    "fetch:photo-albums": "node build-scripts/fetch-sheets.mjs photo-albums",
+    "fetch:all": "node build-scripts/fetch-sheets.mjs",
 
 	"fetch-build": "npm run fetch:all && npm run build",
 
 	"fetch-build-run": "npm run fetch:all && npm run build-run",
 
 	"build": "node build-scripts/build.js",
+	"build-strict": "node build-scripts/build.js --strict",
 	"build-run": "npm run build && npm run run",
 	"build-run:page": "npm run build && npm run run:page-i",
 	
