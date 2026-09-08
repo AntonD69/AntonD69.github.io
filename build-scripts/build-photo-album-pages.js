@@ -2,11 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import * as utils from './utils.js';
 
-
 // --- Configuration ---
-const JSON_FILE_PATH = './src/data/photo-albums.json'; // Update to your JSON source file path
+const JSON_FILE_PATH = './src/data/photo-albums.json';
 const TEMPLATES_DIR = './src/templates/photo-album';
-const OUTPUT_DIR = './dist'; // Update to your build output directory
+const OUTPUT_DIR = './dist';
 
 // --- Utility Functions ---
 function slugify(text) {
@@ -25,14 +24,15 @@ function replacePlaceholders(template, data) {
 
 export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
   // 1. Ensure output directory exists
-//   if (!fs.existsSync(OUTPUT_DIR)) {
-//     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-//   }
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+  }
 
-  // 2. Load templates
+  // 2. Load templates (including index-card.html)
   const indexTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, 'album-index-page.html'), 'utf-8');
   const displayTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, 'album-display-page.html'), 'utf-8');
   const cardTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, 'photo-card.html'), 'utf-8');
+  const indexCardTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, 'index-card.html'), 'utf-8');
 
   // 3. Read and parse JSON data
   const rawData = fs.readFileSync(JSON_FILE_PATH, 'utf-8');
@@ -62,14 +62,15 @@ export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
     }
   });
 
-  // 5. Build individual Album Display pages
-  const indexListItems = [];
+  // 5. Build individual Album Display pages & collect Index Cards
+  const indexCardsHtml = [];
 
   albumsMap.forEach((albumData, categoryName) => {
     const slug = slugify(categoryName);
     const fileName = `album-${slug}.html`;
+    const albumMeta = albumData.meta || {};
 
-    // Group photos inside this album by SubCategory
+    // --- Build Individual Album Page ---
     const subCategoriesMap = new Map();
 
     albumData.photos.forEach(photo => {
@@ -80,16 +81,14 @@ export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
       subCategoriesMap.get(subCat).push(photo);
     });
 
-    // Render photo cards grouped by SubCategory
     let albumContentHtml = '';
 
     subCategoriesMap.forEach((photos, subCatName) => {
       albumContentHtml += `<section class="subcategory-group">\n`;
-      albumContentHtml += `  <h2>${subCatName}</h2>\n`;
+      //albumContentHtml += `  <h2>${subCatName}</h2>\n`;
       albumContentHtml += `  <div class="photo-grid">\n`;
 
       photos.forEach(photo => {
-        // Convert newlines in description to <br> tags if present
         const formattedDescription = photo.Description
           ? photo.Description.replace(/\n/g, '<br>')
           : '';
@@ -97,7 +96,8 @@ export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
         const cardHtml = replacePlaceholders(cardTemplate, {
           ...photo,
           Description: formattedDescription,
-		  Path : photo.Category
+		  Date: photo.Date || '',
+          Path: photo.Category
         });
 
         albumContentHtml += `    ${cardHtml}\n`;
@@ -107,8 +107,6 @@ export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
       albumContentHtml += `</section>\n`;
     });
 
-    // Populate album display template
-    const albumMeta = albumData.meta || {};
     const displayHtml = replacePlaceholders(displayTemplate, {
       Category: categoryName,
       Name: albumMeta.Name || categoryName,
@@ -116,17 +114,32 @@ export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
       Content: albumContentHtml
     }).replace('<!--NAV_MENU-->', navHtml);
 
-    // Save album HTML file
     fs.writeFileSync(path.join(OUTPUT_DIR, fileName), displayHtml);
 
-    // Add entry for index page
-    indexListItems.push(
-      `<li><a href="${fileName}">${albumMeta.Name || categoryName}</a></li>`
-    );
+    // --- Build Index Card for Index Page ---
+    // Look for image in album metadata; if null, grab the first available photo's image
+    const coverImage = albumMeta.Image || (albumData.photos[0] ? albumData.photos[0].Image : '') || '';
+
+    const formattedIndexDescription = albumMeta.Description
+      ? albumMeta.Description.replace(/\n/g, '<br>')
+      : '';
+
+    const indexCardHtml = replacePlaceholders(indexCardTemplate, {
+      ...albumMeta,
+      Category: categoryName,
+      Name: albumMeta.Name || categoryName,
+      Image: coverImage,
+      Link: fileName,
+      Description: formattedIndexDescription,
+      Path: categoryName
+    });
+
+    indexCardsHtml.push(indexCardHtml);
   });
 
   // 6. Build the Photo Album Index Page
-  const indexContentHtml = `<ul>\n  ${indexListItems.join('\n  ')}\n</ul>`;
+  const indexContentHtml = `<div class="album-grid">\n  ${indexCardsHtml.join('\n  ')}\n</div>`;
+  
   const indexPageHtml = replacePlaceholders(indexTemplate, {
     Content: indexContentHtml,
     Title: 'Photo Album Index'
@@ -134,5 +147,5 @@ export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
 
   fs.writeFileSync(path.join(OUTPUT_DIR, 'album-index.html'), indexPageHtml);
 
-  console.log(`Successfully generated index page and ${albumsMap.size} album pages!`);
+  console.log(`Successfully generated album-index.html and ${albumsMap.size} album pages!`);
 }
