@@ -1,0 +1,78 @@
+  .pano-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.25rem;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 1400px) { .pano-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 900px)  { .pano-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 550px)  { .pano-grid { grid-template-columns: 1fr; } }
+
+  /* Light card container */
+  .pano-card {
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .pano-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .pano-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .pano-thumb-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #f3f4f6;
+  }
+
+  .pano-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Text & Pill layout */
+  .pano-card-info {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
+
+  .pano-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #1d4ed8; /* Soft blue heading color */
+    margin-bottom: 1rem;
+    line-height: 1.35;
+  }
+
+  .pano-meta {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* Date Badge/Pill styling */
+  .pano-date {
+    font-size: 0.75rem;
+    color: #4b5563;
+    background-color: #f0fdf4; /* Light tint background */
+    border: 1px solid #dbeafe;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }

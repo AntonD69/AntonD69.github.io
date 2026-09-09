@@ -1,4 +1,4 @@
-import { build_Parkrun_page } from './build-parkruns.js';
+import { build_Parkrun_page } from './build-parkrun-pages.js';
 import { build_PlacesBeen_page } from './build-PlacesBeen-page.js';
 import { build_GeocachesFound_page } from './build-geocachesFound-page.js';
 import { build_Home_page } from './build-home-page.js';
@@ -6,6 +6,7 @@ import { build_workshop_key_ring_page } from './build-workshop-keyring-page.js';
 import { build_OtherAdventures_page } from './build-other-adventures-page.js';
 import { build_static_page_with_menu } from './build-static-page-with-menu.js'
 import { build_PhotoAlbum_pages } from './build-photo-album-pages.js'
+import { build_Panorama_page } from './build-panorama-pages.js'
 
 import * as utils from './utils.js';
 import fs from 'fs';
@@ -68,14 +69,17 @@ async function buildSite() {
     console.log('  ⚡ Building Geocaches-Found page ...');
     build_GeocachesFound_page(navTemplate, IS_STRICT);
 
-    console.log('  ⚡ Building Workshop-keyring-page ...');
+    console.log('  ⚡ Building Workshop-keyring page ...');
     build_workshop_key_ring_page(navTemplate, IS_STRICT);
 
-    console.log('  ⚡ Building interests-other-adventures-page ...');
+    console.log('  ⚡ Building interests-other-adventures page ...');
     build_OtherAdventures_page(navTemplate, IS_STRICT);
 
-    console.log('  ⚡ Building photo-album-pages ...');
+    console.log('  ⚡ Building photo-album pages ...');
 	build_PhotoAlbum_pages(navTemplate, IS_STRICT);
+
+    console.log('  ⚡ Building panorama pages ...');
+	build_Panorama_page(navTemplate, IS_STRICT);
 
 	// console.log('+-----------------------------------+');
 	// console.log('| Copy static HTML files & add menu |');

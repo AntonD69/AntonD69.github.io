@@ -21,11 +21,18 @@
 	"build-strict": "node build-scripts/build.js --strict",
 	"build-run": "npm run build && npm run run",
 	"build-run:page": "npm run build && npm run run:page-i",
+
 	
 	"run": "npx vite preview --outDir dist --open",
 	"run:page": "npx vite preview --outDir dist --open /workshop-keyrings.html",
-	"run:page-i": "npx vite preview --outDir dist --open /interests-other-adventures.html"
-  },
+	"run:page-i": "npx vite preview --outDir dist --open /panorama-index.html",
+
+	"fetch-build-run:page": "npm run fetch-build  && npm run run:page-i",
+	"fetch-build-run:panorama": "npm run fetch:panoramas && npm run build && npx vite preview --outDir dist --open /panorama-index.html",
+
+	"panoramas:convert": "node build-scripts/panoramas-convert.mjs",
+	"panoramas:copy-into-project": "node build-scripts/panoramas-copy-into-project.mjs"
+},
   "devDependencies": {
     "glob": "^13.0.6",
     "sharp": "^0.35.3",

@@ -205,6 +205,34 @@ body {
   opacity: 1;
 }
 
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.15);
+  color: var(--text-main);
+  border: none;
+  font-size: 2rem;
+  padding: 1rem 0.75rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  z-index: 1010;
+  user-select: none;
+}
+
+.lightbox-nav:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.lightbox-prev {
+  left: 1.5rem;
+}
+
+.lightbox-next {
+  right: 1.5rem;
+}
+
 /* ==========================================================================
    Album Index Cards & Grid Layout
    ========================================================================== */
