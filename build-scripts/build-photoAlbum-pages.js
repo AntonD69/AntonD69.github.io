@@ -17,9 +17,15 @@ function slugify(text) {
 }
 
 function replacePlaceholders(template, data) {
-  return template.replace(/\{\{\s*(\w+)\s*\}\}/g, (match, key) => {
+  return template.replace(/\{\{\s*([\w-]+)\s*\}\}/g, (match, key) => {
     return data[key] !== undefined && data[key] !== null ? data[key] : '';
   });
+}
+
+// Normalizes Windows backslashes (\) to Web forward slashes (/)
+function normalizeImagePath(imagePath) {
+  if (!imagePath) return '';
+  return imagePath.replace(/\\/g, '/');
 }
 
 export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
@@ -28,7 +34,7 @@ export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
 
-  // 2. Load templates (including index-card.html)
+  // 2. Load templates
   const indexTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, 'album-index-page.html'), 'utf-8');
   const displayTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, 'album-display-page.html'), 'utf-8');
   const cardTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, 'photo-card.html'), 'utf-8');
@@ -38,26 +44,26 @@ export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
   const rawData = fs.readFileSync(JSON_FILE_PATH, 'utf-8');
   const items = JSON.parse(rawData);
 
-  // 4. Group data into albums (by Category) and individual photo items
+  // 4. Group data into albums using the "Folder" property
   const albumsMap = new Map();
 
   items.forEach(item => {
-    if (!item.Category) return;
+    if (!item.Folder) return;
 
-    if (!albumsMap.has(item.Category)) {
-      albumsMap.set(item.Category, {
+    if (!albumsMap.has(item.Folder)) {
+      albumsMap.set(item.Folder, {
         meta: null,
         photos: []
       });
     }
 
-    const album = albumsMap.get(item.Category);
+    const album = albumsMap.get(item.Folder);
 
-    // If SubCategory is empty, this item defines the Album metadata
-    if (!item.SubCategory) {
+    // If AlbumId is not null, this entry defines the Album Cover / Metadata
+    if (item.AlbumId !== null && item.AlbumId !== undefined) {
       album.meta = item;
     } else {
-      // It's a photo entry within the album
+      // Otherwise, it's an individual photo item inside the album
       album.photos.push(item);
     }
   });
@@ -65,60 +71,57 @@ export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
   // 5. Build individual Album Display pages & collect Index Cards
   const indexCardsHtml = [];
 
-  albumsMap.forEach((albumData, categoryName) => {
-    const slug = slugify(categoryName);
-    const fileName = `album-${slug}.html`;
+  albumsMap.forEach((albumData, folderName) => {
     const albumMeta = albumData.meta || {};
+    const albumTitle = albumMeta.AlbumName || folderName;
+    const slug = slugify(albumTitle);
+    const fileName = `album-${slug}.html`;
 
-    // --- Build Individual Album Page ---
-    const subCategoriesMap = new Map();
+    // --- Build Photo Cards HTML for this Album ---
+    let photosGridHtml = '<div class="photo-grid">\n';
 
     albumData.photos.forEach(photo => {
-      const subCat = photo.SubCategory || 'General';
-      if (!subCategoriesMap.has(subCat)) {
-        subCategoriesMap.set(subCat, []);
+      // Parse optional MetaData array (e.g., ["Date:2022-09-03"])
+      let photoDate = photo.Date || '';
+      if (!photoDate && Array.isArray(photo.MetaData)) {
+        const dateMeta = photo.MetaData.find(m => m.startsWith('Date:'));
+        if (dateMeta) {
+          photoDate = dateMeta.replace('Date:', '').trim();
+        }
       }
-      subCategoriesMap.get(subCat).push(photo);
-    });
 
-    let albumContentHtml = '';
+      const formattedDescription = photo.Description
+        ? photo.Description.replace(/\n/g, '<br>')
+        : '';
 
-    subCategoriesMap.forEach((photos, subCatName) => {
-      albumContentHtml += `<section class="subcategory-group">\n`;
-      //albumContentHtml += `  <h2>${subCatName}</h2>\n`;
-      albumContentHtml += `  <div class="photo-grid">\n`;
+      const cleanImagePath = normalizeImagePath(photo.Image);
 
-      photos.forEach(photo => {
-        const formattedDescription = photo.Description
-          ? photo.Description.replace(/\n/g, '<br>')
-          : '';
-
-        const cardHtml = replacePlaceholders(cardTemplate, {
-          ...photo,
-          Description: formattedDescription,
-		  Date: photo.Date || '',
-          Path: photo.Category
-        });
-
-        albumContentHtml += `    ${cardHtml}\n`;
+      const cardHtml = replacePlaceholders(cardTemplate, {
+        ...photo,
+        Image: cleanImagePath,
+        Description: formattedDescription,
+        Date: photo.Date || photoDate,
+        Folder: folderName
       });
 
-      albumContentHtml += `  </div>\n`;
-      albumContentHtml += `</section>\n`;
+      photosGridHtml += `  ${cardHtml}\n`;
     });
 
+    photosGridHtml += '</div>\n';
+
+    // --- Generate Album Display Page ---
     const displayHtml = replacePlaceholders(displayTemplate, {
-      Category: categoryName,
-      Name: albumMeta.Name || categoryName,
+      AlbumName: albumTitle,
+      Name: albumTitle,
+      Date: albumMeta.Date || '',
       Description: albumMeta.Description ? albumMeta.Description.replace(/\n/g, '<br>') : '',
-      Content: albumContentHtml
+      Content: photosGridHtml
     }).replace('<!--NAV_MENU-->', navHtml);
 
     fs.writeFileSync(path.join(OUTPUT_DIR, fileName), displayHtml);
 
-    // --- Build Index Card for Index Page ---
-    // Look for image in album metadata; if null, grab the first available photo's image
-    const coverImage = albumMeta.Image || (albumData.photos[0] ? albumData.photos[0].Image : '') || '';
+    // --- Build Index Card for Main Index Page ---
+    const coverImage = normalizeImagePath(albumMeta.Image || (albumData.photos[0] ? albumData.photos[0].Image : ''));
 
     const formattedIndexDescription = albumMeta.Description
       ? albumMeta.Description.replace(/\n/g, '<br>')
@@ -126,12 +129,12 @@ export function build_PhotoAlbum_pages(navHtml, isStrictMode) {
 
     const indexCardHtml = replacePlaceholders(indexCardTemplate, {
       ...albumMeta,
-      Category: categoryName,
-      Name: albumMeta.Name || categoryName,
+      AlbumName: albumTitle,
+      Name: albumTitle,
       Image: coverImage,
       Link: fileName,
       Description: formattedIndexDescription,
-      Path: categoryName
+      Folder: folderName
     });
 
     indexCardsHtml.push(indexCardHtml);

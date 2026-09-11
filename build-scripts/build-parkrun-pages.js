@@ -116,12 +116,12 @@ export function build_Parkrun_page(navHtml) {
   console.log('      Successfully generated parkruns.html with injected menu!');
 
 //---------------------------------------------------------------------------------
-  const parkrunKeyringTemplate = fs.readFileSync(path.resolve('src/templates/parkruns/parkrun-keyrings.html'), 'utf-8');
+  const parkrunKeyringTemplate = fs.readFileSync(path.resolve('src/templates/parkruns/parkrun-fan-keyrings.html'), 'utf-8');
 
     const parkrunKeyringsFinalHtml = parkrunKeyringTemplate
           .replace('<!--NAV_MENU-->', navHtml);
 
-  fs.writeFileSync(path.resolve('dist/parkrun-keyrings.html'), parkrunKeyringsFinalHtml, 'utf-8');
+  fs.writeFileSync(path.resolve('dist/parkrun-fan-keyrings.html'), parkrunKeyringsFinalHtml, 'utf-8');
 
-  console.log('      Successfully generated parkrun-keyrings.html with injected menu!');
+  console.log('      Successfully generated parkrun-fan-keyrings.html with injected menu!');
 }

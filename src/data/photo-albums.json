@@ -1,332 +1,354 @@
 [
   {
-    "Page": 2,
-    "Category": "2023-namaqualand",
-    "SubCategory": null,
-    "Year": 2023,
-    "Name": "Anton & Trish - Namaqualand",
-    "Description": "Trish and I did a trip to Fishriver canyon and Namaqualand in September 2023",
-    "Image": "cover.webp",
-    "Date": null
+    "AlbumId": 1,
+    "AlbumName": "Anton & Trish - Namaqualand",
+    "Date": "September 2023",
+    "Folder": "2023-namaqualand",
+    "Image": "2023-namaqualand\\cover.webp",
+    "MetaData": null,
+    "Description": "Trish and I did a trip to Fishriver canyon and Namaqualand in September 2023"
   },
   {
-    "Page": null,
-    "Category": "2023-namaqualand",
-    "SubCategory": "2023-naq",
-    "Year": null,
-    "Name": null,
-    "Description": "Stopped at Die Oog in Pofadder area",
-    "Image": "20220903_140714.webp",
-    "Date": "2022-09-03"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2023-namaqualand",
+    "Image": "2023-namaqualand\\20220903_140714.webp",
+    "MetaData": [
+      "Date:2022-09-03"
+    ],
+    "Description": "Stopped at Die Oog in Pofadder area"
   },
   {
-    "Page": null,
-    "Category": "2023-namaqualand",
-    "SubCategory": "2023-naq",
-    "Year": null,
-    "Name": null,
-    "Description": "Crossing into Namibia",
-    "Image": "20220904_100657.webp",
-    "Date": "2022-09-04"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2023-namaqualand",
+    "Image": "2023-namaqualand\\20220904_100657.webp",
+    "MetaData": [
+      "Date:2022-09-04"
+    ],
+    "Description": "Crossing into Namibia"
   },
   {
-    "Page": null,
-    "Category": "2023-namaqualand",
-    "SubCategory": "2023-naq",
-    "Year": null,
-    "Name": null,
-    "Description": "My first (and only) geocache in Namibia",
-    "Image": "20220904_122318.webp",
-    "Date": "2022-09-04"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2023-namaqualand",
+    "Image": "2023-namaqualand\\20220904_122318.webp",
+    "MetaData": [
+      "Date:2022-09-04"
+    ],
+    "Description": "My first (and only) geocache in Namibia"
   },
   {
-    "Page": null,
-    "Category": "2023-namaqualand",
-    "SubCategory": "2023-naq",
-    "Year": null,
-    "Name": null,
-    "Description": "A huge quiver tree",
-    "Image": "20220904_153840.webp",
-    "Date": "2022-09-04"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2023-namaqualand",
+    "Image": "2023-namaqualand\\20220904_153840.webp",
+    "MetaData": [
+      "Date:2022-09-04"
+    ],
+    "Description": "A huge quiver tree"
   },
   {
-    "Page": null,
-    "Category": "2023-namaqualand",
-    "SubCategory": "2023-naq",
-    "Year": null,
-    "Name": null,
-    "Description": "Braaing in Namibia under a starlit sky",
-    "Image": "20220904_202259.webp",
-    "Date": "2022-09-04"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2023-namaqualand",
+    "Image": "2023-namaqualand\\20220904_202259.webp",
+    "MetaData": [
+      "Date:2022-09-04"
+    ],
+    "Description": "Braaing in Namibia under a starlit sky"
   },
   {
-    "Page": null,
-    "Category": "2023-namaqualand",
-    "SubCategory": "2023-naq",
-    "Year": null,
-    "Name": null,
-    "Description": "Wetting our feet in the Atlantic ocian",
-    "Image": "20220907_110637.webp",
-    "Date": "2022-09-07"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2023-namaqualand",
+    "Image": "2023-namaqualand\\20220907_110637.webp",
+    "MetaData": [
+      "Date:2022-09-04"
+    ],
+    "Description": "Wetting our feet in the Atlantic waters"
   },
   {
-    "Page": null,
-    "Category": "2023-namaqualand",
-    "SubCategory": "2023-naq",
-    "Year": null,
-    "Name": null,
-    "Description": "A geocach surrounded by flowers",
-    "Image": "20220907_130320.webp",
-    "Date": "2022-09-07"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2023-namaqualand",
+    "Image": "2023-namaqualand\\20220907_130320.webp",
+    "MetaData": [
+      "Date:2022-09-04"
+    ],
+    "Description": "A geocach surrounded by flowers"
   },
   {
-    "Page": null,
-    "Category": "2023-namaqualand",
-    "SubCategory": "2023-naq",
-    "Year": null,
-    "Name": null,
-    "Description": "Flowers everywhere",
-    "Image": "20220907_132054.webp",
-    "Date": "2022-09-07"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2023-namaqualand",
+    "Image": "2023-namaqualand\\20220907_132054.webp",
+    "MetaData": [
+      "Date:2022-09-04"
+    ],
+    "Description": "Flowers everywhere"
   },
   {
-    "Page": null,
-    "Category": "2023-namaqualand",
-    "SubCategory": "2023-naq",
-    "Year": null,
-    "Name": null,
-    "Description": "A sea of Orange",
-    "Image": "IMG-20220907-WA0033.webp",
-    "Date": "2022-09-07"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2023-namaqualand",
+    "Image": "2023-namaqualand\\IMG-20220907-WA0033.webp",
+    "MetaData": [
+      "Date:2022-09-04"
+    ],
+    "Description": "A sea of Orange"
   },
   {
-    "Page": null,
-    "Category": "2023-namaqualand",
-    "SubCategory": "2023-naq",
-    "Year": null,
-    "Name": null,
-    "Description": "Taking the tram in Kimberly",
-    "Image": "20220909_100338.webp",
-    "Date": "2022-09-09"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2023-namaqualand",
+    "Image": "2023-namaqualand\\20220909_100338.webp",
+    "MetaData": [
+      "Date:2022-09-09"
+    ],
+    "Description": "Taking the tram in Kimberly"
   },
   {
-    "Page": 3,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "A small town",
-    "Image": "2005_0209_182706AA.webp",
-    "Date": "2005-02-09"
+    "AlbumId": 2,
+    "AlbumName": "Rudi - London to Cape Town - 2005",
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\rudi-birthday-2005.webp",
+    "MetaData": [
+      "Date:2005-02-09"
+    ],
+    "Description": "A small town"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "Goats in the street",
-    "Image": "2005_0212_192726AA.webp",
-    "Date": "2005-02-12"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0212_192726AA.webp",
+    "MetaData": [
+      "Date:2005-02-12"
+    ],
+    "Description": "Goats in the street"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "Other travelers in the desert",
-    "Image": "2005_0213_184144AA.webp",
-    "Date": "2005-02-13"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0213_184144AA.webp",
+    "MetaData": [
+      "Date:2005-02-13"
+    ],
+    "Description": "Other travelers in the desert"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "Garmin GPS showing the way",
-    "Image": "2005_0215_160034AA.webp",
-    "Date": "2005-02-15"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0215_160034AA.webp",
+    "MetaData": [
+      "Date:2005-02-15"
+    ],
+    "Description": "Garmin GPS showing the way"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "Smore break",
-    "Image": "2005_0216_114812AA.webp",
-    "Date": "2005-02-16"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0216_114812AA.webp",
+    "MetaData": [
+      "Date:2005-02-16"
+    ],
+    "Description": "Smore break"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "Crossing the jungle",
-    "Image": "2005_0311_090250AA.webp",
-    "Date": "2005-03-11"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0311_090250AA.webp",
+    "MetaData": [
+      "Date:2005-03-11"
+    ],
+    "Description": "Crossing the jungle"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "Having a bear on his birthday in the middle of Africa",
-    "Image": "2005_0317_084252AA.webp",
-    "Date": "2005-03-17"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0317_084252AA.webp",
+    "MetaData": [
+      "Date:2005-03-17"
+    ],
+    "Description": "Having a bear on his birthday in the middle of Africa"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "Biek and Rider have a birthday bear",
-    "Image": "2005_0317_084556AA.webp",
-    "Date": "2005-03-17"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0317_084556AA.webp",
+    "MetaData": [
+      "Date:2005-03-17"
+    ],
+    "Description": "Bike and Rider having a birthday bear"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "Lots of water all over the place",
-    "Image": "2005_0317_120450AA.webp",
-    "Date": "2005-03-17"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0317_120450AA.webp",
+    "MetaData": [
+      "Date:2005-03-17"
+    ],
+    "Description": "Lots of water all over the place"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "Heavy traffic on the road",
-    "Image": "2005_0317_172430AA.webp",
-    "Date": "2005-03-17"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0317_172430AA.webp",
+    "MetaData": [
+      "Date:2005-03-17"
+    ],
+    "Description": "Heavy traffic on the road"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "Done after a days riding",
-    "Image": "2005_0317_211304AA.webp",
-    "Date": "2005-03-21"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0317_211304AA.webp",
+    "MetaData": [
+      "Date:2005-03-21"
+    ],
+    "Description": "Done after a days riding"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "Africa can be tough for some",
-    "Image": "2005_0324_160920AA.webp",
-    "Date": "2005-03-24"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0324_160920AA.webp",
+    "MetaData": [
+      "Date:2005-03-24"
+    ],
+    "Description": "Africa can be tough for some"
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": "photos",
-    "Year": null,
-    "Name": null,
-    "Description": "made it to Johannesburg",
-    "Image": "2005_0325_164100AA.webp",
-    "Date": "2005-03-25"
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct\\2005_0325_164100AA.webp",
+    "MetaData": [
+      "Date:2005-03-25"
+    ],
+    "Description": "Made it to Johannesburg"
   },
   {
-    "Page": null,
-    "Category": "Cape Town Bike Tour",
-    "SubCategory": null,
-    "Year": null,
-    "Name": null,
-    "Description": null,
-    "Image": null,
-    "Date": null
+    "AlbumId": 3,
+    "AlbumName": "Cape Town Bike Tour",
+    "Date": null,
+    "Folder": "ct-bike-tour",
+    "Image": "photos-photo-album-placeHolder.webp",
+    "MetaData": null,
+    "Description": null
   },
   {
-    "Page": null,
-    "Category": "Sabatical Bike Tour",
-    "SubCategory": null,
-    "Year": null,
-    "Name": null,
-    "Description": null,
-    "Image": null,
-    "Date": null
+    "AlbumId": 4,
+    "AlbumName": "Sabatical Bike Tour",
+    "Date": null,
+    "Folder": "sabatical-bike-tour",
+    "Image": "photos-photo-album-placeHolder.webp",
+    "MetaData": null,
+    "Description": null
   },
   {
-    "Page": null,
-    "Category": "Fly Fishing",
-    "SubCategory": null,
-    "Year": null,
-    "Name": null,
-    "Description": null,
-    "Image": null,
-    "Date": null
+    "AlbumId": 5,
+    "AlbumName": "Fly Fishing",
+    "Date": null,
+    "Folder": "fly-fshing",
+    "Image": "photos-photo-album-placeHolder.webp",
+    "MetaData": null,
+    "Description": null
   },
   {
-    "Page": null,
-    "Category": "Bike Trips",
-    "SubCategory": null,
-    "Year": null,
-    "Name": null,
-    "Description": null,
-    "Image": null,
-    "Date": null
+    "AlbumId": 6,
+    "AlbumName": "Bike Trips",
+    "Date": null,
+    "Folder": "bike-trips",
+    "Image": "photos-photo-album-placeHolder.webp",
+    "MetaData": null,
+    "Description": null
   },
   {
-    "Page": null,
-    "Category": "Kids School Years",
-    "SubCategory": null,
-    "Year": null,
-    "Name": null,
-    "Description": null,
-    "Image": null,
-    "Date": null
+    "AlbumId": 7,
+    "AlbumName": "Kids School Years",
+    "Date": null,
+    "Folder": "kids-school-years",
+    "Image": "photos-photo-album-placeHolder.webp",
+    "MetaData": null,
+    "Description": null
   },
   {
-    "Page": null,
-    "Category": "Kruger Holiday",
-    "SubCategory": null,
-    "Year": null,
-    "Name": null,
-    "Description": null,
-    "Image": null,
-    "Date": null
+    "AlbumId": 8,
+    "AlbumName": "Kruger Holiday",
+    "Date": null,
+    "Folder": "kruger-holiday",
+    "Image": "photos-photo-album-placeHolder.webp",
+    "MetaData": null,
+    "Description": null
   },
   {
-    "Page": null,
-    "Category": "Netherlands Holiday",
-    "SubCategory": null,
-    "Year": null,
-    "Name": null,
-    "Description": "This is a long line of text that spans mulitple lines.\nThis is a long line of text that spans mulitple lines.\nThis is a long line of text that spans mulitple lines.\nThis is a long line of text that spans mulitple lines.",
-    "Image": "photo1.webp",
-    "Date": null
+    "AlbumId": 9,
+    "AlbumName": "Netherlands Holiday",
+    "Date": null,
+    "Folder": "Netherlands Holiday",
+    "Image": "photos-photo-album-placeHolder.webp",
+    "MetaData": null,
+    "Description": "This is a long line of text that spans mulitple lines.\nThis is a long line of text that spans mulitple lines.\nThis is a long line of text that spans mulitple lines.\nThis is a long line of text that spans mulitple lines."
   },
   {
-    "Page": null,
-    "Category": "Easter with the kids",
-    "SubCategory": null,
-    "Year": null,
-    "Name": null,
-    "Description": null,
-    "Image": null,
-    "Date": null
+    "AlbumId": 10,
+    "AlbumName": "Easter with the kids",
+    "Date": null,
+    "Folder": "O&O-kids-easter",
+    "Image": "photos-photo-album-placeHolder.webp",
+    "MetaData": null,
+    "Description": null
   },
   {
-    "Page": null,
-    "Category": "2005-rudi-ldn-to-ct",
-    "SubCategory": null,
-    "Year": 2005,
-    "Name": "Rudi - London to Cape Town",
-    "Description": "Rudi traveled on his BMW 650 GS all the way from London to CapeTown in 2005.",
-    "Image": "cover.webp",
-    "Date": null
+    "AlbumId": 12,
+    "AlbumName": "Molototsi",
+    "Date": null,
+    "Folder": "Molototsi",
+    "Image": "photos-photo-album-placeHolder.webp",
+    "MetaData": null,
+    "Description": null
+  },
+  {
+    "AlbumId": 13,
+    "AlbumName": "Durban holidays",
+    "Date": null,
+    "Folder": "durban-holidays",
+    "Image": "photos-photo-album-placeHolder.webp",
+    "MetaData": null,
+    "Description": null
   }
 ]
