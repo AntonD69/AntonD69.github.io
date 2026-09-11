@@ -15,10 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -36,7 +33,7 @@ jobs:
       - name: Build site
         run: npm run build
 
-      # --- DEPLOYMENT 1: GITHUB PAGES ---
+      # --- UPLOAD GITHUB PAGES ARTIFACT ---
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -45,11 +42,7 @@ jobs:
         with:
           path: './dist'
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      # --- DEPLOYMENT 2: VPS (CUSTOM NAMED ZIP ARCHIVE) ---
+      # --- DEPLOYMENT: VPS ---
       - name: Set Custom Zip Filename Variable
         run: echo "DEPLOY_FILENAME=prd-backToTheAdventure-static($(date +'%Y-%m-%d_%H-%M-%S')).zip" >> $GITHUB_ENV
 
@@ -79,7 +72,16 @@ jobs:
           port: 22
           envs: DEPLOY_FILENAME
           script: |
-            # Clear old live assets before unzipping
             rm -rf /srv/www/prd-backToTheAdventure-static/*
-            # Extract from the preserved backup archive to live web folder
             unzip -o "/srv/www/deployment-backups/$DEPLOY_FILENAME" -d /srv/www/prd-backToTheAdventure-static
+
+  deploy-pages:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
