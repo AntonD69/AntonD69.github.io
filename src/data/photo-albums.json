@@ -121,9 +121,18 @@
   {
     "AlbumId": 2,
     "AlbumName": "Rudi - London to Cape Town - 2005",
-    "Date": null,
+    "Date": "Feb-Mar-Apri 2005",
     "Folder": "2005-rudi-ldn-to-ct",
     "Image": "2005-rudi-ldn-to-ct\\rudi-birthday-2005.webp",
+    "MetaData": null,
+    "Description": "From February to April 2005, my brother Rudolf (Rudi) undertook a solo journey from London to Cape Town. In just over two months, he tackled a grueling 15,000 km route down the west coast of Africa."
+  },
+  {
+    "AlbumId": null,
+    "AlbumName": null,
+    "Date": null,
+    "Folder": "2005-rudi-ldn-to-ct",
+    "Image": "2005-rudi-ldn-to-ct/2005_0209_182706AA.webp",
     "MetaData": [
       "Date:2005-02-09"
     ],
