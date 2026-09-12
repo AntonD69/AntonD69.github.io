@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch: # Allows manual re-triggering from GitHub UI if needed
 
 permissions:
   contents: read
@@ -15,7 +16,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # ==========================================
+  # 1. BUILD
+  # ==========================================
   build:
+    name: 1. Build Site
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -33,16 +38,53 @@ jobs:
       - name: Build site
         run: npm run build
 
-      # --- UPLOAD GITHUB PAGES ARTIFACT ---
+      # Save dist output as an artifact for downstream jobs
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: './dist'
+          retention-days: 1
+
+      # Prepare and upload GitHub Pages artifact
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
 
-      # --- DEPLOYMENT: VPS ---
+  # ==========================================
+  # 2. DEPLOY TO GITHUB PAGES
+  # ==========================================
+  deploy-pages:
+    name: 2. Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # ==========================================
+  # 3. DEPLOY TO UBUNTU SERVER (VPS)
+  # ==========================================
+  deploy-vps:
+    name: 3. Deploy to Ubuntu VPS
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # Download the pre-built dist folder from the Build job
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site-dist
+          path: './dist'
+
       - name: Set Custom Zip Filename Variable
         run: echo "DEPLOY_FILENAME=prd-backToTheAdventure-static($(date +'%Y-%m-%d_%H-%M-%S')).zip" >> $GITHUB_ENV
 
@@ -74,14 +116,3 @@ jobs:
           script: |
             rm -rf /srv/www/prd-backToTheAdventure-static/*
             unzip -o "/srv/www/deployment-backups/$DEPLOY_FILENAME" -d /srv/www/prd-backToTheAdventure-static
-
-  deploy-pages:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
