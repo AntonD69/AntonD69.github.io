@@ -292,7 +292,7 @@
     "AlbumId": 5,
     "AlbumName": "Fly Fishing",
     "Date": null,
-    "Folder": "fly-fshing",
+    "Folder": "fly-fishing",
     "Image": "photos-photo-album-placeHolder.webp",
     "MetaData": null,
     "Description": null
@@ -318,7 +318,7 @@
   {
     "AlbumId": 8,
     "AlbumName": "Kruger Holiday",
-    "Date": null,
+    "Date": "2005-07",
     "Folder": "kruger-holiday",
     "Image": "photos-photo-album-placeHolder.webp",
     "MetaData": null,
